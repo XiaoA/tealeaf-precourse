@@ -2,11 +2,15 @@
 #+AUTHOR: Andrew Buckingham
 #+STARTUP: indent
 #+OPTIONS: num:nil
+#+OPTIONS: html-postamble:nil
 #+TODO: TODO(t) | | Started(s) | Waiting(w) | Someday/Maybe(m) | Canceled(c) | DONE(d)(@) | Meeting(M) | Note(n)
 
 * Preparation
 
 ** Exercise 1
+Create a directory named my_folder and then navigate inside that directory. Create two files named one.rb and two.rb in the my_folder directory. Write a ruby program that outputs the line this is file one when you run the one.rb file. Then write another program that outputs this is file two when you run the two.rb file. (Hint: one.rb should have this in it puts "this is file one")
+*** Solution
+
    #+BEGIN_SRC ruby :tangle 01_preparation/my_folder/one.rb
      # one.rb
      puts "this is file one"
@@ -18,3 +22,16 @@
    #+END_SRC
 
 
+** Exercise 
+When you are finished with the above and both programs are working correctly, navigate to the directory above the my_folder directory and delete all of the content you generated with one command.
+*** Solution
+#+BEGIN_SRC sh
+小A曰:ls
+one.rb	two.rb
+小A曰:cd ..
+小A曰:ls
+my_folder
+小A曰:rm -R my_folder/
+小A曰:ls
+小A曰:
+#+END_SRC

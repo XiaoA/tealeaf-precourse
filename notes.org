@@ -1,0 +1,20 @@
+#+TITLE: Andrew's Learn Ruby Notes
+#+AUTHOR: Andrew Buckingham
+#+STARTUP: indent
+#+OPTIONS: num:nil
+#+TODO: TODO(t) | | Started(s) | Waiting(w) | Someday/Maybe(m) | Canceled(c) | DONE(d)(@) | Meeting(M) | Note(n)
+
+* Preparation
+
+** Exercise 1
+   #+BEGIN_SRC ruby :tangle 01_preparation/my_folder/one.rb
+     # one.rb
+     puts "this is file one"
+        #+END_SRC
+
+   #+BEGIN_SRC ruby :tangle 01_preparation/my_folder/two.rb
+     # two.rb
+   puts "this is file two"
+   #+END_SRC
+
+

@@ -7,13 +7,13 @@ I will be completing the exercises on the Command Line, in IRB, and in [emacs or
 Each subdirectory corresponds to a chapter in the book:
 
 
-1. Preparations (Not included in this repository)
-2. The Basics
-3. Variables
-4. Methods
-5. Flow Control
-6. Loops & Iterators
-7. Arrays
-8. Hashes
-9. Files
-10. More Stuff
+0. Preparations (Not included in this repository)
+1. The Basics
+2. Variables
+3. Methods
+4. Flow Control
+5. Loops & Iterators
+6. Arrays
+7. Hashes
+8. Files
+9. More Stuff

@@ -22,7 +22,7 @@ Create a directory named my_folder and then navigate inside that directory. Crea
    #+END_SRC
 
 
-** Exercise 
+** Exercise 2
 When you are finished with the above and both programs are working correctly, navigate to the directory above the my_folder directory and delete all of the content you generated with one command.
 *** Solution
 #+BEGIN_SRC sh
@@ -35,3 +35,212 @@ my_folder
 小A曰:ls
 小A曰:
 #+END_SRC
+
+* The Basics
+** Strings
+   - Strings can use either double quotes ("") or single quotes (''), and you can escape quotes, when necessary ('This is Andrew\'s string.')
+   - String interpolation (concatenation) *only works with double quotes*
+     - Syntax: "Here's how to use string interpolation with a #{Ruby Expression}"
+       *Example:*       
+
+   #+BEGIN_SRC ruby 
+a = 'ten'
+"My favorite number is #{a}!"
+   #+END_SRC
+** Symbols
+- You can use symbols to reference things, like strings, that you don't intend to print or edit.
+- Often referred to as "immutable" (though this is apparently not 100% correct)
+
+  *Examples:*
+#+BEGIN_SRC ruby
+# Examples of symbols
+:name
+:a_symbol
+:"surprisingly, this is also a symbol" 
+   #+END_SRC
+
+** Numbers
+- integers do not contain decimal points. Floats do.
+  
+*** Integers
+    9, 1, 4, 1000
+
+*** Floats
+    9.1, 44.44409, 9.01234
+
+** nil
+   empty value
+
+** Operations (Mathematical)
+   These work as I would expect (similar to JavaScript).
+*** Adding, Subtracting, and Multiplying Integers
+
+*Addition (+)*
+    #+BEGIN_SRC ruby
+      2 + 2
+    #+END_SRC
+
+    #+RESULTS:
+    : 4
+
+*Subtraction (-)*
+    #+BEGIN_SRC ruby
+49 - 47
+    
+    #+END_SRC
+
+    #+RESULTS:
+    : 2
+
+*Multiplication (*)*
+    #+BEGIN_SRC ruby
+144 * 144
+    
+    #+END_SRC
+
+    #+RESULTS:
+    : 20736
+
+** Division vs. Modulus
+
+*** Division (/)
+    #+BEGIN_SRC ruby
+144 / 2
+    #+END_SRC
+
+    #+RESULTS:
+    : 72
+
+*** Modulo
+    #+BEGIN_SRC ruby
+16 / 4  # 0
+16 / 3  # 5
+    
+    #+END_SRC
+
+    #+RESULTS:
+    : 5
+
+*** Multiplying Floats and Decimals
+    #+BEGIN_SRC ruby
+15.0 / 4    # 3.75
+48.0 * 7.2  # 345.6
+    
+    #+END_SRC
+
+    #+RESULTS:
+    : 3.75
+
+*** Equality Comparison
+
+    #+BEGIN_SRC ruby
+      4 == 4    # true
+      4 == '4'  # false
+      
+      'book' == "book"  # true
+      'four' == 4       # false
+      'four' == '4'     #false
+    #+END_SRC
+
+    #+RESULTS:
+    : false
+
+*** String Concatenation
+    #+BEGIN_SRC ruby
+"I love" + " Ruby!"
+    
+    #+END_SRC
+
+    #+RESULTS:
+    : I love Ruby!
+
+#+BEGIN_SRC ruby
+"1" + "1" 
+#+END_SRC
+
+#+RESULTS:
+: 11
+
+    *We cannot concatenate a string and a number*
+
+#+BEGIN_SRC ruby
+1 + "Love"
+#+END_SRC    
+
+#+RESULTS:
+-:3:in `+': String can't be coerced into Fixnum (TypeError)
+	from -:3:in `main'
+	from -:5:in `<main>'
+
+** Basic Data Structures
+   
+*** Arrays
+
+    #+BEGIN_SRC ruby
+[1,2,3,4]
+    
+    #+END_SRC
+
+    #+RESULTS:
+    | 1 | 2 | 3 | 4 |
+
+    Predictably, the index starts with 0:
+
+    #+BEGIN_SRC ruby
+    [1, 2, 3, 4] [1]
+    #+END_SRC
+
+    #+RESULTS:
+    : 2
+
+*** Hashes {}
+    - Function as dictionary/key-value pairs
+
+      #+BEGIN_SRC ruby
+{:cat => 'meows'}
+      
+      #+END_SRC
+
+      #+RESULTS:
+      | :cat=> | meows |
+
+    We can add more values:
+    #+BEGIN_SRC ruby
+{:dog => 'barks', :cat => 'meows', :pig => 'oinks'}
+    
+    #+END_SRC
+
+    #+RESULTS:
+    | :dog=> | barks | :cat=> | meows | :pig=> | oinks |
+
+    To find the value of one of the hashes:
+    #+BEGIN_SRC ruby
+{:dog => 'barks', :cat => 'meows', :pig => 'oinks'} [:cat]  # meows
+    
+    #+END_SRC
+
+    #+RESULTS:
+    : meows
+
+** Expressions and Return
+   - When you use the IRB, you'll see the 'hash rocket': =>
+   - Everything in Ruby is an expression, and it always returns something, even if only /nil/
+
+*** Puts vs. Return
+    - puts: Ruby puts something on the screen, but it doesn't return what is printed to the screen. For example, *do* does something, but it also returns a value. Puts does not return the value:
+
+      #+BEGIN_SRC ruby
+      puts "stuff" # nil (but it puts 'stuff')
+      #+END_SRC
+
+      #+RESULTS:
+      : nil
+
+      #+BEGIN_SRC ruby
+        a = puts "stuff"
+        puts a               # nil
+      #+END_SRC
+
+      #+RESULTS:
+      : nil
+   

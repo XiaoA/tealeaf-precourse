@@ -371,8 +371,7 @@ puts "#{fname} #{lname}"
 
 #+END_SRC
 
-Here's the output:
-
+Output: [[file:02_basics/solution1.rb][02_basics/solution01.rb]]
 #+BEGIN_SRC sh
 # See 02_basics/solution01.rb for Ruby file.
 小A曰: ruby solution1.rb 
@@ -394,10 +393,9 @@ puts 6732 / 1000
 puts 6732 % 1000 / 100
 puts 6732 % 1000 % 100 / 10
 puts 6732 % 1000 %100 % 10     
-
 #+END_SRC
-Results (02_basics/solution.rb)
 
+Output: ([[file:02_basics/solutions2.rb][02_basics/solution2.rb]])
 #+BEGIN_SRC sh
 小A曰:ruby solution2.rb 
 6
@@ -441,3 +439,4 @@ Output ([[file:02_basics/solution3.rb][02_basics/solution3.rb]])
 2001
 1981
 #+END_SRC
+

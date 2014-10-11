@@ -77,7 +77,8 @@ a = 'ten'
 
 *Addition (+)*
     #+BEGIN_SRC ruby
-      2 + 2
+     > 2 + 2
+     => 4
     #+END_SRC
 
     #+RESULTS:
@@ -85,7 +86,8 @@ a = 'ten'
 
 *Subtraction (-)*
     #+BEGIN_SRC ruby
-49 - 47
+> 49 - 47
+=> 2
     
     #+END_SRC
 
@@ -94,8 +96,8 @@ a = 'ten'
 
 *Multiplication (*)*
     #+BEGIN_SRC ruby
-144 * 144
-    
+> 144 * 144  # => 201736 
+=> 20736    
     #+END_SRC
 
     #+RESULTS:
@@ -105,7 +107,7 @@ a = 'ten'
 
 *** Division (/)
     #+BEGIN_SRC ruby
-144 / 2
+> 144 / 2  # 2
     #+END_SRC
 
     #+RESULTS:
@@ -187,11 +189,12 @@ a = 'ten'
     Predictably, the index starts with 0:
 
     #+BEGIN_SRC ruby
-    [1, 2, 3, 4] [1]
+    > [1, 2, 3, 4] [1]
+    => 2
     #+END_SRC
 
     #+RESULTS:
-    : 2
+    :2 
 
 *** Hashes {}
     - Function as dictionary/key-value pairs
@@ -244,3 +247,22 @@ a = 'ten'
       #+RESULTS:
       : nil
    
+*** Exercise One
+
+**** Problem 1
+     Add two strings together that, when concatenated, return your first and last name as your full name in one string.
+
+#+BEGIN_SRC ruby
+"<Firstname> <Lastname>"
+#+END_SRC
+
+For example, if your name is John Doe, think about how you can put "John" and "Doe" together to get "John Doe".
+
+**** Solution 1
+     #+BEGIN_SRC ruby
+"Andrew " + "Buckingham" # Andrew Buckingham
+     
+     #+END_SRC
+
+     #+RESULTS:
+     : Andrew Buckingham

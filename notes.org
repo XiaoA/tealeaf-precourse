@@ -371,7 +371,7 @@ puts "#{fname} #{lname}"
 
 #+END_SRC
 
-Output: [[file:02_basics/solution1.rb][02_basics/solution01.rb]]
+File: [[file:02_basics/solution1.rb][02_basics/solution01.rb]]
 #+BEGIN_SRC sh
 # See 02_basics/solution01.rb for Ruby file.
 小A曰: ruby solution1.rb 
@@ -431,7 +431,7 @@ Write a program that uses a hash to store a list of movie titles with the year t
        puts movies[:Into_the_Fire]
      #+END_SRC
 
-Output ([[file:02_basics/solution3.rb][02_basics/solution3.rb]])
+File: [[file:02_basics/solution3.rb][02_basics/solution3.rb]]
 #+BEGIN_SRC sh
 小A曰:ruby solution3.rb
 1980
@@ -444,12 +444,65 @@ Output ([[file:02_basics/solution3.rb][02_basics/solution3.rb]])
 **** Problem 4
 Use the dates from the previous example and store them in an array. Then make your program output the same thing as exercise 3.
 
+File: [[file:02_basics/solution4.rb][02_basics/solution4.rb]]
+
 **** Solution 4
 #+BEGIN_SRC ruby :tangle 02_basics/solution4.rb
-years = [1975, 2004, 2013, 2001, 1981]
+# My solution
+years = [1980, 2008, 2009, 2009, 2010]
 puts years
+
+# Book solution
+dates = [1980, 2008, 2009, 2009, 2010]
+
+puts dates[0]
+puts dates[1]
+puts dates[2]
+puts dates[3]
+puts dates[4]
 #+END_SRC
 
+***** TODO Find out if there is a difference between our solutions in practical coding situations
+*Note:* My solution looks the same as the book's but I can understand the difference in our approach. My reasoning was that if I created a variable (years), I could call that variable, and it would list the dates. The book calls each index, one at a time. Although the output was the same for me, I wonder if there might be a situation where mine would not work well.
+
+**** Problem 5
+Write a program that outputs the factorial of the numbers 5, 6, 7, and 8.
+**** Solution 5
+I need to create a program that outputs something like this:
+
+#+BEGIN_SRC ruby
+puts 5 * 4 * 3 * 2 * 1 
+puts 6 * 5 * 4 * 3 * 2 * 1
+puts 7 * 6 * 5 * 4 * 3 * 2 * 1
+puts 8 * 7 * 6 * 5 * 4 * 3 * 2 * 1
+#+END_SRC
+
+It seems like that works in irb. But perhaps I could make it a bit more elegant with variables.
+
+#+BEGIN_SRC ruby :tangle 02_basics/solution5.rb
+# Write a program that outputs the factorial of the numbers 5, 6, 7, and 8.
+# My solution
+five = 5 * 4 * 3 * 2 * 1
+six = 6 * 5 * 4 * 3 * 2 * 1
+seven = 7 * 6 * 5 * 4 * 3 * 2 * 1
+eight = 8 * 7 * 6 * 5 * 4 * 3 * 2 * 1
+
+puts five
+puts six
+puts seven
+puts eight
+
+# Book solution
+puts 5 * 4 * 3 * 2 * 1 
+puts 6 * 5 * 4 * 3 * 2 * 1
+puts 7 * 6 * 5 * 4 * 3 * 2 * 1
+puts 8 * 7 * 6 * 5 * 4 * 3 * 2 * 1
+
+# This is the same as what I first came up with, but then I decided to assign variables...
+
+#+END_SRC
+***** Note 
+It looks like my first instinct was correct; the book came up with the same answer. I suppose the one advantage of using variables would be that I could use them again, if needed. 
 
 
 

@@ -11,12 +11,12 @@
 Create a directory named my_folder and then navigate inside that directory. Create two files named one.rb and two.rb in the my_folder directory. Write a ruby program that outputs the line this is file one when you run the one.rb file. Then write another program that outputs this is file two when you run the two.rb file. (Hint: one.rb should have this in it puts "this is file one")
 *** Solution
 
-   #+BEGIN_SRC ruby :tangle 01_preparation/my_folder/one.rb
+   #+BEGIN_SRC ruby
      # one.rb
      puts "this is file one"
         #+END_SRC
 
-   #+BEGIN_SRC ruby :tangle 01_preparation/my_folder/two.rb
+   #+BEGIN_SRC ruby
      # two.rb
    puts "this is file two"
    #+END_SRC
@@ -51,7 +51,6 @@ a = 'ten'
 - You can use symbols to reference things, like strings, that you don't intend to print or edit.
 - Often referred to as "immutable" (though this is apparently not 100% correct)
 
-  *Examples:*
 #+BEGIN_SRC ruby
 # Examples of symbols
 :name
@@ -60,7 +59,7 @@ a = 'ten'
    #+END_SRC
 
 ** Numbers
-- integers do not contain decimal points. Floats do.
+Integers do not contain decimal points. Floats do.
   
 *** Integers
     9, 1, 4, 1000
@@ -69,7 +68,60 @@ a = 'ten'
     9.1, 44.44409, 9.01234
 
 ** nil
-   empty value
+The *nil* variable allows us to express an /empty value/ (it equals nothing). Ruby also outputs nil when an expected value is not returned.
+
+In this example, puts prints out a statement, but returns nothing (nil):
+
+   #+BEGIN_SRC ruby
+# An example from irb
+
+irb(main):006:0> puts "I love Ruby!"
+puts "I love Ruby!"
+I love Ruby!
+=> nil
+irb(main):007:0> 
+   #+END_SRC
+
+We can also check to see if a value is equal to nil:
+
+#+BEGIN_SRC ruby
+nil.nil?
+=> true
+irb(main):008:0> "nil".nil?
+"nil".nil?
+=> false
+irb(main):009:0> 0.nil?
+0.nil?
+=> false
+irb(main):010:0> "nothing".nil?
+"nothing".nil?
+=> false
+
+# Note that following is also false:
+irb(main):011:0> false == nil
+false == nil
+=> false
+
+#+END_SRC
+
+As expected, in the first example, *nil* is equal to 'nil', but strings or numbers (including the string, "nil" have a value, and so they cannot equal the empty value of nil.
+
+When nil is used in a condtional expression, rather than as output, the result will be treated as false, because the value is not empty. Note these examples from the text:
+
+#+BEGIN_SRC ruby
+# The xpression is not empty, so it is false.
+irb :001 > if nil
+irb :002 > puts "Hello, World!"
+irb :003 > end
+=> nil
+
+# The expression runs, and the output is nil.
+irb :001 > if 1
+irb :002 > puts "Hello, World!"
+irb :003 > end
+Hello, World!
+=> nil
+#+END_SRC
 
 ** Operations (Mathematical)
    These work as I would expect (similar to JavaScript).
@@ -77,8 +129,8 @@ a = 'ten'
 
 *Addition (+)*
     #+BEGIN_SRC ruby
-     > 2 + 2
-     => 4
+2 + 2
+=> 4
     #+END_SRC
 
     #+RESULTS:
@@ -86,7 +138,7 @@ a = 'ten'
 
 *Subtraction (-)*
     #+BEGIN_SRC ruby
-> 49 - 47
+49 - 47
 => 2
     
     #+END_SRC
@@ -95,8 +147,8 @@ a = 'ten'
     : 2
 
 *Multiplication (*)*
-    #+BEGIN_SRC ruby
-> 144 * 144  # => 201736 
+#+BEGIN_SRC ruby
+144 * 144
 => 20736    
     #+END_SRC
 
@@ -107,7 +159,8 @@ a = 'ten'
 
 *** Division (/)
     #+BEGIN_SRC ruby
-> 144 / 2  # 2
+144 / 2
+=> 2
     #+END_SRC
 
     #+RESULTS:
@@ -115,8 +168,11 @@ a = 'ten'
 
 *** Modulo
     #+BEGIN_SRC ruby
-16 / 4  # 0
-16 / 3  # 5
+16 / 4
+=> 0
+
+16 / 3
+=> 5
     
     #+END_SRC
 
@@ -125,8 +181,12 @@ a = 'ten'
 
 *** Multiplying Floats and Decimals
     #+BEGIN_SRC ruby
-15.0 / 4    # 3.75
-48.0 * 7.2  # 345.6
+15.0 / 4
+=> 3.75
+
+48.0 * 7.2
+=> 345.6
+
     
     #+END_SRC
 
@@ -136,12 +196,21 @@ a = 'ten'
 *** Equality Comparison
 
     #+BEGIN_SRC ruby
-      4 == 4    # true
-      4 == '4'  # false
+4 == 4
+=> true
+
+4 == '4'
+=> false
       
-      'book' == "book"  # true
-      'four' == 4       # false
-      'four' == '4'     #false
+'book' == "book"
+=> true
+
+'four' == 4
+=> false
+
+'four' == '4'
+=> false
+
     #+END_SRC
 
     #+RESULTS:
@@ -189,80 +258,156 @@ a = 'ten'
     Predictably, the index starts with 0:
 
     #+BEGIN_SRC ruby
-    > [1, 2, 3, 4] [1]
-    => 2
+irb(main):012:0> [1, 2, 3, 4] [0]
+[1, 2, 3, 4] [0]
+=> 1
+irb(main):013:0* [1, 2, 3, 4] [1]
+[1, 2, 3, 4] [1]
+=> 2
+irb(main):014:0> [1, 2, 3, 4] [2]
+[1, 2, 3, 4] [2]
+=> 3
+irb(main):015:0> [1, 2, 3, 4] [3]
+[1, 2, 3, 4] [3]
+=> 4
+irb(main):016:0> [1, 2, 3, 4] [4]
+[1, 2, 3, 4][4]
+=> nil 
     #+END_SRC
-
-    #+RESULTS:
-    :2 
-
+In the example above, there is no 4th index, so the result is nil.
+    
 *** Hashes {}
     - Function as dictionary/key-value pairs
+    - consists of a *key* and a *value*.
+      + The key is usually represented by a *:symbol*.
+      + The value follows the *=>*.
 
-      #+BEGIN_SRC ruby
-{:cat => 'meows'}
-      
-      #+END_SRC
-
-      #+RESULTS:
-      | :cat=> | meows |
-
-    We can add more values:
-    #+BEGIN_SRC ruby
+        
+#+BEGIN_SRC ruby
+irb(main):019:0> {:dog => 'barks'}
+{:dog => 'barks'}
+=> {:dog=>"barks"}
+irb(main):020:0> {:dog => 'barks', :cat => 'meows', :pig => 'oinks'}
 {:dog => 'barks', :cat => 'meows', :pig => 'oinks'}
-    
-    #+END_SRC
+=> {:dog=>"barks", :cat=>"meows", :pig=>"oinks"}
+#+END_SRC
 
-    #+RESULTS:
-    | :dog=> | barks | :cat=> | meows | :pig=> | oinks |
+We can retrieve any value by its key:    
+#+BEGIN_SRC ruby
+# Can you spot the error?
+irb(main):021:0> 
+{dog => 'barks', :cat => 'meows', :pig => 'oinks'}[:cat]
+NameError: undefined local variable or method `dog' for main:Object
+	from (irb):21
+	from /usr/bin/irb:12:in `<main>'
+#+END_SRC
 
-    To find the value of one of the hashes:
-    #+BEGIN_SRC ruby
-{:dog => 'barks', :cat => 'meows', :pig => 'oinks'} [:cat]  # meows
-    
-    #+END_SRC
+In the example above, I forgot to add the ':' before 'dog'. Remember that strings require single or double quotes, and symbols require colons. Without either of these, your statements will throw an error.
 
-    #+RESULTS:
-    : meows
+I've fixed the error. Now we can search for the sound a cat makes:
+
+#+BEGIN_SRC ruby
+irb(main):022:0> {:dog => 'barks', :cat => 'meows', :pig => 'oinks'}[:cat]
+{:dog => 'barks', :cat => 'meows', :pig => 'oinks'}[:cat]
+=> "meows"{:cat => 'meows'}
+#+END_SRC      
+
+Many coding errors are just tiny punctuation or spacing errors. Syntax highlighting can help point those out, but experience reading error messages and a sharp eye are essential traits. For example, I remember once, when I was trying to debug a CSS file, it took me forever to figure out why it wasn't working. It turns out I'd used a colon instead of a semi-colon. Lesson learned...
 
 ** Expressions and Return
-   - When you use the IRB, you'll see the 'hash rocket': =>
+   - When you use the IRB, you'll see the 'hash rocket': *=>*
    - Everything in Ruby is an expression, and it always returns something, even if only /nil/
 
 *** Puts vs. Return
-    - puts: Ruby puts something on the screen, but it doesn't return what is printed to the screen. For example, *do* does something, but it also returns a value. Puts does not return the value:
+    - puts: Ruby puts something on the screen, but it doesn't return what is printed to the screen. For example, *do* does something, but it also returns a value. Puts does not return the value.
+
+      In these examples, *put* /prints/ a value to the screen, but it /returns/ nil:
 
       #+BEGIN_SRC ruby
-      puts "stuff" # nil (but it puts 'stuff')
-      #+END_SRC
-
-      #+RESULTS:
-      : nil
-
-      #+BEGIN_SRC ruby
-        a = puts "stuff"
-        puts a               # nil
-      #+END_SRC
-
-      #+RESULTS:
-      : nil
-   
-*** Exercise One
+irb(main):023:0> puts 'stuff'
+puts 'stuff'
+stuff
+=> nil
+irb(main):024:0> a = puts 'stuff'
+a = puts 'stuff'
+stuff
+=> nil
+irb(main):025:0> puts a
+puts a
+=> nil
+#+END_SRC
+      
+*** Exercises
 
 **** Problem 1
-     Add two strings together that, when concatenated, return your first and last name as your full name in one string.
-
-#+BEGIN_SRC ruby
-"<Firstname> <Lastname>"
-#+END_SRC
+Add two strings together that, when concatenated, return your first and last name as your full name in one string.
 
 For example, if your name is John Doe, think about how you can put "John" and "Doe" together to get "John Doe".
 
 **** Solution 1
-     #+BEGIN_SRC ruby
-"Andrew " + "Buckingham" # Andrew Buckingham
-     
-     #+END_SRC
+Here are three ways. The first is the one I came up with. It can be run in irb:     
+#+BEGIN_SRC ruby
+irb(main):026:0> "Andrew " + "Buckingham"
+"Andrew " + "Buckingham"
+=> "Andrew Buckingham"
+#+END_SRC
+(Note the space after "Andrew ").
 
-     #+RESULTS:
-     : Andrew Buckingham
+The solution came up with two other ways, by assigning variables in the first case, and using string interpolation in the second:
+
+#+BEGIN_SRC ruby :tangle 02_basics/solution1.rb
+# #1: My original, (overly?) simple solution
+puts "Andrew " + "Buckingham" # Andrew Buckingham
+
+# #2: From the books's solution; assigns variables and then concatenates them:
+
+fname = "Andrew"
+lname = "Buckingham"
+
+puts fname + " " + lname
+
+# #3: From the book's solution; using string interpolation:
+puts "#{fname} #{lname}"
+
+#+END_SRC
+
+Here's the output:
+
+#+BEGIN_SRC sh
+# See 02_basics/solution01.rb for Ruby file.
+小A曰: ruby solution1.rb 
+Andrew Buckingham
+Andrew Buckingham
+Andrew Buckingham
+
+#+END_SRC
+
+
+
+**** Problem 2
+2. Use the modulo operator, division, or a combination of both to take a 4 digit number and find 1) the thousands number 2) the hundreds 3) the tens and 4) and the ones.
+     
+**** Solution 2
+
+#+BEGIN_SRC ruby :tangle 02_basics/solution2.rb
+puts 6732 / 1000
+puts 6732 % 1000 / 100
+puts 6732 % 1000 % 100 / 10
+puts 6732 % 1000 %100 % 10     
+
+#+END_SRC
+Results (02_basics/solution.rb)
+
+#+BEGIN_SRC sh
+小A曰:ruby solution2.rb 
+6
+7
+3
+2
+#+END_SRC
+
+I'll be honest. I didn't quite understand what I was supposed to do, until I saw the solution. I understood the modulo, because it's the same in JavaScript, and once I saw it, the directions made sense. But this was a fun exercise; it's a very simple preview of the kinds of problem-solving tasks that I'll become better at with practice!
+
+
+     
+

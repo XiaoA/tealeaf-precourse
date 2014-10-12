@@ -1,4 +1,5 @@
 # Asks user to provide three floats and then outputs the result to the screen.
+
 puts "Please provide three numbers, with decimal points and at least one digit."
 first_number = gets.chomp.to_f
 second_number = gets.chomp.to_f

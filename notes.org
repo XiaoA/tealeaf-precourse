@@ -589,3 +589,359 @@ SyntaxError: (irb):2: syntax error, unexpected ')', expecting '}' from /usr/loca
 *My solution:* "The coder typed a ')' instead of a '}' (probably when closing a hash)."
 
 *The book's solution:* "There is an opening bracket somewhere in the program without a closing bracket following it. It may have happened when creating a hash."
+
+* Variables
+- Use this syntax when assigning variables: <variable_name> = <variable value>
+- Be careful to assign a variable names that are unique, and yet easy for others (or you, at a later date) to understand.
+- Variables contain information that we can use again, and are a useful way to abstract data. As the author reminds us, "It is helpful to think of variables as containers that hold information. Their sole purpose is to label and store data in memory. This data can then be used throughout your program."
+
+** Assigning Value to Variables
+   - Use descriptive/understandable variable names
+   - Use '=' for assignment.
+   - Use snake_case for variable names.
+   - (=) is an assignment operator. (==) is an equality variable. Be careful not to confuse them. /(Unlike JS, Ruby does not appear to have a (===) operator.)/
+
+#+BEGIN_SRC ruby
+irb(main):032:0* first_name = "Andrew"
+first_name = "Andrew"
+=> "Andrew"
+
+#+END_SRC
+
+Now, when we call the variable:
+
+#+BEGIN_SRC ruby
+irb(main):033:0> first_name
+first_name
+=> "Andrew"
+
+#+END_SRC
+
+*"Variables point to values in memory."*
+The value, *"Andrew,"* is a string. We can reference that in our program by calling the variable, *first_name*
+   #+BEGIN_SRC ruby
+a = 4
+# 4
+
+b = a
+# 4
+
+a = 7
+# 7
+
+b
+
+# b still equals 4, even though variable a = 7.
+   
+   #+END_SRC
+
+** Variable Scope
+- Defined by where the variable was created/initialized
+- Determined by blocks
+  
+*** *Inner scope can access variables initialized in an outer scope, but not vice versa.*
+
+#+BEGIN_SRC ruby
+# scope.rb
+
+a = 5 # variable is initialized in the outer scope
+3.times do |n| a = 3 # is a accessible here, in an inner scope?
+end puts a 
+
+# a = 3
+#+END_SRC    
+
+    Another example:
+
+#+BEGIN_SRC ruby
+# scope.rb
+a = 5
+
+3.times do |n|
+  a = 3
+  b = 5 # b is initialized in the inner scope
+end
+
+puts a
+puts b
+
+# is b accessible here, in the outer scope? 
+    
+#+END_SRC
+
+It didn't work. I got the following error:
+
+#+BEGIN_SRC sh
+scope.rb:10:in `<main>': undefined local variable or method `b' for main:Object (NameError)
+    
+#+END_SRC
+
+According to the book: This is because the variable b is not available outside of the do/end block in which it is initialized. When we call puts b it is not available within that outer scope.
+
+/(This isn't a surprise. I've seen the same behavior in JS.)/
+
+Another example, with a method:
+#+BEGIN_SRC ruby
+a = 5
+
+def some_method
+a = 3
+end
+
+puts a
+
+# a = 5
+#+END_SRC
+
+From the text:
+
+"What's the value of a? Still 5, because methods create their own scope that's entirely outside of the execution flow. We'll cover this in more detail when we talk about methods, but for now, make sure you don't mix up do/end with methods when you're working with variable scope issues.
+
+*Note: the key distinguishing factor for deciding whether code delimited by {} or do/end is considered a block (and thereby creating a new scope for variables), is seeing if the {} or do/end immediately follows a method invocation.*
+
+For example:
+
+#+BEGIN_SRC ruby
+arr = [1, 2, 3]
+
+for i in arr do
+  a = 5 # a is initialized here
+end
+
+puts a # is it accessible here? (A: Yes!)
+    
+#+END_SRC
+
+In this case, *for...do/end* did not create a new inner scope, because these are part of standard Ruby language, and not method calls.
+
+(!) New blocks are created when we use *each*, *times*, or other methods, followed by:
+    - {}
+    - do/end
+
+    
+** Exercises
+
+*** Problem 1
+Write a program called name.rb that asks the user to type in their name and then prints out a greeting message with their name included.
+
+*File:* [[file:03_variables/name.rb][03_variables/name.rb]]
+*** Solution 1
+
+#+BEGIN_SRC ruby :tangle 03_variables/name.rb
+# 03_variables/name.rb
+# Asks user for his/her name, and prints it out with a greeting.
+
+puts "What's your name?"
+name = gets.chomp
+
+puts 'Hello, ' + name + '!'
+
+#+END_SRC
+
+Here's the book's solution. Almost identical.
+
+#+BEGIN_SRC ruby
+# name.rb
+puts "What is your name?"
+name = gets.chomp
+puts "Hello " + name
+#+END_SRC
+
+
+*** Problem 2
+Write a program called age.rb that asks a user how old they are and then tells them how old they will be in 10, 20, 30 and 40 years. Below is the output for someone 20 years old.
+
+#+BEGIN_SRC ruby
+# output of age.rb for someone 20 yrs old
+How old are you?
+In 10 years you will be: 30
+In 20 years you will be: 40
+In 30 years you will be: 50
+In 40 years you will be: 60
+
+#+END_SRC
+
+*** Solution 2
+
+*File:* [[file:03_variables/age.rb][03_variables/age.rb]]
+#+BEGIN_SRC ruby :tangle 03_variables/age.rb
+# age.rb
+
+puts "How old are you?"
+
+age = gets.chomp.to_i
+
+puts "In 10 years you will be: #{age + 10}"
+puts "In 20 years you will be: #{age + 20}"
+puts "In 30 years you will be: #{age + 30}"
+puts "In 40 years you will be: #{age + 40}"
+
+#+END_SRC
+
+Here's the solution from the book. Mine's a bit different, but both work. The main difference is that my solution prints each statement on one line, and the book's prints each solution two lines. 
+#+BEGIN_SRC ruby
+puts "How old are you?" 
+age = gets.chomp.to_i 
+"In 10 years you will be:" 
+puts age + 10 
+puts "In 20 years you will be:" 
+puts age + 20 
+puts "In 30 years you will be:" 
+puts age + 30 
+puts "In 40 years you will be:" 
+puts age + 40
+#+END_SRC
+**** Note 
+A couple things:
+1. I learned about the 'to.i' method this summer. It seems to be the equivalent of JavaScript's 'parseInt'. I'll need to look into this more.
+2. Are there any practical differences to the way I solved the problem, vs. the way the book did?
+
+*** Problem 3
+Add another section onto name.rb that prints the name of the user 10 times. You must do this without explicitly writing the puts method 10 times in a row.
+
+*** Solution 3
+
+*File:* [[file:03_variables/name2.rb]]
+
+#+BEGIN_SRC ruby :tangle 03_variables/name2.rb
+# 03_variables/name2.rb (Version II; prints out the greeting ten times)
+puts "What is your name?" 
+name = gets.chomp 
+
+10.times do
+  puts name
+end
+#+END_SRC
+
+*** Book Solution (Same)
+
+#+BEGIN_SRC ruby
+  # name.rb continued 
+  10.times do 
+    puts name 
+  end
+#+END_SRC
+
+*Comments*
+Yay! I got this right. :)
+
+*** Problem 4
+Modify name.rb again so that it first asks the user for their first name, saves it into a variable, and then does the same for the last name. Then outputs their full name all at once.
+
+*** Solution 4
+
+
+**** Version 1
+*File:* [[file:03_variables/name3_version1.rb][03_variables/name3_version1.rb]]
+
+#+BEGIN_SRC ruby :tangle 03_variables/name3_version1.rb
+# 03_variables/name3_version1.rb (Version III; prints out full name
+
+puts "What is your first name?" 
+first_name = gets.chomp
+
+puts "What is your last name?" 
+last_name = gets.chomp 
+
+puts first_name + " " + last_name
+
+#alternatively: puts #{first_name} #{last_name}
+
+#+END_SRC
+
+**** Version 2
+*File:* [[03_variables/name3_version2.rb]]
+
+#+BEGIN_SRC ruby :tangle 03_variables/name3_version2.rb
+# name.rb (Version III; prints out full name, with interpolation)
+
+puts "What is your first name?" 
+first_name = gets.chomp
+
+puts "What is your last name?" 
+last_name = gets.chomp 
+
+puts "#{first_name} #{last_name}"
+
+#+END_SRC
+
+
+**** Book Solution
+#+BEGIN_SRC ruby
+# name.rb continued again
+puts "What is your first name?"
+first_name = gets.chomp
+puts "Thank you. What is your last name?"
+last_name = gets.chomp
+puts "Great. So your full name is " + first_name + " " + last_name
+
+#+END_SRC
+
+**** Comments
+I didn't have any problems with this one. My name3_version1.rb file is about the same as the book's verison; name2_version2.rb uses string interpolation to achieve the same result.
+
+*** Problem 5
+Look at the following programs...
+
+#+BEGIN_SRC ruby
+  x = 0
+  3.times do
+    x += 1
+  end
+  puts x
+#+END_SRC
+
+and...
+
+#+BEGIN_SRC ruby
+
+  y = 0
+  3.times do
+    y+= 1
+    x = y
+  end
+  puts x
+
+#+END_SRC
+What does x print to the screen in each case? Do they both give errors? Are the errors different? Why?
+
+**** My Solution
+*Here are my guesses before I test them...*
+I think the first one will print '3', because 'X' is defined as '0', and then it is incremented three times. Because the variable is initialized globally, it will be available in the global scope.
+
+X will cause an error in the second example, because 'x' is initialized within the '3.times do' local scope. (BTW, Y = 1)...
+
+And now for the tests...
+
+- I was right for the first one.
+
+- I was also right for the second one. The exact error message was:
+
+  #+BEGIN_SRC sh
+test.rb:6:in `<main>': undefined local variable or method `x' for main:Object (NameError)
+  
+  #+END_SRC
+
+*Here's the book's solution:*
+The first prints 3 to the screen. The second throws an error undefined local variable or method because x is not available as it is created within the scope of the do/end block.
+
+*Comments*
+I was right, but I should have been a bit more precise with my answer for the second one. The nature of the error was 'undefined local variable or method.'
+
+*** Problem 6
+What does the following error message tell you?
+
+#+BEGIN_SRC ruby
+NameError: undefined local variable or method `shoes' for main:Object
+
+from (irb):3
+
+from /usr/local/rvm/rubies/ruby-2.0.0-rc2/bin/irb:16:in `<main>'
+
+#+END_SRC
+
+*** Solution 6
+The variable 'shoes' was defined locally, and is therefore unavailable in the global scope.
+
+*Here's the book's solution:*
+The program is trying to reference a variable or method named shoes that has not been defined in the program, or is outside of the scope in which it is being called.

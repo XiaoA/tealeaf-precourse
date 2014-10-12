@@ -522,6 +522,7 @@ This summer, I learned the 'get.chomps' method. I think I could use that to crea
 *File:* [[file:02_basics/solution6_bonus.rb][02_basics/solution6_bonus.rb]]
 #+BEGIN_SRC ruby :tangle 02_basics/solution6_bonus.rb
 # Asks user to provide three floats and then outputs the result to the screen.
+
 puts "Please provide three numbers, with decimal points and at least one digit."
 first_number = gets.chomp.to_f
 second_number = gets.chomp.to_f
@@ -568,4 +569,19 @@ puts "The square of #{third_number} is #{third_number * third_number}. The cube 
 
 #+END_SRC
 
+And here's the solution from the book:
+
+#+BEGIN_SRC ruby
+puts 4.30 * 4.30
+puts 6.13 * 6.13
+puts 124.34 * 124.34
+#+END_SRC
+
 That was a bit of a detour, but I learned a valuable lesson. And it was really fun to solve that problem!
+**** Problem 7
+What does the following error message tell you?
+
+#+BEGIN_SRC sh
+SyntaxError: (irb):2: syntax error, unexpected ')', expecting '}' from /usr/local/rvm/rubies/ruby-2.0.0-rc2/bin/irb:16:in `<main>' 
+#+END_SRC
+**** Solution 7

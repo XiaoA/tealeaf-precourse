@@ -3,7 +3,7 @@
 #+STARTUP: indent
 #+OPTIONS: num:nil
 #+OPTIONS: html-postamble:nil
-#+TODO: TODO(t) | | Started(s) | Waiting(w) | Someday/Maybe(m) | Canceled(c) | DONE(d)(@) | Meeting(M) | Note(n)
+#+TODO: TODO(t) | Started(s) | Waiting(w) | Canceled(c) | DONE(d)(@) | Questions(q) | Note(n)
 
 * Preparation
 
@@ -502,9 +502,70 @@ puts 8 * 7 * 6 * 5 * 4 * 3 * 2 * 1
 
 #+END_SRC
 ***** Note 
-It looks like my first instinct was correct; the book came up with the same answer. I suppose the one advantage of using variables would be that I could use them again, if needed. 
+It looks like my first instinct was correct; the book came up with the same answer. I suppose the one advantage of using variables would be that I could use them again, if needed.
+
+**** Problem 6
+Write a program that calculates the squares of 3 float numbers of your choosing and outputs the result to the screen.
+
+*File:* [[file:02_basics/solution6.rb][02_basics/solution6.rb]]
+**** Solution 6
+#+BEGIN_SRC ruby :tangle 02_basics/solution6.rb
+# Calculate the squares of 3 float numbers of your choosing and outputs the result to the screen.
+puts 40.3 * 40.3
+puts 59.5959 * 59.5959
+puts 999.99191874 * 999.99191874
+#+END_SRC
+
+*Bonus*
+This summer, I learned the 'get.chomps' method. I think I could use that to create an interactive program here, that asks the user to provide the floats...
+
+*File:* [[file:02_basics/solution6_bonus.rb][02_basics/solution6_bonus.rb]]
+#+BEGIN_SRC ruby :tangle 02_basics/solution6_bonus.rb
+# Asks user to provide three floats and then outputs the result to the screen.
+puts "Please provide three numbers, with decimal points and at least one digit."
+first_number = gets.chomp.to_f
+second_number = gets.chomp.to_f
+third_number = gets.chomp.to_f
+
+puts "I will now give you the squares and cubes of each of the numbers you have provided."
 
 
+puts "The square of the first number is #{first_number * first_number}. The cube is  #{first_number * first_number * first_number}."
+puts "The square of the second number is #{second_number * second_number}. The cube is #{second_number * second_number * second_number}."
+puts "The square of the third number is #{third_number * third_number}. The cube is #{third_number * third_number * third_number}."
+
+#+END_SRC
+I had trouble getting that to work, because I was trying to concatenate everything, so it kept throwing errors. The lines looked like this:
+
+#+BEGIN_SRC ruby
+puts "The square of the first number is " first_number * first_number "." "The cube is " first_number * first_number * first_number "."
+#+END_SRC
+
+Based on my experience with JavaScript, that seemed to make sense to me, but I kept getting errors similar to this:
+
+#+BEGIN_SRC sh
+solution6_bonus.rb:9:in `+': no implicit conversion of Float into String (TypeError)
+	from solution6_bonus.rb:9:in `<main>'
+#+END_SRC
+
+I checked the Ruby documentation, and had decided that the problem was that I wasn't using the correct syntax to put strings and variables on the same line. A simple searched revealed the answer: string interpolation! See this link: http://stackoverflow.com/questions/13526847/ruby-puts-string-and-integer-on-same-line
+
+I just thought of one more way to improve the program. Instead of saying, "The square of the first number is..." I can use string interpolation to show the user the number he/she entered.
+
+*File:* [[file:02_basics/solution6_bonus_improved.rb][02_basics/solution6_bonus_improved.rb]]
+#+BEGIN_SRC ruby :tangle 02_basics/solution6_bonus_improved.rb
+puts "Please provide three numbers, with decimal points and at least one digit."
+first_number = gets.chomp.to_f
+second_number = gets.chomp.to_f
+third_number = gets.chomp.to_f
+
+puts "I will now give you the squares and cubes of each of the numbers you have provided."
 
 
+puts "The square of #{first_number} is #{first_number * first_number}. The cube is  #{first_number * first_number * first_number}."
+puts "The square of #{second_number} is #{second_number * second_number}. The cube is #{second_number * second_number * second_number}."
+puts "The square of #{third_number} is #{third_number * third_number}. The cube is #{third_number * third_number * third_number}."
 
+#+END_SRC
+
+That was a bit of a detour, but I learned a valuable lesson. And it was really fun to solve that problem!

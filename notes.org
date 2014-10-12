@@ -599,7 +599,7 @@ SyntaxError: (irb):2: syntax error, unexpected ')', expecting '}' from /usr/loca
    - Use descriptive/understandable variable names
    - Use '=' for assignment.
    - Use snake_case for variable names.
-   - (=) is an assignment operator. (==) is an equality variable. Be careful not to confuse them. /(Unlike JS, Ruby does not appear to have a (===) operator.)/
+   - '=' is an assignment operator. '==' is an equality variable. Be careful not to confuse them. /(Unlike JS, Ruby does not appear to have a '===' operator.)/
 
 #+BEGIN_SRC ruby
 irb(main):032:0* first_name = "Andrew"
@@ -617,8 +617,8 @@ first_name
 
 #+END_SRC
 
-*"Variables point to values in memory."*
-The value, *"Andrew,"* is a string. We can reference that in our program by calling the variable, *first_name*
+- "Variables point to values in memory."
+- The value *Andrew* is a string. We can reference that in our program by calling the variable, *first_name*
    #+BEGIN_SRC ruby
 a = 4
 # 4
@@ -944,4 +944,4 @@ from /usr/local/rvm/rubies/ruby-2.0.0-rc2/bin/irb:16:in `<main>'
 The variable 'shoes' was defined locally, and is therefore unavailable in the global scope.
 
 *Here's the book's solution:*
-The program is trying to reference a variable or method named shoes that has not been defined in the program, or is outside of the scope in which it is being called.
+"The program is trying to reference a variable or method named shoes that has not been defined in the program, or is outside of the scope in which it is being called."

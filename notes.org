@@ -845,8 +845,6 @@ last_name = gets.chomp
 
 puts first_name + " " + last_name
 
-#alternatively: puts #{first_name} #{last_name}
-
 #+END_SRC
 
 **** Version 2
@@ -945,3 +943,587 @@ The variable 'shoes' was defined locally, and is therefore unavailable in the gl
 
 *Here's the book's solution:*
 "The program is trying to reference a variable or method named shoes that has not been defined in the program, or is outside of the scope in which it is being called."
+
+* Methods
+
+** What Are Methods and Why Do We Need Them?
+- Most programming languages have procedures that allow you to abstract function calls (or other tasks), to make code cleaner and more readable. In Ruby, these are called *methods*.
+- We can add parameters(x) to access data from outside the current scope.
+  - Like variables, parameters should always have clear and easily-understandable names.
+  - Parameters allow us to pass values into methods, which can allow us to make changees in one place, which can change many other parts of our code, as we'll see below.
+
+Here is the basic syntax:
+#+BEGIN_SRC ruby
+  
+  def say
+    # method body goes here
+  end
+  
+#+END_SRC
+
+Using a method call, we can turn this redundant code:
+#+BEGIN_SRC ruby
+
+# say.rb
+
+puts "hello"
+puts "hi"
+puts "how are you"
+puts "I'm fine"
+
+#+END_SRC
+
+into this:
+
+#+BEGIN_SRC ruby
+    
+    # say.rb refactored
+    def say(words)
+      puts words
+    end
+
+    say("hello")
+    say("hi")
+    say("how are you")
+    say("I'm fine")
+    
+#+END_SRC
+
+One advantage of using methods is that we can make a single change, which will make many changes in our program. For example, to add a period to each expresison:
+
+#+BEGIN_SRC ruby
+# say.rb refactored
+def say(words)
+puts words + '.' ## <= We only make the change here!
+end
+say("hello")
+say("hi")
+say("how are you")
+say("I'm fine")
+
+#+END_SRC
+
+*** Aside
+Taking this a step further, in irb, I grabbed the full array of available methods for strings:
+
+#+BEGIN_SRC ruby
+irb(main):001:0> "hello".methods.sort
+
+=> [:!, :!=, :!~, :%, :*, :+, :<, :<<, :<=, :<=>, :==, :===, :=~, :>, :>=, :[], :[]=, :__id__, :__send__, :ascii_only?, :b, :between?, :bytes, :bytesize, :byteslice, :capitalize, :capitalize!, :casecmp, :center, :chars, :chomp, :chomp!, :chop, :chop!, :chr, :class, :clear, :clone, :codepoints, :concat, :count, :crypt, :define_singleton_method, :delete, :delete!, :display, :downcase, :downcase!, :dump, :dup, :each_byte, :each_char, :each_codepoint, :each_line, :empty?, :encode, :encode!, :encoding, :end_with?, :enum_for, :eql?, :equal?, :extend, :force_encoding, :freeze, :frozen?, :getbyte, :gsub, :gsub!, :hash, :hex, :include?, :index, :insert, :inspect, :instance_eval, :instance_exec, :instance_of?, :instance_variable_defined?, :instance_variable_get, :instance_variable_set, :instance_variables, :intern, :is_a?, :kind_of?, :length, :lines, :ljust, :lstrip, :lstrip!, :match, :method, :methods, :next, :next!, :nil?, :object_id, :oct, :ord, :partition, :prepend, :private_methods, :protected_methods, :public_method, :public_methods, :public_send, :remove_instance_variable, :replace, :respond_to?, :reverse, :reverse!, :rindex, :rjust, :rpartition, :rstrip, :rstrip!, :scan, :scrub, :scrub!, :send, :setbyte, :singleton_class, :singleton_method, :singleton_methods, :size, :slice, :slice!, :split, :squeeze, :squeeze!, :start_with?, :strip, :strip!, :sub, :sub!, :succ, :succ!, :sum, :swapcase, :swapcase!, :taint, :tainted?, :tap, :to_c, :to_enum, :to_f, :to_i, :to_r, :to_s, :to_str, :to_sym, :tr, :tr!, :tr_s, :tr_s!, :trust, :unpack, :untaint, :untrust, :untrusted?, :upcase, :upcase!, :upto, :valid_encoding?]
+
+#+END_SRC
+
+Then I capitalized each sentence:
+
+#+BEGIN_SRC ruby
+# say.rb refactored (plus, capitalized!)
+def say(words)
+  puts words.capitalize + "." # <= I added the 'capitalize' method, just for fun...
+end
+
+say("hello")
+say("hi")
+say("how are you")
+say("I'm fine")
+
+#+END_SRC
+
+Here's the result:
+
+#+BEGIN_SRC bash
+
+Hello.
+Hi.
+How are you.
+I'm fine.
+
+#+END_SRC
+
+*Learning to program is so much fun! :)* 
+
+** Default Parameters
+Default parameters allow us to write methods that work, even if no arguments are sent:
+
+*File:* [[file:04_methods/say_refactored.rb][04_methods/say_refactored.rb]]
+#+BEGIN_SRC ruby :tangle 04_methods/say_refactored.rb
+  
+  def say(words='hello')
+    puts words + '.'
+  end
+  say()   # <= "hello."
+  say("hi")
+  say("how are you")
+  say("I'm fine")
+  
+#+END_SRC
+
+It works!
+
+#+BEGIN_SRC sh
+小A曰:ruby say_refactored.rb 
+hello.
+hi.
+how are you.
+I'm fine.
+#+END_SRC
+
+** Optional Parentheses
+Many Rubyists leave off parentheses when using methods. So *say("hi")* could be written as *say "hi"*. This can make it hard to differentiate local variables and method names.
+
+** obj.method or method(obj)
+From the book:
+
+"There are two ways to use methods that we will discuss in this book. The some_method(obj) format is when you send arguments to a method; in the previous example, obj is the argument being passed in to the some_method method. Sometimes, you will see methods called with an explicit caller, like this a_caller.some_method(obj). We will discuss this in more detail in part III on Object Oriented Programming. For now it's best to think of the previous code as some_method modifying a_caller. You'll have to memorize which way is required to call a method for now."
+
+** Mutating the Caller (Permanently altering the argument)
+Recall:
+- method arguments are scoped
+- method arguments are not available outside of the method
+- methods cannot modify arguments permanently
+
+*File:* [[file:04_methods/mutate.rb][04_methods/mutate.rb]]
+
+#+BEGIN_SRC ruby :tangle 04_methods/mutate.rb
+  def some_method(number)
+    number = 7 # this is implicitly returned by the method (because it's scoped, it won't affect the global value of a).
+  end
+  
+  a = 5
+  some_method(a)
+  puts a # <= '5'
+  
+  # a = 5
+#+END_SRC
+
+
+*** Aside
+Just to test out what would happen, I made a change to the code on line 7. I added a 'puts' before 'some method(a), which allowed Ruby to print both the value of 'a' as an argument of *some_method* and as a global variable.
+
+*File:* [[file:04_methods/mutate_test.rb][04_methods/mutate_test.rb]]
+#+BEGIN_SRC ruby :tangle 04_methods/mutate_test.rb
+  def some_method(number)
+    number = 7 # this is implicitly returned by the method (because it's scoped, it won't affect the global value of a).
+  end
+  
+  a = 5
+  puts some_method(a) # <= I added a 'puts' here so that I could see the '7' 
+  puts a # <= '5'
+  
+  # a = 5
+#+END_SRC
+
+*There is an exception to the rule!* We can perform actions that permanently change the argument (mutate the caller). For example:
+
+*File:* [[file:04_methods/mutate_perm.rb][04_methods/mutate_perm.rb]]
+
+#+BEGIN_SRC ruby :tangle 04_methods/mutate_perm.rb
+# Example of a method that modifies its argument permanently
+# 04_methods/mutate_perm.rb
+a = [1, 2, 3]
+def mutate(array)
+  array.pop
+end
+
+p "Before mutate method: #{a}"
+mutate(a)
+p "After mutate method: #{a}"
+
+# Result:
+# "Before mutate method: [1, 2, 3]"
+# "After mutate method: [1, 2]"
+
+#+END_SRC
+
+*** Comments
+The authors point out that they use *p* instead of *puts* in this program. I ran it both ways, and here were the results:
+
+**** *p*
+"Before mutate method: [1, 2, 3]"
+
+"After mutate method: [1, 2]"
+
+**** *puts*
+Before mutate method: [1, 2, 3]
+
+After mutate method: [1, 2]
+
+I spent some time learning at RubyMonk this summer, and I knew I'd seen a lesson about the difference between 'p' and 'puts'. The vernerable master explains, "*Puts* generally prints the result of applying to_s on an object while *p* prints the result of inspecting the object.
+
+In other words, using 'p' is generally better for debugging, because it inspects the object..."p foo" is the same as "puts foo.inspect" (Source: http://stackoverflow.com/questions/1255324/p-vs-puts-in-ruby).
+
+*** This method will not mutate the caller
+#+BEGIN_SRC ruby
+  # Example of a method that does not mutate the caller
+  # mutate.rb
+  
+  a = [1, 2, 3]
+  def no_mutate(array)
+    array.last
+  end
+  
+  p "Before no_mutate method: #{a}"
+  no_mutate(a)
+  p "After no_mutate method: #{a}"
+
+# Results:
+# "Before no_mutate method: [1, 2, 3]"
+# "After no_mutate method: [1, 2, 3]"
+  
+#+END_SRC
+
+Key points:
+- The *last* method does not mutate the caller
+- Some methods mutate the caller, and some do not. Unfortunately, you just have to memorize which do.
+- Ruby is both a /pass-by-value/ and a /pass-by-reference/ language.
+  
+** puts vs. return: The Sequel
+
+*File:* [[file:04_methods/mutate_sequel.rb][04_methods/mutate_sequel.rb]]
+#+BEGIN_SRC ruby :tangle 04_methods/mutate_sequel.rb
+# 04_methods/mutate_sequel.rb
+
+a = [1, 2, 3]
+
+def mutate(array)
+  array.pop
+end
+
+p "Before mutate method:#{a}"    # a = [1, 2, 3]
+p mutate(a)                      # 3 (popped value from array)
+p "After mutate method:#{a}"     # a = [1, 2]
+#+END_SRC
+
+*Output*
+#+BEGIN_SRC sh
+小A曰:ruby mutate_sequel.rb 
+"Before mutate method:[1, 2, 3]"
+3
+"After mutate method:[1, 2]"
+#+END_SRC
+
+Explanation:
+1. Print out *a* as initially defined ([1,2,3] array)
+2. Print out the value returned by the mutate method (array.pop)
+3. Print out *a* afer the mutate method
+
+
+Here's an example of *return*:
+
+*File:* [[file:04_methods/return.rb][04_methods/return.rb]]
+#+BEGIN_SRC ruby :tangle 04_methods/return.rb
+# return.rb
+def add_three(number)
+number + 3
+end
+
+returned_value = add_three(4)
+puts returned_value
+#+END_SRC
+
+
+I guessed it would be '7' and I was right!
+
+Explanation from the book:
+
+"Here we're saving the returned value of the add_three method in a variable called returned_value. Then we print returned_value to the output to see what it has inside it. Your output should print 7 because that's what the method returned."
+
+"*Ruby methods ALWAYS return the evaluated result of the last line of the expression unless an explicit return comes before it.*" For example:
+*File:* [[file:04_methods/return2.rb][04_methods/return2.rb]]
+#+BEGIN_SRC ruby :tangle 04_methods/return2.rb
+
+# return.rb
+def add_three(number)
+  return number + 3
+end
+
+returned_value = add_three(4)
+puts returned_value
+
+#+END_SRC
+
+Output:
+
+#+BEGIN_SRC sh
+小A曰:ruby return2.rb 
+7
+#+END_SRC
+*Comments*
+I predicted the above formula would return 7. Return prints the value and stops without executing the next line.
+
+*** Important Takeaway
+Important feature of Ruby:
+*"The 'return' reserved word is not required in order to return something from a method."
+
+#+BEGIN_SRC ruby
+    
+  def just_assignment(number)
+    foo = number + 3
+  end
+
+# The value of just_assignment(5) would be '8'
+    
+#+END_SRC
+
+** Exercises
+
+*** Problem 1
+Write a program that contains a method called greeting that takes a name as its parameter. It then prints a greeting message with the name included in it.
+
+*** Solution 1
+
+*File:* [[file:04_methods/greeting.rb][04_methods/greeting.rb]]
+#+BEGIN_SRC ruby :tangle 04_methods/greeting.rb
+# 04_methods/greeting.rb
+
+puts "What is your name?"
+name = gets.chomp
+
+def greeting(name)
+  "Hello, " + name + "!" 
+end
+
+puts greeting(name)
+#+END_SRC
+
+*** Book Solution
+#+BEGIN_SRC ruby
+def greeting(name)
+"Hello, " + name + ". How are you doing?"
+end
+puts greeting("Bob")
+
+#+END_SRC
+
+
+*Comments*
+My version worked, but I focused on making it interactive, instead of on passing in an argument.
+
+Here's a version that combines my solution with the authors':
+
+*File:* [[file:04_methods/greeting_final.rb][04_methods/greeting_corrected.rb]]
+#+BEGIN_SRC ruby :tangle 04_methods/greeting_corrected.rb
+
+def greeting(name)
+  "Hello, " + name + ". I think Ruby's pretty cool. How about you?"
+end
+
+puts greeting("Jon")
+#+END_SRC
+
+
+** Problem 2.
+What do the following expressions evaluate to?
+
+#+BEGIN_SRC ruby
+
+1. x = 2
+2. puts x = 2
+3. p name = "Joe"
+4. four = "four"
+5. print something = "nothing"
+
+#+END_SRC
+
+** Solution 2
+
+1. x will equal 2, but it won't print anything. 2
+2. x will equal two, and it will evaluate to "2" and return nil
+3. "Joe"
+4. four will equal the string "four", but it won't print anything.
+5. nothing
+   
+*** Book Solution
+#+BEGIN_SRC ruby
+1. x = 2 # => 2
+2. puts x = 2 # nil
+3. p name = "Joe" # => "Joe"
+4. four = "four" # => "four"
+5. print something = "nothing" # => nil
+
+  #+END_SRC
+
+#+BEGIN_SRC sh
+print something = "nothing"
+
+#+END_SRC
+
+*** Solution 2
+
+1. x will equal 2, but it won't print anything. 2
+2. x will equal two, and it will evaluate to "2" and return nil
+3. "Joe"
+4. four will equal the string "four", but it won't print anything.
+5. nothing
+   
+*** Book Solution
+#+BEGIN_SRC ruby
+1. x = 2 # => 2
+2. puts x = 2 # nil
+3. p name = "Joe" # => "Joe"
+4. four = "four" # => "four"
+5. print something = "nothing" # => nil
+
+#+END_SRC
+
+Just to be sure, I ran these through irb:
+
+#+BEGIN_SRC sh
+
+irb(main):002:0> x = 2
+x = 2
+=> 2
+irb(main):003:0> puts x = 2
+puts x = 2
+2
+=> nil
+irb(main):004:0> "Joe"
+"Joe"
+=> "Joe"
+irb(main):005:0> four = "four"
+four = "four"
+=> "four"
+irb(main):006:0> print something
+print something
+nothing=> nil
+irb(main):007:0> 
+
+#+END_SRC
+
+*** Problem 3
+Write a program that includes a method called multiply that takes two arguments and returns the product of the two numbers.
+
+*** Solution 3
+
+*File:* [[file:04_methods/multiply.rb][04_methods/multiply.rb]]
+#+BEGIN_SRC ruby :tangle 04_methods/multiply.rb
+
+def multiply(a, b)
+  a * b
+end
+
+puts multiply(5,3)
+
+#+END_SRC
+
+*** Book Solution
+
+#+BEGIN_SRC ruby
+  
+  def multiply(number1, number2) 
+    number1 * number2 
+  end 
+  puts multiply(4, 2)
+  
+#+END_SRC
+
+*** Comments
+My solution worked, and it was essentially the same thing, but I used 'a' and 'b' for arguments. 'number1' and 'number2' are more descriptive and would probably be better choices for arguments.
+
+** Problem 4
+What will the following code print to the screen?
+
+#+BEGIN_SRC ruby
+  def scream(words)
+    words = words + "!!!!"
+    return puts words
+  end
+
+  scream("Yippeee") 
+  
+#+END_SRC
+
+*** Andrew's Answer
+Nothing. When it hits the 'return' on the third line, it will stop evaluating the program.
+
+*** Book Solution
+It will not print anything to the screen. This is great, because I'm used to looking for the 'return' now, and when I see it, I know that nothing after it will be printed.
+
+
+** Problem 5
+1) Edit the method in exercise #4 so that it does print words on the screen;
+2) What does it return now?
+
+*** Andrew's Answer
+My guess before I do anything is that if I remove (or simply comment out) the 'return', it will return "Yipeee!!!!" Let's try:
+
+
+1. *File:* [[file:04_methods/scream.rb][04_methods/scream.rb]]
+
+#+BEGIN_SRC ruby :tangle 04_methods/scream.rb
+
+def scream(words)
+  words = words + "!!!!"
+#  return
+  puts words
+end
+
+scream("Yippeee")
+
+#+END_SRC
+
+2. It should print out "Yippeee!!!!"
+
+*** Book Solution
+
+1.
+#+BEGIN_SRC ruby
+
+def scream(words)
+words = words + "!!!!"
+puts words
+end
+scream("Yippeee")
+
+#+END_SRC
+
+2. still returns *nil*
+
+The key here is that it /prints/ "Yippeee!!!!" but it /returns/ nil. Watching the *Video Walkthrough* made this clear to me. In irb:
+
+#+BEGIN_SRC ruby
+小A曰:irb
+irb(main):001:0> def scream(words)
+irb(main):002:1> words = words + "!!!!"
+irb(main):003:1> puts words
+irb(main):004:1> end
+=> :scream
+irb(main):005:0> scream("Yippeee")
+Yippeee!!!!  # <= Prints "Yippeee!!!!"
+=> nil       # <= Returns nil
+
+# In this case, if we add a 'hi there' string to the end of the method, Ruby will return that string, regardless of what is printed.
+irb(main):006:0> def scream(words)
+irb(main):007:1> words = words + "!!!!"
+irb(main):008:1> puts words
+irb(main):009:1> 'hi there'
+irb(main):010:1> end
+=> :scream
+irb(main):011:0> scream("Yippeee")
+Yippeee!!!!    # <= Prints "Yippeee!!!!"
+=> "hi there"  # <= Returns "hi there"
+
+#+END_SRC
+
+*Comments*
+
+Aha! The light bulb finally went off for me when I watched the video, and the instructor said, "In Ruby methods, the last thing in the method is the 'return' value, regardless what happens in the method (except for the return keyword.) We've already seen that the return keyword is not necessarily needed in Ruby, but it is needed when we need to explicitly designated a return value, (.e.g., in a conditional statement).
+
+*Keypoint:* Every Ruby program returns something, even if it's only a 'nil'.
+
+
+In the example, he added 'hi there' before the 'end' statement, and Ruby returned that. Now I understand that Ruby can put/print a value, but still return 'nil'! (And that's what I've been seeing in irb all along!)
+
+** 6. What does the following error message tell you?
+
+#+BEGIN_SRC sh
+ArgumentError: wrong number of arguments (1 for 2)
+from (irb):1:in `calculate_product\
+from (irb):4
+from /Users/username/.rvm/rubies/ruby-2.0.0-p353/bin/irb:12:in `<main>'
+
+#+END_SRC
+
+*** Andrew's Answer
+In a method called 'calculate_product, only one argument was given, but two were required.
+*** Book Solution
+You are calling a method (calculate_product in this case) that requires two arguments, but you are only providing one.

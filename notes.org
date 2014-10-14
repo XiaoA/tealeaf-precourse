@@ -1523,7 +1523,671 @@ from /Users/username/.rvm/rubies/ruby-2.0.0-p353/bin/irb:12:in `<main>'
 
 #+END_SRC
 
-*** Andrew's Answer
+*** Solution 6
 In a method called 'calculate_product, only one argument was given, but two were required.
 *** Book Solution
 You are calling a method (calculate_product in this case) that requires two arguments, but you are only providing one.
+
+* Flow Control
+** Conditionals
+
+*** Formed with a combination of logical statments and comparison operators.
+Logical Statements:
+- if
+- else
+- elsif
+- end
+
+Comparison Operators:
+- <
+- >
+- <=
+- >=
+- !=
+- &&
+- ||
+
+*File:* [[05_flow_control/conditional.rb]]  
+#+BEGIN_SRC ruby :tangle 05_flow_control/conditional.rb
+# 05_flow_control/conditional.rb
+
+puts "Put in a number"
+a = gets.chomp.to_i
+if a == 3
+  puts "a is 3"
+elsif a == 4
+  puts "a is 4"
+else
+  puts "a is neither 3, nor 4"
+end
+
+#+END_SRC
+*Output*
+#+BEGIN_SRC sh
+小A曰:ruby conditional.rb 
+Put in a number
+3
+a is 3
+小A曰:ruby conditional.rb 
+Put in a number
+4
+a is 4
+小A曰:ruby conditional.rb 
+Put in a number
+9
+a is neither 3, nor 4
+
+#+END_SRC
+
+*** Valid Ruby Conditionals
+#+BEGIN_SRC ruby
+# Example 1
+  if x == 3
+    puts "x is 3"
+  end
+  
+#+END_SRC
+
+#+BEGIN_SRC ruby
+# Example 2
+  if x == 3
+    puts "x is 3"
+  elsif x == 4
+    puts "x is 4"
+  end
+  
+#+END_SRC
+
+#+BEGIN_SRC ruby
+# Example 3
+  if x == 3
+    puts "x is 3"
+  else
+    puts "x is NOT 3"
+  end
+  
+#+END_SRC
+
+#+BEGIN_SRC ruby
+# Example 4: must use "then" keyword when using 1-line syntax
+
+if x == 3 then puts "x is 3" end
+
+# or
+
+puts "x is 3" if x == 3
+
+#+END_SRC
+
+*unless* is a reserved word that serves as the opposite of *if*:
+
+#+BEGIN_SRC ruby
+puts "x is NOT 3" unless x ==3
+
+#+END_SRC
+
+*** Comparisons
+- *Key Point*: Comparisons always return a *boolean value*.
+
+  | Symbol | Meaning                  | Comments   |
+  |--------+--------------------------+------------|
+  | <      | less than                |            |
+  | >      | greater than             |            |
+  | <=     | less than or equal to    |            |
+  | >=     | greater than or equal to |            |
+  | ==     | equal to                 | (no '===') |
+  | !=     | not equal to             |            |
+  | &&     | and                      |            |
+  |        | or                       |            |
+
+
+**** Less than/Greater than
+
+#+BEGIN_SRC ruby
+irb(main):022:0> 4 < 5
+4 < 5
+=> true
+irb(main):023:0> 4 > 5
+4 > 5
+=> false
+#+END_SRC
+
+**** Less than or equal to/Greater than or equal to
+#+BEGIN_SRC ruby
+irb(main):024:0> 4 <= 5
+4 <= 5
+=> true
+irb(main):025:0> 5 >= 5
+5 >= 5
+=> true
+irb(main):026:0> 4 >= 5
+4 >= 5
+=> false
+irb(main):027:0> 4 >= 3
+4 >= 3
+=> true
+irb(main):028:0> 4 >= 4
+4 >= 4
+=> true
+
+#+END_SRC
+
+**** Is equal to
+#+BEGIN_SRC ruby
+irb(main):029:0> 5 == 5
+5 == 5
+=> true
+irb(main):030:0> 5 == 6
+5 == 6
+=> false
+irb(main):031:0> '5' == 5
+'5' == 5
+=> false
+#+END_SRC
+*Note:* '5' is a string, and that is not equal to an integer (5). You must always compare the same type of data, or you'll get a 'false' boolean value.
+
+**** Is not equal to
+#+BEGIN_SRC ruby
+irb(main):032:0> 4 != 5
+4 != 5
+=> true
+irb(main):033:0> 4 != 4
+4 != 4
+=> false
+irb(main):034:0> 4 != 156
+4 != 156
+=> true
+#+END_SRC
+
+*** Combining Expressions
+1. && 'and' (Expressions on both the right and left of the operator must be true)
+   #+BEGIN_SRC ruby
+(4 == 4) && (5 == 5)
+=> true
+
+(4 == 5) && (5 == 5)
+=> false
+
+(4 == 5) && (5 == 6)
+=> false
+   
+   #+END_SRC
+
+2. The "or" Operator (An expression on either side of the operator must be true, or the value will be 'false'.)
+
+   #+BEGIN_SRC ruby
+(4 == 4) || (5 == 5)
+=> true
+
+(4 == 5) || (5 == 5)
+=> true
+
+(4 == 5) || (5 == 6)
+=> false
+   
+   #+END_SRC
+
+3. The "not" Operator (Putting this in front of a boolean expression will negate it.)
+
+#+BEGIN_SRC ruby
+!(4 == 4)
+=> false
+#+END_SRC
+
+** Order of Precedence
+1. <=, <, >, >= *Comparison*
+2. ==, != *Equality*
+3. && *Logical AND*
+4. || *Logical OR*
+
+How will the following be evaluated?   
+   #+BEGIN_SRC ruby
+
+if x && y || z
+# do something
+end
+   
+   #+END_SRC
+Answer:
+1. if *x && y* = true, *#do something* will be executed.
+2. if *x && yY = false, the program will evaluate *|| z*. If true, *#do something* will be executed. If not, the *if* statement will be exited.
+
+** Ternary Operator
+- common Ruby idiom to make a quick *if/else* statement in one line.
+- Uses a combination of *?* and *:*
+- Ruby evaluates the expression to the left of the *?*.
+  - If true, it executes the code directly after the *?*.
+  - If false, it executes the code directly after the *:*. 
+
+#+BEGIN_SRC ruby
+true ? "this is true" : "this is not true"
+=> true
+
+false ? "this is true" : "this is not true"
+=> false
+#+END_SRC
+
+** Case Statement
+- Similar to 'if' statements
+- Use *reserved words*:
+  - *case*
+  - *when*
+  - *else*
+  - *end*
+- First define a case and then evaluate the value of the case and what operation to complete if the case is true...
+- Modified version of *if/elsif/else* statement
+
+*Here's an example:*
+
+*File:* [[file:05_flow_control/case_statement.rb][05_flow_control/case_statement.rb]]
+  #+BEGIN_SRC ruby :tangle 05_flow_control/case_statement.rb
+    # case_statement.rb
+    a = 5
+
+    case a
+    when 5
+      puts "a is 5"
+    when 6
+      puts "a is 6"
+    else
+      puts "a is neither 5, nor 6"
+    end
+      
+  #+END_SRC
+
+  We can also save the result of a case statement into a variable, which will allow us to not have to write *puts* so many times.
+
+  Here is the refactored file:
+
+  *File:* [[http:05_flow_control/case_statement_refactored.rb%20][05_flow_control/case_statement_refactored.rb]]
+
+  #+BEGIN_SRC ruby :tangle 05_flow_control/case_statement_refactored.rb
+# 05_flow_control/case_statement_refactored.rb
+
+a = 5
+
+answer = case a
+  when 5 
+    "a is 5"
+  when 6 
+    "a is 6"
+  else 
+    "a is neither 5, nor 6"
+  end
+
+puts answer
+  
+  #+END_SRC
+
+You can write the same program without a case argument:
+*File:* [[file:05_flow_control/case_statement-refactored_no_case_argument.rb][05_flow_control/case_statement-refactored_no_case_argument.rb]]
+#+BEGIN_SRC ruby :tangle
+# 05_flow_control/case_statement-refactored_no_case_argument.rb
+  
+  a = 5 
+  
+  answer = case 
+    when a == 5 
+      "a is 5" 
+    when a == 6 
+      "a is 6" 
+    else 
+      "a is neither 5, nor 6" 
+    end 
+
+puts answer
+  
+#+END_SRC
+
+** True and False
+After *if* and *elsif*, we must put an expression that evaluates a boolean value:
+
+#+BEGIN_SRC ruby
+      
+      a = 5
+      if a 
+        puts "how can this be true?"
+        
+      else
+  
+        puts "it is not true"
+  
+      end
+
+# output: "how can this be true?"
+      
+#+END_SRC
+
+We could also write this:
+#+BEGIN_SRC ruby
+if x = 5 # <= careful, this is not asking 'if x == 5...'; it's assigning the value 'x = 5'
+  puts "how can this be true?"
+else
+  puts "it is not true"
+end
+
+#output: "How can this be true?"
+#+END_SRC
+
+** Exercises
+
+*** Problem 1
+Write down whether the following expressions return true or false. Then type the expressions into irb to see the results.
+
+1. (32 * 4) >= 129
+2. false != !true
+3. true == 4
+4. false == (847 == '874')
+5. (!true || (!(100 / 5) == 20) || ((328 / 4) == 82)) || false
+
+*** Solution 1
+1. False. 128 isn't greater than or equal to 129.
+2. False. False does not /not equal/ true. remove one of the exclamation marks.
+3. false. true == true. 4 == 4.
+4. true. the statement in parentheses is false.
+5. true.
+   
+*** Book Solution
+1. false
+2. false
+3. false
+4. true
+5. true
+
+I got them all right!
+
+*** Problem 2
+Write a method that takes a string as argument. The method should return the capitalized version of the string, only if the string is longer than 10 characters. (Hint: Ruby's String class has a few methods that would be helpful. Check the [[http://ruby-doc.org/core-2.1.0/String.html][Ruby Docs]]!)
+
+*** Solution 2
+
+*File:* [[file:05_flow_control/string.rb][05_flow_control/capitalize.rb]]
+#+BEGIN_SRC ruby :tangle 05_flow_control/capitalize.rb
+      def capital(string)
+        if string.length > 10
+          puts string.upcase!
+        else
+          puts "You expect me to capitalize #{string}? I don't waste my time capitalizing such short words!"
+        end
+      end
+
+      capital("it's not a tumor!")
+      capital("hey")
+#+END_SRC
+
+*** Book Solution
+#+BEGIN_SRC ruby
+  
+  # caps_method.rb
+  def caps(string)
+    if string.length > 10
+      string.upcase
+    else string
+    end
+  end
+
+  puts caps("Joe Smith")
+  puts caps("Joe Robertson")
+  
+#+END_SRC
+
+*** Andrew's Comments
+My solution was overly complicated. 'else string' is a lot more elegant. Also, not sure if there's a problem with 'puts' in line 3. Though mine would be good if I wanted to create a custom reply..
+
+*** Problem 3
+Write a program that takes a number from the user between 0 and 100 and reports back whether the number is between 0 and 50, 50 and 100, or above 100.
+
+*** Andrew's Solution 3
+
+*File:* [[file:05_flow_control/evaluate_num.rb][05_flow_control/evaluate_num.rb]]
+#+BEGIN_SRC ruby :tangle 05_flow_control/evaluate_num.rb
+# This was my original attempt; I refined my answer with: 05_flow_control/evaluate_num_simplified.rb
+
+puts "Please choose a number."
+
+number = gets.chomp.to_i
+
+if (number >= 0) &&  (number <= 50)
+  puts "Your number is between 0 and 50."
+elsif (number >= 50) && (number <= 100)
+  puts "Your number is between 50 and 100."
+else number >100
+  puts "Your number is more than 100."
+end
+
+#+END_SRC
+
+*** Book Solution
+
+#+BEGIN_SRC ruby
+  # evaluate_num.rb
+  puts "Please enter a number between 0 and 100."
+  number = gets.chomp.to_i
+  if number < 0
+    puts "You can't enter a negative number!"
+  elsif number <= 50
+    puts "#{number} is between 0 and 50"
+  elsif number <= 100 puts "#{number} is between 51 and 100"
+  else
+    puts "#{number} is above 100"
+  end
+#+END_SRC
+
+
+
+*Comments*
+My solution was too complicated, and I didn't use interpolation. Let's try again:
+
+*File:* [[file:05_flow_control/evaluate_num_simplified.rb][05_flow_control/evaluate_num_updated.rb]]
+
+#+BEGIN_SRC ruby :tangle 05_flow_control/evaluate_num_updated.rb
+    # 05_flow_control/evaluate_num_simplified.rb
+        puts "Please enter a number between 0 and 100."
+        number = gets.chomp.to_i
+        if number < 0
+          puts "You've entered a negative number. Please try again."
+        elsif number <= 50
+          puts "#{number} is between 0 and 50."
+        elsif number <= 100
+          puts "#{number} is between 51 and 100"
+        else
+          puts "#{number} is above 100"
+        end
+#+END_SRC
+
+*** Problem 4
+What will each block of code below print to the screen? Write your answer on a piece of paper or in a text editor and then run each block of code to see if you were correct.
+
+#+BEGIN_SRC ruby
+  # 1.
+   '4' == 4 ? puts("TRUE") : puts("FALSE")
+    
+    # 2.
+    x = 2
+    if ((x * 3) / 2) == (4 + 4 - x - 3)
+      puts "Did you get it right?"
+    else
+      puts "Did you?"
+    end
+    
+  # 3.
+  y = 9
+  x = 10
+  if (x + 1) <= (y)
+    puts "Alright."
+  elsif (x + 1) >= (y)
+    puts "Alright now!"
+  elsif (y + 1) == x
+    puts "ALRIGHT NOW!"
+  else puts "Alrighty!"
+  end
+    
+#+END_SRC
+
+**** Andrew's Answer
+1. "FALSE"
+2. "Did you get it right?"
+3. "Alright now!"
+**** Book Solution
+(Same) I got it right!
+
+
+
+*** Problem 5
+Rewrite your program from exercise 3 using a case statement. Wrap each statement in a method and make sure they both still work.
+
+*Book Solution*
+
+#+BEGIN_SRC ruby :tangle 05_flow_control/evaluate_num_revisited.rb
+
+# evaluate_num_revisited.rb
+
+def evaluate_num(num)
+  if num < 0
+    puts "You can't enter a negative num!"
+  elsif num <= 50
+    puts "#{num} is between 0 and 50"
+  elsif num <= 100
+    puts "#{num} is between 51 and 100"
+  else
+    puts "#{num} is above 100"
+  end
+end
+
+def evaluate_case1_num(num)
+  case
+  when num < 0
+    puts "You can't enter a negative num!"
+  when num <= 50
+    puts "#{num} is between 0 and 50"
+  when num <= 100
+    puts "#{num} is between 51 and 100"
+  else
+    puts "#{num} is above 100"
+  end
+end
+
+def evaluate_case2_num(num)
+  case num
+  when 0..50
+    puts "#{num} is between 0 and 50"
+  when 51..100
+    puts "#{num} is between 51 and 100"
+  else
+    if num < 0
+      puts "You can't enter a negative num!"
+    else
+      puts "#{num} is above 100"
+    end
+  end
+end
+
+puts "Please enter a number between 0 and 100."
+number = gets.chomp.to_i
+
+evaluate_num(number)
+evaluate_case1_num(number)
+evaluate_case2_num(number)
+
+#+END_SRC
+
+*Confession:*
+I spent a lot of time trying to make this work, and all of my guesses were way off. I watched the video and retyped the solution a couple times, and it makes sense to me, but I think I need to try another one, to make sure. So here is a different take on Problem 5:
+
+#+BEGIN_SRC ruby :tangle 05_flow_control/problem5_extra_practice.rb
+# I had trouble figuring out 05_flow_control/evaluate_num.rb on my own, so I created a new version for practice.
+# This program asks how your day was. The length of your answer determines the reply!
+      def string_length(num)
+        if num == 0
+            puts "You have to give me something to work with, here."
+        elsif num <= 10
+          puts "You're not much with words, are you?"
+        elsif num <= 20
+          puts "You've got a lot to say."
+        else
+          puts "Sounds like you had quite a day!"
+          end
+      end
+  
+      def string_length_case1(num)
+        case
+          when num == 0
+          puts "You have to give me something to work with, here."
+          when num <= 10
+          puts "You're not much with words, are you?"
+          when num <=20
+          puts "You've got a lot to say."
+        else
+          puts "Sounds like you had quite a day!"
+        end
+      end
+  
+      def string_length_case2(num)
+        case num
+          when 1..10
+          puts "You're not much with words, are you?"
+          when 11..20
+          puts "You've got a lot to say."
+          else
+          if num == 0
+            puts "You have to give me something to work with, here."
+          else
+            puts "Sounds like you had quite a day!"
+          end
+        end
+      end
+  
+  puts "Tell me about your day."
+  number = gets.chomp.to_s.length
+  
+  string_length(number)
+  string_length_case1(number)
+  string_length_case2(number)
+    
+#+END_SRC
+
+*Comment:* That helped. I understand the difference much better. I'm sure I'll be doing lots of extra problems as I go along, just to make sure I'm grasping the material...
+*** Problem 6
+When you run the following code...
+
+#+BEGIN_SRC ruby 
+    def equal_to_four(x)
+      if x == 4
+        puts "yup"
+      else
+        puts "nope"
+      end
+    
+  equal_to_four(5)
+        
+#+END_SRC
+
+You get the following error message..
+
+#+BEGIN_SRC sh
+test_code.rb:96: syntax error, unexpected end-of-input, expecting keyword_end
+
+#+END_SRC
+Why do you get this error and how can you fix it?
+
+*** Solution 6
+Based on the error messages I've seen so far, Ruby error messages usually seem to be farily easy to debug. In this case, it's missing an 'end' keyword. If we look at the code, the conditional is closed with an 'end' but the method is not (the 'def' is missing a closing 'end').
+
+To fix this, just add one more 'end' at the end of the method, just before the last line, where it's called.
+
+It should look like this:
+
+
+
+
+#+BEGIN_SRC ruby :tangle 05_flow_control/equal_to_four.rb
+    def equal_to_four(x)
+      if x == 4
+        puts "yup"
+      else
+        puts "nope"
+      end
+    end                # <= add an 'end' here to close the method.
+  equal_to_four(5)
+        
+#+END_SRC

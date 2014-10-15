@@ -2191,3 +2191,302 @@ It should look like this:
   equal_to_four(5)
         
 #+END_SRC
+
+* Loops & Iterators
+
+** A Simple Loop
+- The simplest way to create a loop is to use the *loop* keyword.
+- According to the authors, "*loop* takes a block, which is denoted by *{ ... }* or *do ... end*." ([[http://www.gotealeaf.com/books/ruby/read/loops_iterators#simpleloop][Source]])
+- Loops execute code within blocks until a user intervenes
+- There are two ways to stop a loop:
+  1. Pressing *Ctrl-C* while the loop is running
+  2. Inserting a *break* into the block
+
+Here's an example of an infinite loop in Ruby (To stop it from running, press *Ctrl-C*):
+
+#+BEGIN_SRC ruby :tangle 
+  #Warning: This program creates an infinite loop, which will not stop until you press the Ctrl-C button!
+  
+  loop do
+    puts "This will keep printing until you hit Ctrl+ C"
+  end
+#+END_SRC
+
+As expected, this produces an infinite loop, that doesn't stop:
+
+#+BEGIN_SRC sh
+This will keep printing until you hit Ctrl + c
+This will keep printing until you hit Ctrl + c
+This will keep printing until you hit Ctrl + c
+This will keep printing until you hit Ctrl + c
+This will keep printing until you hit Ctrl + cInterrupt:
+from (pry):2:in `puts'
+[2] pry(main)>
+#+END_SRC
+
+** Controlling Loop Execution
+Of course, it's more useful to control loops with the *break* keyword, as in this example:
+
+#+BEGIN_SRC ruby :tangle 06_loops/useful.loop.rb
+  # 06_loops/useful.loop.rb
+  
+  i = 0
+  loop do
+    i += 2
+    puts "#{i}"
+    if i == 10
+      break #this will cause execution to exit the loop
+    end
+  end
+  #+END_SRC
+
+*Output:*
+
+#+BEGIN_SRC sh
+ruby conditional_loop.rb
+
+2
+4
+6
+8
+10
+=> nil
+
+#+END_SRC
+
+As I'd expect, when the interation reached a value of '10', it stopped.
+
+We can also use *next* to skip the rest of the current iteration and move to the next one. (This is different from *break*, because while *break* will exit the loop, *next* will move to the next iteration within the loop.)
+
+*Example:*
+
+#+BEGIN_SRC ruby 
+# next_loop.rb
+
+i = 0
+
+loop do
+
+  i += 2
+  if i == 4
+    next # skips the rest of the code for this iteration
+  end
+  puts "#{i}"
+  if i == 10
+    break
+  end
+end
+#+END_SRC
+
+*Output:*
+
+#+BEGIN_SRC sh
+ruby next_loop.rb
+
+2
+6
+8
+10
+=> nil
+
+#+END_SRC
+
+The value of '4' was not printed out, because that iteration was skipped; the code picked up with the next value, and went until it was told to break at 10.
+
+** While Loops
+- Takes a parameter that evaluates to a boolean (true/false) value.
+- Once the value of the boolean expression is *false*, the while loop is no longer executed.
+- Any kind of logic is possible with a while loop.
+
+This example counts down from any number the user provides:
+
+#+BEGIN_SRC ruby :tangle 06_loops/countdown.rb
+    # 06_loops/countdown.rb
+  
+    x = gets.chomp.to_i
+  
+    while x >= 0
+      puts x
+      x = x - 1
+    end
+    
+    puts "Done!"
+    
+#+END_SRC
+
+#+BEGIN_SRC sh
+小A曰:ruby countdown.rb
+
+5
+4
+3
+2
+1
+0
+Done!
+
+#+END_SRC
+This example shows how to write less code:
+
+*File:* 06_loops/countdown_refactored.rb
+#+BEGIN_SRC ruby :tangle 06_loops/countdown_refactored.rb
+    # 06_loops/countdown_refactored.rb
+    
+    x = gets.chomp.to_i
+    
+    while x >= 0
+      puts x
+  x -= 1 # <-- Refactored line
+    end
+
+puts "Done!"
+    
+#+END_SRC
+
+#+BEGIN_SRC sh
+小A曰:ruby countdown.rb
+
+5
+4
+3
+2
+1
+0
+Done!
+
+#+END_SRC
+I've seen this kind of thing in JavaScript.
+
+Key Points:
+- *x = x - 1* is the same as *x -= 1*
+- This shortcut can be done with other operators, like (+, *, /, etc.)
+- This kind of loop (x >= 0) requires that you act upon x, and also that you have a way to stop the loop, or it will become unresponsive and crash.
+
+** Until Loops
+- The until loop is the opposite of the while loop.
+- The until loop is a convenience; sometimes it's easier or more elegant to write code this way.
+
+Here's how it works:
+
+#+BEGIN_SRC ruby :tangle 06_loops/countdown_until.rb
+    # 06_loops/countdown_until.rb
+    
+    x = gets.chomp.to_i
+    
+    until x < 0
+      puts x
+      x -= 1
+    end
+
+puts "Done!"
+    
+#+END_SRC
+
+*Output:*
+#+BEGIN_SRC sh
+小A曰:ruby countdown_until.rb
+
+5
+4
+3
+2
+1
+0
+Done!
+
+#+END_SRC
+** Do/While Loops
+- Similar to while loops, but the code within the loop is executed once first, and then the conditional check begins.
+- The while statement is placed at the end of the loop.
+- Do/While loops are descended from the C language. Instead of using the *do* keyword to begin the loop, we use *begin*.
+
+  Here's an example:
+
+  #+BEGIN_SRC ruby :tangle 06_loops/countdown2.rb
+    # 06_loops/countdown2.rb
+    
+    x = gets.chomp.to_i
+    
+    begin
+      puts x
+      x -= 1
+    end while x >= 0
+
+puts "Done!"
+      
+  #+END_SRC
+
+  *Output:*
+  #+BEGIN_SRC sh
+小A曰:ruby countdown2.rb
+
+5
+4
+3
+2
+1
+0
+Done!
+  
+  #+END_SRC
+** For Loops
+- For loops loop over a set collection of elements
+- No risk of infinite loops; the first and last elements of the range are defined.
+- begins with the *for* reserved word; then the *in* reserved word, and the elements.
+
+  #+BEGIN_SRC ruby :tangle 06_loops/countdown3.rb
+        # 06_loops/countdown3.rb
+        
+        x = gets.chomp.to_i
+        
+        for i in 1..x do
+          puts i
+        end
+
+puts "Done!"
+
+  #+END_SRC
+
+  *Output:*
+  #+BEGIN_SRC sh
+小A曰:ruby countdown3.rb
+
+1
+2
+3
+4
+5
+Done!
+  
+  #+END_SRC
+
+This example uses arrays:
+
+#+BEGIN_SRC ruby :tangle 06_loops/countdown4.rb
+    # 06_loops/countdown4.rb
+    x = [1, 2, 3, 4, 5]
+    
+    for i in x do
+      puts i
+    end
+  
+  puts "Done!"
+#+END_SRC
+
+** Conditionals Within Loops
+Conditionals can improve loops by providing flow control and precision.
+
+Here's an example that uses and 'if' statement:
+
+#+BEGIN_SRC ruby :tangle 06_loops/conditional_loop.rb
+  # 06_loops/conditional_loop.rb
+  
+  x = 0
+  
+  while x <= 10
+    if x.odd?
+      puts x
+    end
+    x += 1
+  end
+    #+END_SRC

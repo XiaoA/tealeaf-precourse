@@ -2561,3 +2561,30 @@ The use of *next* in the code allowed us to avoid printing the number 3 in the l
 3
 5
 #+END_SRC
+
+** Iterators
+- Iterators, according to the authors, "are methods that naturally loop over a given set of data and allow you to operate on each element in the collection." ([[http://www.gotealeaf.com/books/ruby/read/loops_iterators#iterators][Source]])
+- Iterators provide a great deal of flexibilty, because they allow us to concisely print arrays and other data sources in an efficient format.
+- Most Rubyists prefer iterators to loops.
+
+*Here's an example that prints a list of array names:*
+
+*File:* [[file:06_loops/practice_each.rb][06_loops/practice_each.rb]]
+#+BEGIN_SRC ruby :tangle 06_loops/practice_each.rb
+# 06_loops/practice_each.rb
+
+names = ['Bob', 'Joe', 'Steve', 'Janice', 'Susan', 'Helen']
+
+names.each { |name| puts name }
+#+END_SRC
+
+*Output:*
+#+BEGIN_SRC sh
+小A曰:ruby practice_each.rb
+Bob
+Joe
+Steve
+Janice
+Susan
+Helen
+#+END_SRC

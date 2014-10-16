@@ -2841,6 +2841,62 @@ end
 I like adding one to the index to make it a "normal" list. I'll add that to mine.
 
 *** Problem 4
-
+Write a method that counts down to zero using recursion.
 *** Solution 4
 
+*File:* [[06_loops/exercise4.rb]]
+#+BEGIN_SRC ruby :tangle 06_loops/exercise4.rb
+    # 06_loops/exercise4.rb
+    # Uses recursion to count down to zero
+    
+    def final_countdown(x)
+      if x == 0
+        return
+        else
+        puts x
+        final_countdown(x-1)
+      end
+    end
+  
+  final_countdown(10)
+#+END_SRC
+
+Here's the book's answer:
+#+BEGIN_SRC ruby
+def count_to_zero(number)
+  if number <= 0
+    puts number
+  else
+    puts number
+    count_to_zero(number-1)
+  end
+end
+
+count_to_zero(10)
+count_to_zero(20)
+count_to_zero(-3)
+#+END_SRC
+
+In the video, he said that we should always think the stop condition when we think about recursion.
+
+In my example, I used 'return' to stop the recursion, so it didn't print '0' To fix this, I could rewrite it to look like the book's:
+
+*File:* [[file:06_loops/exercise4_without_return.rb][06_loops/exercise4_refactored.rb]]
+#+BEGIN_SRC ruby :tangle 06_loops/exercise4_refactored.rb
+        # 06_loops/exercise_refactored.rb
+        # Uses recursion to count down to zero
+        # Refactored to print '0' in the countdown
+        
+        def final_countdown(x)
+          if x <= 0
+            puts x
+            else
+            puts x
+            final_countdown(x-1)
+          end
+        end
+      
+      final_countdown(10)
+#+END_SRC
+
+That worked. And now, we're ready to work on Arrays!

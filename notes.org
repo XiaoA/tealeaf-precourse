@@ -2814,6 +2814,7 @@ OK, after watching the video, it makes more sense. So let's try another one:
 Use the each_with_index method to iterate through an array of your creation that prints each index and value of the array.
 *** Solution 3
 
+*File:* [[06_loops/exercise3.rb]]
  #+BEGIN_SRC ruby :tangle 06_loops/exercise3.rb
    # Lists Japanese Imperial Reign names since the end of the Edo Period.
 

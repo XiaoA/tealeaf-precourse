@@ -2205,8 +2205,8 @@ It should look like this:
 Here's an example of an infinite loop in Ruby (To stop it from running, press *Ctrl-C*):
 
 
-#+BEGIN_SRC ruby :tangle 
-  #Warning: This program creates an infinite loop, which will not stop until you press the Ctrl-C button!
+#+BEGIN_SRC ruby :tangle no
+  # Warning: This program creates an infinite loop, which will not stop until you press the Ctrl-C button!
   
   loop do
     puts "This will keep printing until you hit Ctrl+ C"
@@ -2587,4 +2587,225 @@ Steve
 Janice
 Susan
 Helen
+#+END_SRC
+
+I'll paraphrase the book's explanation, because that helps me understand.
+
+The *each* method, called by the '.' dot operator, loops through each element in the array, from 'Bob' to 'Helen.' It then evaluates the code in the block, which is defined within the curly braces, {}. The variable *|name|* is placed between two pipes. This is the value assigned to each element. Finally, each time the loop runs, the result is printed to the screen (*puts name*).
+
+*Question:* Is the use of pipes the same as in Unix-based command line programs? (i.e., do the pipes direct data, or are they just dividers for the variable and the code?)
+
+Blocks are simply code to be run. In Ruby, there are two things to remember about blocks:
+1. We use curly braces ({}) for anything that can be contained in one line.
+2. We use reserved words *do* and *end* for multi-line code blocks.
+
+We can take the previous code, and add incremental line numbers:
+
+*File:* [[file:06_loops/practice_each.rb][06_loops/practice_each.rb]]
+#+BEGIN_SRC ruby :tangle 06_loops/practice_each.rb
+    # 06_loops/practice_each.rb
+    
+    names = ['Bob', 'Joe', 'Steve', 'Janice', 'Susan', 'Helen']
+    x = 1
+    
+    names.each do |name|
+      puts "#{x}. #{name}"
+      x += 1
+    end
+#+END_SRC
+
+*Output:*
+#+BEGIN_SRC sh
+小A曰:ruby practice_each.rb
+Bob
+Joe
+Steve
+Janice
+Susan
+Helen
+1. Bob
+2. Joe
+3. Steve
+4. Janice
+5. Susan
+6. Helen
+#+END_SRC
+
+** Recursion
+- another kind of loop
+- calling a method within itself
+
+  
+  *Simple Example*
+
+  Let's say you wanted to create a program that would continue to double the number. You could create it like this:
+  
+  *Example:*
+  #+BEGIN_SRC ruby :tangle no
+        
+        def doubler(start)
+          puts start * 2
+        end
+        
+          
+  #+END_SRC
+
+Then, you could keep calling it from irb:
+
+#+BEGIN_SRC ruby :tangle no
+irb(main):001:0> def doubler(start)
+irb(main):002:1>   puts start * 2
+irb(main):003:1> end
+=> :doubler
+irb(main):004:0> doubler(2)
+4
+=> nil
+irb(main):005:0> doubler(4)
+8
+=> nil
+irb(main):006:0> doubler(8)
+16
+=> nil
+
+#+END_SRC
+
+But using recursion makes this task much simpler. For example:
+
+#+BEGIN_SRC ruby :tangle no
+      def doubler(start)
+        puts start
+        if start < 10
+          doubler(start * 2)
+        end
+      end
+      
+#+END_SRC
+
+Here's what that would do when it was run:
+
+#+BEGIN_SRC ruby
+irb(main):001:0> def doubler(start)
+irb(main):002:1>   puts start
+irb(main):003:1>   if start < 10
+irb(main):004:2>     doubler(start * 2)
+irb(main):005:2>   end
+irb(main):006:1> end
+=> :doubler
+irb(main):007:0> doubler(2)
+2
+4
+8
+16
+=> nil
+#+END_SRC
+
+** Another Example
+We can use recursion to calculate the *nth number in the [[http://en.wikipedia.org/wiki/Fibonacci_number][fibonacci sequence]].
+
+*File:* [[file:06_loops/fibonacci.rb][06_loops/fibonacci.rb]]
+
+#+BEGIN_SRC ruby :tangle 06_loops/fibonacci.rb
+  # 06_loops/fibonacci.rb
+  
+  def fibonacci(number)
+    if number < 2
+      number
+    else
+      fibonacci(number -1) + fibonacci(number - 2)
+    end
+  end
+
+puts fibonacci(6)
+#+END_SRC
+
+Here's a really clear explanation of the fibonacci sequence. It starts off very simply, so be sure to watch the whole thing: http://www.youtube.com/watch?v=koFsRrJgioA
+
+The authors offer a final word about recursion:
+
+The key concept with recursion is that there is some baseline condition that returns a value, which then "unwinds" the recursive calls. You can think of the successive recursive calls building up, until some value is returned, and only then can the recursive calls be evaluated. ([[http://www.gotealeaf.com/books/ruby/read/loops_iterators#recursion][Source]])
+
+** Exercises
+
+*** Problem 1
+What does the each method in the following program return after it is finished executing?
+
+#+BEGIN_SRC ruby
+    x = [1, 2, 3, 4, 5]
+    x.each do |a|
+      a + 1
+    end
+    
+#+END_SRC
+
+*** Solution 1
+My guess is that this will increment each number in the array, adding +1 to the value of each integer ('a') like this:
+
+#+BEGIN_SRC
+2
+3
+4
+5
+6
+#+END_SRC
+
+Oh no! I fell for that trick again! I forgot the lesson I learned, back in *Chapter 5, Problem 2*:
+
+#+BEGIN_SRC 
+Aha! The light bulb finally went off for me when I watched the video, and the instructor said, "In Ruby methods, the last thing in the method is the 'return' value, regardless what happens in the method (except for the return keyword.) We've already seen that the return keyword is not necessarily needed in Ruby, but it is needed when we need to explicitly designated a return value, (.e.g., in a conditional statement).
+
+*Keypoint:* Every Ruby program returns something, even if it's only a 'nil'.
+
+
+In the example, he added 'hi there' before the 'end' statement, and Ruby returned that. Now I understand that Ruby can put/print a value, but still return 'nil'! (And that's what I've been seeing in irb all along!)
+#+END_SRC
+
+Actually, it returned the same array: [1, 2, 3, 4, 5]. I ran it through irb. I'm learning a lot, but I still have a long way to go...
+
+*** Problem 2
+Write a while loop that takes input from the user, performs an action, and only stops when the user types "STOP". Each loop can get info from the user.
+
+#+BEGIN_SRC ruby 
+    # 06_loops/exercise2.rb
+    #Warning, this is an infinite loop!
+x = 1
+
+while x > 0
+puts "I won't stop until you type 'STOP'"
+end
+
+puts "OK, I stopped!"
+
+
+#+END_SRC
+
+OK, I tried a few things. One of the things I tried was "while x != 'STOP'" and I had it loop. I deleted that one, and I thought this might work, but it wouldn't pause to let me stop it. Here's the book's answer:
+
+#+BEGIN_SRC ruby
+    # The Book's Answer (Exercise 2)
+    
+    x = ""
+    
+    while x != "STOP" do
+      puts "Hi, How are you feeling?"
+      ans = gets.chomp
+      puts "What me to ask you again?"
+      x = gets.chomp
+    end
+    
+#+END_SRC
+
+OK, after watching the video, it makes more sense. So let's try another one:
+
+*File:* 06_loops/exercise2.rb
+#+BEGIN_SRC ruby :tangle 06_loops/exercise2.rb
+    # 06_loops/exercise2.rb
+    # Runs a 'while' loop until the user types 'STOP'.
+    x = ""
+  
+    while x != "STOP" do
+      puts "Are you still hungry?"
+      ans = gets.chomp
+      puts "You don't mind if I eat your fries, do you?"
+      x = gets.chomp
+    end
 #+END_SRC

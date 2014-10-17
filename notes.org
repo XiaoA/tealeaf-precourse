@@ -2900,3 +2900,62 @@ In my example, I used 'return' to stop the recursion, so it didn't print '0' To 
 #+END_SRC
 
 That worked. And now, we're ready to work on Arrays!
+
+* Arrays
+- Ordered lists of elements
+- can be of any type: [1, 'Bob', 4.33, 'another string']
+
+  #+BEGIN_SRC ruby
+irb(main):001:0> [1, 'Bob', 4.33, 'another string']
+[1, 'Bob', 4.33, 'another string']
+=> [1, "Bob", 4.33, "another string"]
+  
+  #+END_SRC
+
+We can assign the array to a variable:
+
+#+BEGIN_SRC ruby
+irb(main):002:0> my_array = [1, 'Bob', 4.33, 'another string']
+my_array = [1, 'Bob', 4.33, 'another string']
+=> [1, "Bob", 4.33, "another string"]
+irb(main):003:0> my_array
+my_array
+=> [1, "Bob", 4.33, "another string"]
+
+#+END_SRC
+
+To get the first element, we can use the *first* method:
+
+#+BEGIN_SRC ruby
+irb(main):004:0> my_array.first
+my_array.first
+=> 1
+#+END_SRC
+
+Or the *last*:
+
+#+BEGIN_SRC ruby
+irb(main):005:0> my_array.last
+my_array.last
+=> "another string"
+#+END_SRC
+
+We can also reference items by their index number (remember that Ruby, like many languages, starts with '0'):
+
+#+BEGIN_SRC ruby
+irb(main):006:0> my_array[3]
+my_array[3]
+=> "another string"
+irb(main):007:0> my_array[2]
+my_array[2]
+=> 4.33
+irb(main):008:0> my_array[1]
+my_array[1]
+=> "Bob"
+irb(main):009:0> my_array[0]
+my_array[0]
+=> 1
+#+END_SRC
+
+Just like JavaScript. :)
+

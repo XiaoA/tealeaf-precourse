@@ -2959,3 +2959,58 @@ my_array[0]
 
 Just like JavaScript. :)
 
+** Modifying Arrays
+
+To remove an item from the array permanently, use the *pop* method:
+
+#+BEGIN_SRC ruby
+irb(main):010:0> my_array.pop
+my_array.pop
+=> "another string"
+
+irb(main):013:0> my_array
+my_array
+=> [1, "Bob", 4.33]  # "another string" has been popped.
+#+END_SRC
+
+*This is an example of a method that mutates the caller.*
+
+Not to worry; you can add the item back with the *push* method:
+
+#+BEGIN_SRC ruby
+irb(main):015:0> my_array.push("another string")
+my_array.push("another string")
+=> [1, "Bob", 4.33, "another string"]
+
+irb(main):018:0> my_array
+my_array
+=> [1, "Bob", 4.33, "another string"]
+#+END_SRC
+
+Or you could use the *shovel* method (<<):
+
+#+BEGIN_SRC ruby
+irb(main):018:0> my_array
+my_array
+=> [1, "Bob", 4.33, "another string"]
+
+irb(main):020:0> my_array.pop
+my_array.pop
+=> "another string"
+
+irb(main):022:0> my_array
+my_array
+=> [1, "Bob", 4.33]
+
+irb(main):024:0> my_array << "another string"
+my_array << "another string"
+=> [1, "Bob", 4.33, "another string"]
+
+irb(main):026:0> my_array
+my_array
+=> [1, "Bob", 4.33, "another string"]
+
+#+END_SRC
+
+*Note:* Both the *push* and *<<* methods mutate the caller.
+

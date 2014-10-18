@@ -2943,18 +2943,23 @@ my_array.last
 We can also reference items by their index number (remember that Ruby, like many languages, starts with '0'):
 
 #+BEGIN_SRC ruby
+
 irb(main):006:0> my_array[3]
 my_array[3]
 => "another string"
+
 irb(main):007:0> my_array[2]
 my_array[2]
 => 4.33
+
 irb(main):008:0> my_array[1]
 my_array[1]
 => "Bob"
+
 irb(main):009:0> my_array[0]
 my_array[0]
 => 1
+
 #+END_SRC
 
 Just like JavaScript. :)
@@ -3082,3 +3087,149 @@ irb(main):004:0> my_books
 my_books
 => ["Bubishi", "Business Kanji", "Chinese Radicals Vol. 2"]
   #+END_SRC
+
+*** The *uniq* method
+- Iterates through the array, deleting any duplicate values.
+- It's non-destructive.
+- You can add a *bang* (!) to the method to make it destructive, which make is work much like *delete* (this is just like JavaScript).
+
+  #+BEGIN_SRC ruby
+irb(main):001:0> b = [1, 1, 2, 2, 3, 3, 4, 4]
+b = [1, 1, 2, 2, 3, 3, 4, 4]
+=> [1, 1, 2, 2, 3, 3, 4, 4]
+
+irb(main):002:0> b
+b
+=> [1, 1, 2, 2, 3, 3, 4, 4]
+
+irb(main):003:0> b.uniq
+b.uniq
+=> [1, 2, 3, 4]
+
+irb(main):004:0> b
+b
+=> [1, 1, 2, 2, 3, 3, 4, 4]  
+
+  #+END_SRC
+
+  By adding the *bang* operator (!), we can make *uniq* destructive:
+
+  #+BEGIN_SRC ruby
+
+irb(main):004:0> b
+b
+=> [1, 1, 2, 2, 3, 3, 4, 4]
+
+irb(main):005:0> b.uniq!
+b.uniq!
+=> [1, 2, 3, 4]
+
+irb(main):006:0> b
+b
+=> [1, 2, 3, 4]
+  
+  #+END_SRC
+
+*Note:* *uniq* and *uniq!* are two distinct methods. You can't just append a *!* to any non-desructive method to make it function destructively.
+
+** Iterating over an Array
+In the Loops section, we looked at iterating with *each*. The Ruby standard library includes other similar methods. the *select* method is a good example.
+
+*** The *select* method
+The *select* method iterates over an array and returns a new array of elements that return a *true* value.
+
+#+BEGIN_SRC ruby
+
+irb(main):007:0> numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+=> [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+
+irb(main):008:0> numbers
+numbers
+=> [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+
+irb(main):009:0> numbers.select { |number| number > 4 }
+numbers.select { |number| number > 4 }
+=> [5, 6, 7, 8, 9, 10]
+
+irb(main):010:0> numbers
+numbers
+=> [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+
+#+END_SRC
+
+As expected, the values returned were all greater than 4. And we can see that this method is non-destructive.
+
+*** Transformation
+Make sure to confirm whether or not a method is destructive, either in the Ruby documentation or by testing in irb. Methods with a bang operator (!) at the end might be destructive (though not necessarily); some methods, like *pop* and *push* are destructive, but don't have the bang operator.
+
+*** Mutating the Caller: The Sequel
+It is extremely important to understand that some methods, when called, can forever change an argument. The authors gave some more examples in context.
+
+Why does the first method mutate the caller, while the second does not?
+
+*File:* [[07_arrays/mutate_test.rb]]
+#+BEGIN_SRC ruby :tangle 07_arrays/mutate_test.rb
+# 07_arrays/mutate_test.rb
+# This program demonstrates how the *pop* method is destructive, while the *select* method is not.
+    def mutate(arr)
+      arr.pop
+    end
+  
+    def not_mutate(arr)
+      arr.select { |i| i >3 }
+    end
+
+
+a = [1, 2, 3, 4, 5, 6]
+mutate(a)
+not_mutate(a)
+
+puts a
+#+END_SRC
+
+*Output:*
+
+#+BEGIN_SRC sh
+小A曰:ruby mutate_test.rb 
+1
+2
+3
+4
+5
+#+END_SRC
+
+As we've seen before, the *pop* method is destructive, while the *select* method is not.
+
+Because this program calls the *pop method first, the final '6' is lost. When *select* is called, it does not modify the remaining elements.
+
+*** Nested Arrays
+Arrays can be nested within each others. Look at this example of a list of sand volleyball tournament players:
+
+#+BEGIN_SRC ruby
+
+irb(main):013:0> teams = [['Joe', 'Steve'], ['Frank', 'Molly'], ['Dan', 'Sara']]
+teams = [['Joe', 'Steve'], ['Frank', 'Molly'], ['Dan', 'Sara']]
+=> [["Joe", "Steve"], ["Frank", "Molly"], ["Dan", "Sara"]]
+
+irb(main):014:0> teams
+teams
+=> [["Joe", "Steve"], ["Frank", "Molly"], ["Dan", "Sara"]]
+
+#+END_SRC
+
+We can find teams by index:
+#+BEGIN_SRC ruby
+
+irb(main):015:0> teams[1]
+teams[1]
+=> ["Frank", "Molly"]
+
+#+END_SRC
+
+
+
+
+
+
+

@@ -2961,6 +2961,7 @@ Just like JavaScript. :)
 
 ** Modifying Arrays
 
+*** The *pop* and *<<* *(shovel)* methods
 To remove an item from the array permanently, use the *pop* method:
 
 #+BEGIN_SRC ruby
@@ -3014,7 +3015,7 @@ my_array
 
 *Note:* Both the *push* and *<<* methods mutate the caller.
 
-*** Map
+*** The *map* and *collect* methods
 - Iterates over an array and applies a block to each element
 - Returns a new array with the results
 - *collect* is an alias to *map (they do the same thing)
@@ -3040,7 +3041,7 @@ a
 => [1, 2, 3, 4]
 #+END_SRC
 
-*** delete_at
+*** The *delete_at* method
 - Deletes the value at a specified index.
 - Mutates the caller.
 
@@ -3060,3 +3061,24 @@ a
   #+END_SRC
 
   
+*** The *delete* method
+- Deletes matching values when the index is unknown.
+- This is a destructive method (it mutates the caller).
+
+  #+BEGIN_SRC ruby
+irb(main):001:0> my_books = ["Bubishi", "Business Kanji", "Chinese Radicals Vol. 2", "Aperture 3"]
+my_books = ["Bubishi", "Business Kanji", "Chinese Radicals Vol. 2", "Aperture 3"]
+=> ["Bubishi", "Business Kanji", "Chinese Radicals Vol. 2", "Aperture 3"]
+
+irb(main):002:0> my_books
+my_books
+=> ["Bubishi", "Business Kanji", "Chinese Radicals Vol. 2", "Aperture 3"]
+
+irb(main):003:0> my_books.delete("Aperture 3")
+my_books.delete("Aperture 3")
+=> "Aperture 3"
+
+irb(main):004:0> my_books
+my_books
+=> ["Bubishi", "Business Kanji", "Chinese Radicals Vol. 2"]
+  #+END_SRC

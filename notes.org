@@ -3446,5 +3446,59 @@ a.each
 => #<Enumerator: [1, 2, 3]:each>
 #+END_SRC
 
+*** *map*
+From the text:
 
+"*map* also works on objects that allow for iteration. Like *each*, when given a block it invokes the given block once for each element in the collection. Where it really differs from *each* is the returned value. *map* creates and returns a new array containing the values returned by the block" ([[http://www.gotealeaf.com/books/ruby/read/arrays#eachvsmap][Source]]).
 
+#+BEGIN_SRC ruby
+irb(main):049:0> a.map { |x| X**2 }
+a.map { |x| X**2 }
+NameError: uninitialized constant X
+	from (irb):49:in `block in irb_binding'
+	from (irb):49:in `map'
+	from (irb):49
+	from /usr/bin/irb:12:in `<main>'
+
+irb(main):050:0> a.map { |x| x**2 }
+a.map { |x| x**2 }
+=> [1, 4, 9]
+
+#+END_SRC
+
+I accidentally typed a capital 'X', which caused irb to throw an error. It's important to watch for small typing mistakes, because they can cause big headaches, sometimes.
+
+Each element was squared, and sent to a new array. Here's another example that clearly shows how *map* creates a new array with the returned value of the block:
+
+#+BEGIN_SRC ruby
+irb(main):051:0> a = [ 1, 2, 3]
+a = [ 1, 2, 3]
+=> [1, 2, 3]
+
+irb(main):052:0> a.map { |x| puts x**2 }
+a.map { |x| puts x**2 }
+1
+4
+9
+=> [nil, nil, nil]
+#+END_SRC
+
+Every time the block is invoked, *nil* is returned, so all of the elements in the new array are *nil*.
+
+If no block is given, *map* returns an *Enumerator*:
+
+#+BEGIN_SRC rub
+irb(main):055:0> a = [1, 2, 3]
+a = [1, 2, 3]
+=> [1, 2, 3]
+
+irb(main):056:0> a.map
+a.map
+=> #<Enumerator: [1, 2, 3]:map>
+
+#+END_SRC
+
+According to the authors, but *each* and *map are important methods, but they can be confusing. They explain that we can remember the difference this way:
+
+- Use *each* for iteration
+- use *map* for transformation

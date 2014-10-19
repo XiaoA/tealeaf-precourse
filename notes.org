@@ -3558,7 +3558,39 @@ end
 
 My version is obviously too simple. It only provides a boolean (true/false) answer to whether the array contains a '3'.
 
-The first example could be use to obtain user input for a number to search. Here's how I'd change that:
+Let's try this with a modified version, just for practice.
+
+*File:* [[07_arrays/include_3_corrected.rb]]
+#+BEGIN_SRC ruby :tangle 07_arrays/include_3_corrected.rb
+        # 07_arrays/include_3_corrected.rb
+        arr = [1, 3, 5, 7, 9, 11]
+        number = 11
+        
+        arr.each do |num|
+          if num == number
+            puts "#{number} is in the array."
+          end
+        end
+        
+        # ... or ...
+  if arr.include?(number)
+    puts "#{number} is included in the array."
+  end
+  
+#+END_SRC
+
+And here's the output:
+
+#+BEGIN_SRC sh
+
+小A曰:ruby include_3_corrected.rb
+11 is in the array.
+11 is included in the array.
+
+#+END_SRC
+*Extra Credit*
+
+This isn't really the answer that the authors were looking for, but the first example could be modified to obtain user input for a number to search. Here's how I'd change that:
 
 *File:* 07_arrays/include_3_improved.rb
 #+BEGIN_SRC ruby :tangle 07_arrays/include_3_improved.rb
@@ -3590,3 +3622,9 @@ Pick a number between 1 and 20
 小A曰:
 
 #+END_SRC
+
+The problem with my code is that it only tells the user if the answer was correct. If an an 'else' statement, it will print out each failing iteration message. To improved this, I'd want to either find a way to print out, only once, that the number was not included, or else do some other kind of action.
+
+It was worth taking a few minutes to try this, though, because I'm starting to see some connections, as well as advantages and disadvantages to different coding approaches...
+
+*** Problem 2

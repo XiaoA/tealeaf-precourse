@@ -3502,3 +3502,91 @@ According to the authors, but *each* and *map are important methods, but they ca
 
 - Use *each* for iteration
 - use *map* for transformation
+
+** Exercises
+
+*** Problem 1
+Below we have given you an array and a number. Write a program that checks to see if the number appears in the array.
+
+
+#+BEGIN_SRC ruby 
+
+arr = [1, 3, 5, 7, 9, 11]
+number = 3
+
+#+END_SRC
+
+*** Solution 1
+
+*File:* [[07_arrays/include_3.rb]]
+#+BEGIN_SRC ruby :tangle 07_arrays/include_3.rb
+# 07_arrays/include_3.rb
+
+arr = [1, 3, 5, 7, 9, 11]
+
+x = arr.include?(3)
+puts x
+
+#+END_SRC
+
+In irb:
+#+BEGIN_SRC ruby
+
+irb(main):057:0> arr = [1, 3, 5, 7, 9, 11]
+arr = [1, 3, 5, 7, 9, 11]
+=> [1, 3, 5, 7, 9, 11]
+
+irb(main):058:0> arr.include?(3)
+arr.include?(3)
+=> true
+
+#+END_SRC
+
+The authors provided two solutions:
+#+BEGIN_SRC ruby
+arr.each do |num|
+  if num == number
+    puts "#{number} is in the array."
+  end
+end
+
+# ... or...
+if arr.include?(number)
+  puts "#{number} is indeed in the array."
+end
+#+END_SRC
+
+My version is obviously too simple. It only provides a boolean (true/false) answer to whether the array contains a '3'.
+
+The first example could be use to obtain user input for a number to search. Here's how I'd change that:
+
+*File:* 07_arrays/include_3_improved.rb
+#+BEGIN_SRC ruby :tangle 07_arrays/include_3_improved.rb
+  # 07_arrays/include_3_improved.rb
+  # Prompts the user for a number, and searches the array for the number.
+  
+  puts "Pick a number between 1 and 20"
+  number = gets.chomp.to_i
+  
+  arr = [1, 3, 5, 7, 9, 11]
+  arr.each do |num|
+    if num == number
+    puts "#{number} is in the array"
+    end
+  end
+  
+#+END_SRC
+
+Here's the output:
+#+BEGIN_SRC sh
+小A曰:ruby include_3_improved.rb
+Pick a number between 1 and 20
+3
+3 is in the array
+
+小A曰:ruby include_3_improved.rb
+Pick a number between 1 and 20
+19
+小A曰:
+
+#+END_SRC

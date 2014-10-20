@@ -3767,6 +3767,56 @@ arr[1][0]
 => "example"
 #+END_SRC
 
+*** Problem 4
+What does each method return in the following example?
+#+BEGIN_SRC ruby
+arr = [15, 7, 18, 5, 12, 8, 5, 1]
+
+1. arr.index(5)
+
+2. arr.index[5]
+
+3. arr[5]
+
+#+END_SRC
+
+Before I do anything in irb, here are my guesses:
+
+1. arr.index(5) = 3
+2. arr.index[5] = error
+3. arr[5]       = error
+
+Let's try them in irb:
+
+
+#+BEGIN_SRC ruby
+
+irb(main):094:0> arr = [15, 7, 18, 5, 12, 8, 5, 1]
+arr = [15, 7, 18, 5, 12, 8, 5, 1]
+=> [15, 7, 18, 5, 12, 8, 5, 1]
+
+#1
+irb(main):095:0> arr.index(5)
+arr.index(5)
+=> 3
+
+#2
+arr.index[5]
+NoMethodError: undefined method `[]' for #<Enumerator: [15, 7, 18, 5, 12, 8, 5, 1]:index>
+	from (irb):96
+	from /usr/bin/irb:12:in `<main>'
+
+#3
+irb(main):099:0> arr[5]
+arr[5]
+=> 8
+#+END_SRC
+
+*Comments:*
+1. This gave the first index position of the argument, as expected.
+2. NoMethodError, from an undefined method. The *index* method needs an argument in parentheses (), but in this case, it was using the syntax for arrays, []. 
+3. I was wrong. I thought this would be an error. Actually, this is the way to find the item at the index position within brackets. '8' is the fifth item in the array.
+
 
 
    

@@ -3628,3 +3628,95 @@ The problem with my code is that it only tells the user if the answer was correc
 It was worth taking a few minutes to try this, though, because I'm starting to see some connections, as well as advantages and disadvantages to different coding approaches...
 
 *** Problem 2
+What will the following programs return? What is value of arr after each?
+
+#+BEGIN_SRC ruby
+  #1.
+  arr = ["b", "a"]
+  arr = arr.product(Array(1..3))
+  arr.first.delete(arr.first.last)
+  
+  #2.
+  arr = ["b", "a"]
+  arr = arr.product([Array(1..3)])
+  arr.first.delete(arr.first.last)
+  
+#+END_SRC
+
+*** Solution 2
+1. My guess: RETURN: nil; arr=[["b", 2], ["b", 3], ["a", 1] 
+   - First, the *product* method will combine the elements:
+     arr = [["b", 1], ["b", 2], ["b", 3], ["a", 1], ["a", 2], ["a", 3]]
+   - Then, the *first.delete* chained methods will delete the first and last items, so the final result will be: [["b", 2], ["b", 3], ["a", 1]
+2. My guess: It will be the same as #1.
+   
+Two things that confuse me, though...
+
+   First, the arguments for the *producet* method are different. In the first one, it looks like a regular argument, but in the second one, it's an array. I'm not sure if that matters. I have checked on www.ruby-doc.org, but the documentation for the *product* method doesn't seem to deal with this difference.
+
+   Also, I'm not sure what this will return. In the documentation at http://www.ruby-doc.org/core-2.1.3/Array.html#method-i-product, it says:
+
+   *"If given a block, product will yield all combinations and return self instead."*
+
+   Now, keep in mind, I haven't done any testing or checked the answers. These are my guesses. Let's find out...
+
+   *Solution*
+
+   I was wrong. This makes a lot more sense to me, after watching the video walkthrough and trying this out in irb.
+
+   I did check the documentation, but I made a couple mistakes when I looked at this:
+
+   1. I assumed it would return 'nil' because I've been using 'puts...' so much, and that operation will return nil.
+   2. I thought '.first.last' referred to the whole array, but it was only one element. That's why in my answer, I thought the first and last arrays would be deleted. Here's the answer for 1:
+
+      *1. Returns 1; arr = => [["b"], ["b", 2], ["b", 3], ["a", 1], ["a", 2], ["a", 3]]*
+
+     Here's my work in irb:
+
+     #+BEGIN_SRC ruby
+
+irb(main):068:0> arr = ["b", "a"]
+arr = ["b", "a"]
+=> ["b", "a"]
+
+irb(main):069:0> arr = arr.product(Array(1..3))
+arr = arr.product(Array(1..3))
+=> [["b", 1], ["b", 2], ["b", 3], ["a", 1], ["a", 2], ["a", 3]]
+
+irb(main):070:0> arr.first.delete(arr.first.last)
+arr.first.delete(arr.first.last)
+=> 1
+
+irb(main):071:0> arr
+arr
+=> [["b"], ["b", 2], ["b", 3], ["a", 1], ["a", 2], ["a", 3]]
+     
+      #+END_SRC
+
+   *Solution 2*
+   I was wrong here, as well. The intersting difference here is that the nested arrays are not pairs, as above, but a 'b' or 'a' and then a three-numbered range of elements.
+
+   #+BEGIN_SRC ruby
+
+irb(main):073:0> arr = arr.product([Array(1..3)])
+arr = arr.product([Array(1..3)])
+=> [["b", [1, 2, 3]], ["a", [1, 2, 3]]]
+
+irb(main):074:0> arr.first.delete(arr.first.last)
+arr.first.delete(arr.first.last)
+=> [1, 2, 3]
+
+irb(main):075:0> arr
+arr
+=> [["b"], ["a", [1, 2, 3]]]
+   
+   #+END_SRC
+
+   After playing with this in irb a little, and also watching the video walkthrough, I can see that my guess was wrong, but that's ok, because i don't have to guess. I can always check irb, doumentation, or other sources for more help and examples.
+
+   Today, I had a lot of family committments, so I didn't get to spend as much time working on Ruby as I had planned. I think I can understand this exercise, but I'm going to spend some extra time tomorrow, working through a few more extra examples, just to make sure.
+   
+
+   
+
+   

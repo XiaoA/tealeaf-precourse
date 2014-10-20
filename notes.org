@@ -3694,6 +3694,7 @@ arr
       #+END_SRC
 
    *Solution 2: RETURNS: [1, 2, 3]; arr = => [["b"], ["a," [1, 2, 3]]]*
+
    I was wrong here, as well. The intersting difference here is that the nested arrays are not pairs, as above, but a 'b' or 'a' and then a three-numbered range of elements.
 
    #+BEGIN_SRC ruby
@@ -3715,8 +3716,57 @@ arr
    After playing with this in irb a little, and also watching the video walkthrough, I can see that my guess was wrong, but that's ok, because i don't have to guess. I can always check irb, doumentation, or other sources for more help and examples.
 
    Today, I had a lot of family committments, so I didn't get to spend as much time working on Ruby as I had planned. I think I can understand this exercise, but I'm going to spend some extra time tomorrow, working through a few more extra examples, just to make sure.
-   
 
-   
+*** Lessons Learned from Exercise Two
+I went through the video walkthrough again, and did some practice in irb. These problems make more sense to me now. And I've come up with a few basic reminders for myself:
+- When in doubt, break it into parts and check in irb.
+- With a nested array/expression, start from the inner part and work your way outward.
+- Ruby is an object-oriented language, with methods that can be stacked. Some Ruby code can become complicated, but when broken down, it makes sense!
+
+*** Problem 3
+How do you print the word "example" from the following array?
+#+BEGIN_SRC ruby
+arr = [["test", "hello", "world"],["example", "mem"]]
+#+END_SRC
+
+*** Solution 3
+This is a question to see if we were paying attention in the last exercise, and to remind us, once again, to test in irb. :)
+
+At first, I was thinking I could flatten the array, and then use the index(3) to print it. The only problem is, that didn't work. But then, while I was playing around, I looked at what I'd done in the last exercise, using 'first' and 'last' methods to isolate arrays and elements.
+
+I tried this in irb, and it worked:
+
+
+
+
+#+BEGIN_SRC ruby
+
+irb(main):082:0> arr = [["test", "hello", "world"],["example", "mem"]]
+arr = [["test", "hello", "world"],["example", "mem"]]
+=> [["test", "hello", "world"], ["example", "mem"]]
+
+irb(main):083:0> arr.last
+arr.last
+=> ["example", "mem"]
+
+irb(main):084:0> arr.last.first
+arr.last.first
+=> "example"
+
+#+END_SRC
+
+This confused me, until I looked at the last answer. I checked the book's solution, and it was the same, though it also gave the following answer as an alternative:
+
+#+BEGIN_SRC ruby
+irb(main):092:0> arr = [["test", "hello", "world"], ["example", "mem"]]
+arr = [["test", "hello", "world"], ["example", "mem"]]
+=> [["test", "hello", "world"], ["example", "mem"]]
+
+irb(main):093:0> arr[1][0]
+arr[1][0]
+=> "example"
+#+END_SRC
+
+
 
    

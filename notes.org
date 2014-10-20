@@ -3817,6 +3817,40 @@ arr[5]
 2. NoMethodError, from an undefined method. The *index* method needs an argument in parentheses (), but in this case, it was using the syntax for arrays, []. 
 3. I was wrong. I thought this would be an error. Actually, this is the way to find the item at the index position within brackets. '8' is the fifth item in the array.
 
+*** Problem 5
+What is the value of a, b, and c in the following program?
+#+BEGIN_SRC ruby
 
+string = "Welcome to Tealeaf Academy!"
+a = string[6]
+b = string[11]
+c = string[19]
 
+#+END_SRC
+
+*My Guess:*
+
+OK, I think I know the answer. I think each of those arguments will be the letter in the string. But rather than wildly guess, I'm going to give myself a big clue:
+
+#+BEGIN_SRC ruby
+irb(main):100:0> string = "Welcome to Tealeaf Academy!"
+string = "Welcome to Tealeaf Academy!"
+=> "Welcome to Tealeaf Academy!"
+
+irb(main):101:0> string.length
+string.length
+=> 27
+
+irb(main):102:0> string[0]
+string[0]
+=> "W"
+
+#+END_SRC
+
+Yes! It looks like I was right! So here goes:
+- a: 'e'
+- b: 'T'
+- c: 'A'
+
+And the answer....*I was right!*  
    

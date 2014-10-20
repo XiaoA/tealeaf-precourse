@@ -3669,7 +3669,7 @@ Two things that confuse me, though...
    1. I assumed it would return 'nil' because I've been using 'puts...' so much, and that operation will return nil.
    2. I thought '.first.last' referred to the whole array, but it was only one element. That's why in my answer, I thought the first and last arrays would be deleted. Here's the answer for 1:
 
-      *1. Returns 1; arr = => [["b"], ["b", 2], ["b", 3], ["a", 1], ["a", 2], ["a", 3]]*
+*Solution 1 Returns 1; arr = => [["b"], ["b", 2], ["b", 3], ["a", 1], ["a", 2], ["a", 3]]*
 
      Here's my work in irb:
 
@@ -3693,7 +3693,7 @@ arr
      
       #+END_SRC
 
-   *Solution 2*
+   *Solution 2: RETURNS: [1, 2, 3]; arr = => [["b"], ["a," [1, 2, 3]]]*
    I was wrong here, as well. The intersting difference here is that the nested arrays are not pairs, as above, but a 'b' or 'a' and then a three-numbered range of elements.
 
    #+BEGIN_SRC ruby

@@ -3852,5 +3852,55 @@ Yes! It looks like I was right! So here goes:
 - b: 'T'
 - c: 'A'
 
-And the answer....*I was right!*  
-   
+And the answer....*I was right!*
+
+*** Problem 6
+You run the following code...
+
+#+BEGIN_SRC ruby
+names = ['bob', 'joe', 'susan', 'margaret']
+names['margaret'] = 'jody'
+
+#+END_SRC
+
+...and get the following error message:
+
+#+BEGIN_SRC ruby
+TypeError: no implicit conversion of String into Integer
+  from (irb):2:in `[]='
+  from (irb):2
+  from /Users/username/.rvm/rubies/ruby-2.0.0-p353/bin/irb:12:in `<main>'
+
+#+END_SRC
+
+*** Solution 6
+
+Here is my guess. Keeping in mind that I haven't actually seen the answer or tested in irb, I think I know what is happening here. It looks like the user is attempting to change the string 'margaret' to be 'jody,' but instead of using the index number to change it, the user has put in the string value. The error says "no implicit conversion of String into Integer," which means it was expecting an integer argument.
+
+I predict that the following change will work:
+
+#+BEGIN_SRC ruby
+names = ['bob', 'joe', 'susan', 'margaret']
+names[3] = 'jody'
+
+#+END_SRC
+
+And now to test in irb...
+
+#+BEGIN_SRC ruby
+
+irb(main):103:0> names = ['bob', 'joe', 'susan', 'margaret']
+names = ['bob', 'joe', 'susan', 'margaret']
+=> ["bob", "joe", "susan", "margaret"]
+
+irb(main):104:0> names[3] = 'jody'
+names[3] = 'jody'
+=> "jody"
+
+irb(main):105:0> names
+names
+=> ["bob", "joe", "susan", "jody"]
+
+#+END_SRC
+
+It looks like it worked!

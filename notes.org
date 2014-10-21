@@ -3994,3 +3994,28 @@ I'd like try this:
   p hachi
   p hachi2
 #+END_SRC
+
+* Hashes
+** What is a Hash?
+- a data structure that stores items with keys
+- unlike arrays, which store data in ordered lists, hashes use key-value pairs
+- associative representation of data
+- symbole = keys; data types = values
+- surrounded by { } (curly braces) and separated by commas.
+** Syntax
+Two main forms:
+Old (Pre-Ruby 1.9 version): used => to separate key and value
+#+BEGIN_SRC ruby
+irb :001 > old_syntax_hash = {:name => 'bob'}
+=> {:name=>'bob'}
+#+END_SRC
+
+New (Ruby 1.9 and later):
+
+#+BEGIN_SRC ruby
+irb :002 > new_hash = {name: 'bob'}
+=> {:name=>'bob'}
+#+END_SRC
+
+Hashes can also contain multpile key-value pairs:
+

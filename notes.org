@@ -3940,3 +3940,57 @@ It looks like it worked!
 Write a program that iterates over an array and builds a new array that is the result of incrementing each value in the original array by a value of 2. You should have two arrays at the end of this program, The original array and the new array you've created. Print both arrays to the screen using the *p* method instead of *puts*.
 
 *** Solution 7
+#+BEGIN_SRC ruby :tangle 07_arrays/solution_7.rb
+    #07_arrays/solution_7.rb
+    # increments array by two, and prints both with "p" method
+    
+    hachi = [1, 2, 3, 4, 5, 6, 7, 8]
+    
+    hachi2 = hachi.map { |num| num+2 }
+  
+  
+  p hachi
+  p hachi2
+#+END_SRC
+
+#+BEGIN_SRC sh
+小A曰:ruby solution_7.rb 
+[1, 2, 3, 4, 5, 6, 7, 8]
+[3, 4, 5, 6, 7, 8, 9, 10]
+
+#+END_SRC
+
+*Author's Solution*
+
+#+BEGIN_SRC ruby
+  arr = [1, 2, 3, 4, 5]
+  new_arr = []
+  
+  arr.each do |n|
+    new_arr << n + 2
+  end
+  
+  p arr
+  p new_arr
+  
+#+END_SRC
+
+*Comments*
+
+I spent some time trying to use the each method, but then thought it would be easier to use *map*. I didn't come up with anything this elegant. This one creates two methods, 'arr' and 'new_arr.' The former has the original values; the latter is empty. It assigns a value, 'n' to each element in the 'arr' array, and then adds two, uses the *<<* method to add to the new array. Then it prints out both arrays. Very cool!
+
+I'd like try this:
+
+*File:* [[07_arrays/solution7_corrected.rb]]
+#+BEGIN_SRC ruby :tangle 07_arrays/solution7_corrected.rb
+    
+    hachi = [1, 2, 3, 4, 5, 6, 7, 8]
+    hachi2 = []
+  
+    hachi.each do |num|
+      hachi2 << num + 2
+    end
+  
+  p hachi
+  p hachi2
+#+END_SRC

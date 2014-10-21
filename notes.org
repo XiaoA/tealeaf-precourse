@@ -3503,7 +3503,38 @@ According to the authors, but *each* and *map are important methods, but they ca
 - Use *each* for iteration
 - use *map* for transformation
 
+** *Array Methods Covered in this Section*
+
+| Method          | Example Syntax            | Description                                                                                                                        | Destructive? | Comments                                                                                                       |
+|-----------------+---------------------------+------------------------------------------------------------------------------------------------------------------------------------+--------------+----------------------------------------------------------------------------------------------------------------|
+| first           | array.first               | prints first element/array                                                                                                         | no           | with an argument, you can select more than just the first element (e.g., string.push(2) prints the first two.) |
+| last            | array.last                | prints last element/array                                                                                                          | no           | with an argument, you can select more than just the last element (e.g., string.push(2) prints the last two.)   |
+| pop             | array.pop                 | prints the last element                                                                                                            | yes          | with an argument, you can pop more than jsut the last element (e.g., string.pop(2) pops the last two.)         |
+| shovel (<<)     | array << X                | adds item to end of array                                                                                                          | yes          | same as *push*                                                                                                 |
+| push            | array.push                | adds item to end of array                                                                                                          | yes          | same as *<<*                                                                                                   |
+| map             | array.map                 | iterates over an array and applies a block to each element/new array                                                               | no           | same as *collect*                                                                                              |
+| collect         | array.collect             | iterates over an array and applies a block to each element/new array                                                               | no           | same as *map*                                                                                                  |
+| delete          | array.delete              | deletes matching values when the index is unknown                                                                                  | yes          |                                                                                                                |
+| delete_at       | array.delete_at(arg)      | deletes the value at a specified index                                                                                             | yes          |                                                                                                                |
+| uniq            | array.uniq                | iterates through the array, deleting any duplicate values                                                                          | no           |                                                                                                                |
+| uniq!           | array.uniq!               | iterates through the array, deleting any duplicate values                                                                          | yes          | this is not considered a different method from *uniq*                                                          |
+| select          | array.select { }          | iterates over an array, returning a new array of 'true' elements                                                                   | no           |                                                                                                                |
+| to_s            | gets.chomp.to_s           | captures up to end of string, and cuts off whitespace/newline                                                                      | yes          | when we use string interpolation ( #{foo} ), Ruby calls *to_s* behind the scenes.                              |
+| include?        | array.include?(3)         | checks to see if the given arguemnt is included in the array                                                                       | no           | boolean (T/F) value                                                                                            |
+| flatten         | array.flatten             | takes a nested array and puts all elements in a one-dimensional array                                                              | no           |                                                                                                                |
+| each            | array.each                | iterates over array, runs the code in block                                                                                        | no           | if no block is given it returns an Enumerator                                                                  |
+| each_index      | array.each_index          | like the *each* method, but the variable represents the index number, rather than the value at each index; passes index into block | no           |                                                                                                                |
+| each_with_index | array.each_with_index{ }  | similar to *each_index*, but it allows us to manipulate both the value and the index                                               | no           |                                                                                                                |
+| sort            | array.sort                | returns a sorted array                                                                                                             | no           |                                                                                                                |
+| product         | array.product([foo, bar]) | combines nested arrays in all possible combinations                                                                                | no           |                                                                                                                |
+
 ** Exercises
+  :PROPERTIES:
+  :ARCHIVE_TIME: 2014-10-20 Mon 20:37
+  :ARCHIVE_FILE: ~/tealeaf/pre-course1/learn_ruby/notes.org
+  :ARCHIVE_OLPATH: Arrays
+  :ARCHIVE_CATEGORY: notes
+  :END:
 
 *** Problem 1
 Below we have given you an array and a number. Write a program that checks to see if the number appears in the array.
@@ -3700,7 +3731,7 @@ arr
    #+BEGIN_SRC ruby
 
 irb(main):073:0> arr = arr.product([Array(1..3)])
-arr = arr.product([Array(1..3)])
+arr = arr.product(A[rray(1..3)])
 => [["b", [1, 2, 3]], ["a", [1, 2, 3]]]
 
 irb(main):074:0> arr.first.delete(arr.first.last)
@@ -3904,3 +3935,8 @@ names
 #+END_SRC
 
 It looks like it worked!
+
+*** Problem 7
+Write a program that iterates over an array and builds a new array that is the result of incrementing each value in the original array by a value of 2. You should have two arrays at the end of this program, The original array and the new array you've created. Print both arrays to the screen using the *p* method instead of *puts*.
+
+*** Solution 7

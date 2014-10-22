@@ -3996,6 +3996,8 @@ I'd like try this:
 #+END_SRC
 
 * Hashes
+[[http://ruby-doc.org/core-2.1.3/Hash.html][Ruby 2.1.3 Hash Documentation]]
+
 ** What is a Hash?
 - a data structure that stores items with keys
 - unlike arrays, which store data in ordered lists, hashes use key-value pairs
@@ -4281,3 +4283,80 @@ name_and_age.values.each { |v| puts v }
 
 *** A Note on Hash Order
 Before Ruby 1.9, hashes did not maintain order (unlike arrays). From 1.9 on, hashes can maintain the order that they're stored. It's important to remember this limitation with hashes when working with older versions of Ruby.
+
+*** Exercises
+
+**** Problem 1
+Given a hash of family members, with keys as the title and an array of names as the values, use Ruby's built-in [[http://www.ruby-doc.org/core-2.1.3/Hash.html#method-i-select][select method]] to gather only immediate family members' names into a new array.
+
+#+BEGIN_SRC ruby
+# Given
+
+family = {  uncles: ["bob", "joe", "steve"],
+            sisters: ["jane", "jill", "beth"],
+            brothers: ["frank","rob","david"],
+            aunts: ["mary","sally","susan"]
+          }
+
+#+END_SRC
+
+**** Solution 1
+I only want to get teh values for sistes and brothers. I also know that the *select* method will return a new hash of 'true' values.
+
+Here's my solution in irb:
+#+BEGIN_SRC ruby
+irb(main):026:0> family.select { |k,v| (k == :sisters) || (k == :brothers)}
+=> {:sisters=>["jane", "jill", "beth"], :brothers=>["frank", "rob", "david"]}
+
+#+END_SRC
+
+I could also use the *to_a* method:
+
+#+BEGIN_SRC ruby
+irb(main):027:0> siblings = family.select { |k,v| (k == :sisters) || (k == :brothers)}
+=> {:sisters=>["jane", "jill", "beth"], :brothers=>["frank", "rob", "david"]}
+
+irb(main):028:0> siblings.to_a
+=> [[:sisters, ["jane", "jill", "beth"]], [:brothers, ["frank", "rob", "david"]]]
+
+#+END_SRC
+
+Here's the authors' solution:
+#+BEGIN_SRC ruby
+irb(main):029:0> immediate_family = family.select do |k,v|
+irb(main):030:1* k == :sisters || k == :brothers
+irb(main):031:1> end
+=> {:sisters=>["jane", "jill", "beth"], :brothers=>["frank", "rob", "david"]}
+irb(main):032:0> arr = immediate_family.values.flatten
+=> ["jane", "jill", "beth", "frank", "rob", "david"]
+irb(main):033:0> p arr
+["jane", "jill", "beth", "frank", "rob", "david"]
+=> ["jane", "jill", "beth", "frank", "rob", "david"]
+
+#+END_SRC
+
+I had the right idea, but my final output was not flattened in the same way. I was so happy that I figured out the first part, that I was careless, and didn't provide the final answer in a single, flattened array. Here is my corrected answer, exported as a Ruby file:
+
+*File:* [[08_hashes/exercise1.rb]]
+#+BEGIN_SRC ruby :tangle 08_hashes/exercise1.rb
+  # 08_hashes/exercise1.rb
+  # Returns an array of siblings
+  
+  # Given
+  
+  family = {  uncles: ["bob", "joe", "steve"],
+              sisters: ["jane", "jill", "beth"],
+              brothers: ["frank","rob","david"],
+              aunts: ["mary","sally","susan"]
+            }
+  
+  # Return an array of only brothers and sisters
+  
+  immediate_family = family.select do |k,v|
+    k == :sisters || k = :brothers
+  end
+  
+  siblings = immediate_family.values.flatten
+  
+  p siblings
+#+END_SRC

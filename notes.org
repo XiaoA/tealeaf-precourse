@@ -4281,12 +4281,12 @@ name_and_age.values.each { |v| puts v }
 => [42, 31, 19]
 #+END_SRC
 
-*** A Note on Hash Order
+** A Note on Hash Order
 Before Ruby 1.9, hashes did not maintain order (unlike arrays). From 1.9 on, hashes can maintain the order that they're stored. It's important to remember this limitation with hashes when working with older versions of Ruby.
 
-*** Exercises
+** Exercises
 
-**** Problem 1
+*** Problem 1
 Given a hash of family members, with keys as the title and an array of names as the values, use Ruby's built-in [[http://www.ruby-doc.org/core-2.1.3/Hash.html#method-i-select][select method]] to gather only immediate family members' names into a new array.
 
 #+BEGIN_SRC ruby
@@ -4300,7 +4300,7 @@ family = {  uncles: ["bob", "joe", "steve"],
 
 #+END_SRC
 
-**** Solution 1
+*** Solution 1
 I only want to get teh values for sistes and brothers. I also know that the *select* method will return a new hash of 'true' values.
 
 Here's my solution in irb:
@@ -4360,3 +4360,105 @@ I had the right idea, but my final output was not flattened in the same way. I w
   
   p siblings
 #+END_SRC
+
+*** Problem 2
+Look at Ruby's [[http://www.ruby-doc.org/core-2.1.0/Hash.html#method-i-merge][merge method]]. Notice that it has two versions. What is the difference between *merge* and *merge!*? Write a program that uses both and illustrate the differences.
+
+*** Solution 2
+*merge*
+- Basic Syntax: h1.merge(h2)
+- adds the contents of *h2* to *h1*
+- if there is a 'conflict' (identical keys with different values, it will overwrite the h1 values with h2 values)
+- non-destructive
+
+*merge!*
+- Basic Syntax: h1.merge!(h2)
+- adds the contents of *h2* to *h1*
+- if there is a 'conflict' (identical keys with different values, it will overwrite the h1 values with h2 values)
+- destructive
+ 
+To experiment, I created two hashes: h1, and h2:
+
+#+BEGIN_SRC ruby
+irb(main):001:0> h1 = {"a" => 100, "b" => 200, "c" => 300}
+h1 = {"a" => 100, "b" => 200, "c" => 300}
+=> {"a"=>100, "b"=>200, "c"=>300}
+
+irb(main):002:0> h2 = {"c" => 400, "d" => 500, "e" => ["blue", "red", "green"]}
+h2 = {"c" => 400, "d" => 500, "e" => ["blue", "red", "green"]}
+=> {"c"=>400, "d"=>500, "e"=>["blue", "red", "green"]}
+
+irb(main):003:0> h1.merge(h2)
+h1.merge(h2)
+=> {"a"=>100, "b"=>200, "c"=>400, "d"=>500, "e"=>["blue", "red", "green"]}
+
+irb(main):004:0> h1
+h1
+=> {"a"=>100, "b"=>200, "c"=>300}
+
+irb(main):005:0> h1.merge!(h2)
+h1.merge!(h2)
+=> {"a"=>100, "b"=>200, "c"=>400, "d"=>500, "e"=>["blue", "red", "green"]}
+
+irb(main):006:0> h1
+h1
+=> {"a"=>100, "b"=>200, "c"=>400, "d"=>500, "e"=>["blue", "red", "green"]}
+
+#+END_SRC
+
+A couple observations:
+- The value for "c" in h2 did, indeed, overwrite the value for "c" in h1. However, as expected, after calling the *merge* method, h1 was not changed. When I ran *method!*, h1 was permanently changed.
+- The value for "e" in h2 was an array. it was also added to h1, as expected.
+- This isn't news, but irb is an amazing resources for experimentation and testing!
+
+  Now, I'll write a simple program that duplicates this behavior.
+
+  *File:* [[08_hashes/solution2.rb]]
+  #+BEGIN_SRC ruby :tangle 08_hashes/solution2.rb
+      # 08_hashes/solution2.rb
+      # Uses the merge and merge! methods to add values from h2 to h1
+
+h1 = h1 = {"a" => 100, "b" => 200, "c" => 300}
+h2 = {"c" => 400, "d" => 500, "e" => ["blue", "red", "green"]}
+
+mer = h1.merge(h2)
+
+
+puts "The hash values of h1 are #{h1}.\n After calling the 'merge' method, the values of h1 are #{mer}.\n But don't worry, h1 is still #{h1}."
+
+mer2 = h1.merge!(h2)
+
+puts "\n"
+
+puts "The hash values of h1 are still #{h1}.\n But after calling the 'merge!' method, the values of h1 are #{mer2}.\n Now, h1 has permanently changed to #{h1}."
+
+  #+END_SRC
+
+  And here is the output:
+
+  #+BEGIN_SRC sh
+小A曰:ruby solution2.rb 
+The value of h1 is {"a"=>100, "b"=>200, "c"=>300}.
+ After calling the 'merge' method, the value of h1 is {"a"=>100, "b"=>200, "c"=>400, "d"=>500, "e"=>["blue", "red", "green"]}.
+ But don't worry, h1 is still {"a"=>100, "b"=>200, "c"=>300}.
+
+The value of h1 is still {"a"=>100, "b"=>200, "c"=>400, "d"=>500, "e"=>["blue", "red", "green"]}.
+ But after calling the 'merge!' method, the value of h1 is {"a"=>100, "b"=>200, "c"=>400, "d"=>500, "e"=>["blue", "red", "green"]}.
+ Now, the value of h1 has permanently changed to {"a"=>100, "b"=>200, "c"=>400, "d"=>500, "e"=>["blue", "red", "green"]}.
+  
+  #+END_SRC
+
+  Here's the author's solution:
+
+  #+BEGIN_SRC ruby
+
+cat = {name: "whiskers"}
+weight = {weight: "10 lbs"}
+puts cat.merge(weight)
+puts cat                  # => {:name=>"whiskers"}
+puts weight               # => {:weight=>"10 lbs"}
+puts cat.merge!(weight)
+puts cat                  # => {:name=>"whiskers", :weight=>"10 lbs"}
+puts weight               # => {:weight=>"10 lbs"}
+  
+  #+END_SRC

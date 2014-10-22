@@ -4002,6 +4002,10 @@ I'd like try this:
 - associative representation of data
 - symbole = keys; data types = values
 - surrounded by { } (curly braces) and separated by commas.
+- With Ruby 1.9, the syntas changed (see below for examples)
+  + Before 1.9: *{:name => 'Andrew'}*
+  + 1.9 and later: *{name: 'Andrew'}*
+    
 ** Syntax
 Two main forms:
 Old (Pre-Ruby 1.9 version): used => to separate key and value
@@ -4018,4 +4022,111 @@ irb :002 > new_hash = {name: 'bob'}
 #+END_SRC
 
 Hashes can also contain multpile key-value pairs:
+
+#+BEGIN_SRC ruby
+irb(main):001:0> person = {height: '6 ft', weight: '160 lbs' }
+person = {height: '6 ft', weight: '160 lbs' }
+=> {:height=>"6 ft", :weight=>"160 lbs"}
+
+#+END_SRC
+
+You can add to an existing hash:
+
+#+BEGIN_SRC ruby
+irb(main):002:0> person[:hair] = 'brown'
+person[:hair] = 'brown'
+=> "brown"
+
+irb(main):003:0> person[:age] = 62
+person[:age] = 62
+=> 62
+
+irb(main):004:0> person
+person
+=> {:height=>"6 ft", :weight=>"160 lbs", :hair=>"brown", :age=>62}
+
+#+END_SRC
+
+You can also remove items:
+
+#+BEGIN_SRC ruby
+irb(main):005:0> person.delete(:age)
+person.delete(:age)
+=> 62
+
+irb(main):006:0> person
+person
+=> {:height=>"6 ft", :weight=>"160 lbs", :hair=>"brown"}
+#+END_SRC
+
+Here's how to retrieve data from a hash:
+#+BEGIN_SRC ruby
+irb(main):007:0> person[:weight]
+person[:weight]
+=> "160 lbs"
+#+END_SRC
+
+You can also merge hashes together:
+#+BEGIN_SRC ruby
+irb(main):008:0> new_hash = {favorite_language: "Ruby"}
+new_hash = {favorite_language: "Ruby"}
+=> {:favorite_language=>"Ruby"}
+
+irb(main):009:0> person.merge!(new_hash)
+person.merge!(new_hash)
+=> {:height=>"6 ft", :weight=>"160 lbs", :hair=>"brown", :favorite_language=>"Ruby"}
+
+#+END_SRC
+
+*Note:* using the (!) bang operator made this method destructive. The *merge* method is not destructive.
+
+** Iterating over Hashes
+Iterating over hashes is similar to iterating over arrays.
+
+*File:* [[08_hashes/iterating_over_hashes.rb]]
+#+BEGIN_SRC ruby :tangle 08_hashes/iterating_over_hashes.rb
+  # 08_hashes/iterating_over_hashes.rb
+  
+  person = {name: 'bob', height: '6 ft', weight: '160 lbs', hair: 'brown' }
+  
+  person.each do |key, value|
+    puts "Bob's #{key} is #{value}"
+  end
+  
+#+END_SRC
+
+*Output:*
+#+BEGIN_SRC sh
+小A曰:ruby iterating_over_hashes.rb 
+Bob's name is bob
+Bob's height is 6 ft
+Bob's weight is 160 lbs
+Bob's hair is brown
+#+END_SRC
+
+** Hashes as Optional Parameters
+Hashes can accept optional parameters when you are creating methods. This can provide a great deal of flexibility for a programmer.
+
+Here's an example:
+
+*Link:* [[08_hashes/optional_parameters.rb]]
+#+BEGIN_SRC ruby :tangle 08_hashes/optional_parameters.rb
+  # 08_hashes/optional_parameters.rb
+  
+  def greeting(name, options = {})
+    if options.empty?
+      puts "Hi, my name is #{name}"
+      else
+      puts "Hi, my name is #{name} and I'm #{options[:age]}" +
+        " years old and I live in #{options[:city]}."
+    end
+  end
+
+greeting("Bob")
+greeting("Bob", {age: 62, city: "New York City"})
+#+END_SRC
+
+*Important note:* When a hash is the last argument, the { } curly braces are not required. Rails often follow this convention.
+
+
 

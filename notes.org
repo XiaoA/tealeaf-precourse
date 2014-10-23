@@ -4465,3 +4465,101 @@ puts weight               # => {:weight=>"10 lbs"}
 
 *** Problem 3
 Using some of Ruby's built-in [[http://ruby-doc.org/core-2.1.3/Hash.html#method-i-fetch][Hash methods]], write a program that loops through a hash and prints all of the keys. Then write a program that does the same thing except printing the values. Finally, write a program that prints both.
+
+*** Solution 3
+
+My first thought was that I could use *each*. Here's how that works:
+
+#+BEGIN_SRC ruby
+      irb(main):002:0> hash = {"a" => 100, "b" => 200, "c" => "Jon"}
+        hash = {"a" => 100, "b" => 200, "c" => "Jon"}
+        => {"a"=>100, "b"=>200, "c"=>"Jon"}
+        
+      irb(main):003:0> hash.each do |k,v|
+        hash.each do |k,v|
+        
+      irb(main):004:1* puts k
+        puts k
+      
+      irb(main):005:1> end
+        end
+        a
+        b
+        c
+        => {"a"=>100, "b"=>200, "c"=>"Jon"}
+        
+#+END_SRC
+
+But when I checked [[http://ruby-doc.org/core-2.1.3/Hash.html#method-i-each_key][the documentation]], I found three methods that are tailor-made for this exercise:
+
+- *each_key*
+- *each_pair*
+- *each_value*
+
+Let's use these to complete the exercise!
+
+*File:* [[08_hashes/solution3.rb]]
+
+#+BEGIN_SRC ruby :tangle 08_hashes/solution3.rb
+# 08_hashes/solution3.rb
+
+hash = {name: "John", age: 27, occupation: "developer"}
+
+# Program 1: use the each_key method to find the keys in a hash
+
+puts "Here is a list of the keys: "
+hash.each_key { |key| puts "- #{key}" }
+puts "\n"
+
+
+
+# Program 2: use the each_value method to find the values in a hash
+
+puts "Here is a list of the values: "
+hash.each_value { |value| puts "+ #{value}" }
+puts "\n"
+
+# Pogram 3: use the each_pair method to find both the keys and values in a hash
+
+puts "Here is a list of keys and their values:"
+hash.each_pair {|key, value| puts "#{key} is #{value}."}
+puts "\n"
+
+puts "Is there anything else I can help help with?" 
+
+#+END_SRC
+
+And here is the output:
+
+#+BEGIN_SRC sh
+小A曰:ruby solution3.rb
+Here is a list of the keys: 
+- name
+- age
+- occupation
+
+Here is a list of the values: 
++ John
++ 27
++ developer
+
+Here is a list of keys and their values:
+name is John.
+age is 27.
+occupation is developer.
+
+Is there anything else I can help help with?
+
+#+END_SRC
+
+And here is the authors' solution: 
+#+BEGIN_SRC ruby
+opposites = {positive: "negative", up: "down", right: "left"}
+
+opposites.each_key { |key| puts key }
+opposites.each_value { |value| puts value }
+opposites.each { |key, value| puts "The opposite of #{key} is #{value}" }
+
+#+END_SRC
+
+I'd say mine is good. Interestingly enough, they use *each* intead of *each_pair*, which was my first instinct.

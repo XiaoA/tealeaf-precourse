@@ -4563,3 +4563,50 @@ opposites.each { |key, value| puts "The opposite of #{key} is #{value}" }
 #+END_SRC
 
 I'd say mine is good. Interestingly enough, they use *each* intead of *each_pair*, which was my first instinct.
+
+*** Problem 4
+Given the following expression, how would you access the name of the person?
+
+#+BEGIN_SRC ruby
+person = {name: 'Bob', occupation: 'web developer', hobbies: 'painting'}
+#+END_SRC
+
+*** Solution 4
+I think the *fetch* method would be the easiest solution.
+
+#+BEGIN_SRC ruby
+irb(main):006:0> person = {name: 'Bob', occupation: 'web developer', hobbies: 'painting'}
+=> {:name=>"Bob", :occupation=>"web developer", :hobbies=>"painting"}
+irb(main):007:0> person.fetch(:name)
+=> "Bob"
+
+#+END_SRC
+
+If I create that as a file:
+
+*File:* [[08_hashes/solution4.rb]]
+#+BEGIN_SRC ruby :tangle 08_hashes/solution4.rb
+
+# 08_hashes/solution4.rb
+
+
+# Fetches the name from the hash
+person = {name: 'Bob', occupation: 'web developer', hobbies: 'painting'}
+
+name = person.fetch(:name)
+puts name
+
+#+END_SRC
+
+The authors proposed a simpler solution:
+#+BEGIN_SRC ruby
+
+person = {name: 'Bob', occupation: 'web developer', hobbies: 'painting'}
+
+puts person[:name]
+
+#+END_SRC
+
+#+RESULTS:
+: nil
+

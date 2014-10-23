@@ -4610,5 +4610,56 @@ puts person[:name]
 *** Problem 5
 What method could you use to find out if a Hash contains a specific value in it? Write a program to demonstrate this use.
 
+*** Solution 5
+
+A few methods that could help find a specific value:
+- *select*
+- *fetch*
+- *has_value?*
+
+Here's a program that uses all three:
+
+*File:* [[08_hashes/solution5.rb]]
+#+BEGIN_SRC ruby :tangle 08_hashes/solution5.rb
+    # 08_hashes/solution5.rb
+    
+    masterpieces = {title1: "War and Peace", author1: "Tolstoy", title2: "The Scarlet Letter", author2: "Hawthorne", title3: "Moby Dick", author3: "Melville" }
+    
+    # Using the has.value? method
+    puts "Using the has.value? method:\n"
+    v = masterpieces.has_value?("Melville")
+    puts "True or false...Melville is one of the authors:\n"
+    puts v
+#+END_SRC
+
+The authors offer a more elegant solution, using a conditional:
+#+BEGIN_SRC ruby 
+has_value?
+
+if opposites.has_value?("negative")
+  puts "Got it!"
+else
+  puts "Nope!"
+end
+#+END_SRC
+
+I can use this approach to improve my answer:
+
+*File:* [[08_hashes/solution5_improved.rb]]
+#+BEGIN_SRC ruby :tangle 08_hashes/solution5_improved.rb
+  # 08_hashes/solution5_improved.rb
+  
+  masterpieces = {title1: "War and Peace", author1: "Tolstoy", title2: "The Scarlet Letter", author2: "Hawthorne", title3: "Moby Dick", author3: "Melville" }
+  
+  # Using the has.value? method
+  
+  if masterpieces.has_value?("Melville")
+    puts "Yep. Melville's in there!"
+  else
+    puts "Nope. Melville's not in there."
+  end  
 
 
+#+END_SRC
+
+Review, review, review...

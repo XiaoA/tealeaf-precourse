@@ -4663,3 +4663,158 @@ I can use this approach to improve my answer:
 #+END_SRC
 
 Review, review, review...
+
+*** Problem 6
+Given the array...
+
+#+BEGIN_SRC ruby
+words =  ['demo', 'none', 'tied', 'evil', 'dome', 'mode', 'live',
+          'fowl', 'veil', 'wolf', 'diet', 'vile', 'edit', 'tide',
+          'flow', 'neon']
+
+#+END_SRC
+Write a program that prints out groups of words that are anagrams. Anagrams are words that have the same exact letters in them but in a different order. Your output should look something like this:
+
+#+BEGIN_SRC ruby
+  ["demo", "dome", "mode"]
+  ["neon", "none"]
+  (etc)
+
+#+END_SRC
+
+
+*** Solution 6
+I've struggled with this one. I thought I could accomplish this with regex, so I spent some time looking at the documentation, and I skipped to the next section of the book, to glance over that. I use regular expressions, but I'm not even in the same ballpark as [[http://shop.oreilly.com/product/9780596528126.do#tab_03_2][Jeffrey Friedl]], but I can string together some basic searches.
+
+Unfortunately, I found some useful tools, like the *match* method, but it didn't work with Hashes (it's also not listed as a hash method). I also thought about using the select method. I think I could find /one/ anagram, but parsing a file, iterating the contents, and finding all of them, and grouping them into new arrays? I'm stumped. So I'm going to give up, and "cheat" and look at the solution from the book...
+
+Here's the answer the authors have provided:
+
+#+BEGIN_SRC ruby
+result = {}
+
+words.each do |word|
+  key = word.split('').sort.join
+  if result.has_key?(key)
+    result[key].push(word)
+  else
+    result[key] = [word]
+  end
+end
+
+result.each do |k, v|
+  puts "------"
+  p v
+end
+#+END_SRC
+
+This is brilliant, and while I'm disappointed I couldn't come up with a working answer on my own, I'm excited to see a program like this, that solves a complex problem, elegantly! I have to keep working hard, so that I can come up with solutions like this on my own.
+
+*File:* [[08_hashes/solution6.rb]]
+#+BEGIN_SRC ruby :tangle 08_hashes/solution6.rb
+          # 08_hashes/solution6.rb
+      
+      # Create sets of anagrams from the following words
+  words =  ['demo', 'none', 'tied', 'evil', 'dome', 'mode', 'live',
+            'fowl', 'veil', 'wolf', 'diet', 'vile', 'edit', 'tide',
+            'flow', 'neon']    
+  
+  # Create an empty hash to store the answer
+  result = {}
+  
+  words.each do |word|
+    key = word.split('').sort.join
+    if result.has_key?(key)
+      result[key].push(word)
+    else
+      result[key] = [word]
+    end
+  end
+  
+  result.each do |k, v|
+    puts "------"
+    p v
+  end
+#+END_SRC
+
+Here's the output:
+
+#+BEGIN_SRC sh
+小A曰:ruby solution6.rb 
+------
+["demo", "dome", "mode"]
+------
+["none", "neon"]
+------
+["tied", "diet", "edit", "tide"]
+------
+["evil", "live", "veil", "vile"]
+------
+["fowl", "wolf", "flow"]
+
+#+END_SRC
+
+As an experiment, I'd like to do an extra credit exercise to practice this idea. 
+
+This program takes each word form the array, and puts them into a new list, grouped by words that share the last letter.
+
+I had to spend some time playing around with methods to figure this, but I finally did! I added some words, so that the output would be grammtically correct, when it said, "The words end in (letter)". 
+
+*File:* [[08_hashes/solution6_extra_credit.rb]]
+#+BEGIN_SRC ruby :tangle 08_hashes/solution6_extra_credit.rb
+        # 08_hashes/solution6_extra_credit.rb
+        # This program takes each of the following words and groups them by last letter. (Each new array shares the last letter.)
+
+        words =  ['demo', 'none', 'tied', 'evil', 'dome', 'mode', 'live',
+                  'fowl', 'veil', 'wolf', 'diet', 'vile', 'edit', 'tide',
+                  'flow', 'neon', 'taco', 'lead', 'self', 'grow', 'moon']
+        
+  
+        
+        
+        result = {}
+        
+        words.each do |word|
+           key = word.split(", ").join[3]
+          if result.has_key?(key)
+            result[key].push(word)
+          else
+            result[key] = [word]
+          end
+        end
+        
+        result.each do |k, v|
+          puts "------\n These words end in #{k}:"
+          puts v.join(", ")
+        end
+      
+#+END_SRC
+
+Here's the output:
+#+BEGIN_SRC sh
+小A曰:ruby solution6_extra_credit.rb
+------
+ These words end in o:
+demo, taco
+------
+ These words end in e:
+none, dome, mode, live, vile, tide
+------
+ These words end in d:
+tied, lead
+------
+ These words end in l:
+evil, fowl, veil
+------
+ These words end in f:
+wolf, self
+------
+ These words end in t:
+diet, edit
+------
+ These words end in w:
+flow, grow
+------
+ These words end in n:
+neon, moon
+#+END_SRC

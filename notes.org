@@ -4820,3 +4820,30 @@ These words end in n:
 neon, moon
 
 #+END_SRC
+
+*** Problem 7
+Given the following code...
+
+#+BEGIN_SRC ruby
+x = "hi there"
+my_hash = {x: "some value"}
+my_hash2 = {x => "some value"}
+
+#+END_SRC
+What's the difference between the two hashes that were created?
+
+*** Solution 7
+
+*File:* [[08_hashes/solution7.md]]
+#+BEGIN_SRC markdown :tangle 08_hashes/solution7.md
+
+### My answers
+1. my_hash uses the symbol ':x' (Ruby 1.9 or later)
+2. my_hash2 uses the older, pre-1.9 'hash-rocket'.
+
+### The authors's answer
+The first hash that was created used a symbol x as the key. The second hash used the string value of the x variable as the key.
+
+### My comments
+In addition to 'hash rocket,' I should remember that *=>* is a 'string value of the x variable.'
+#+END_SRC

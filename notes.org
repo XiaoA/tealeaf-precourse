@@ -4792,31 +4792,8 @@ I had to spend some time playing around with methods to figure this, but I final
 
 Here's the output:
 #+BEGIN_SRC sh
+
 小A曰:ruby solution6_extra_credit.rb
-------
- These words end in o:
-demo, taco
-------
- These words end in e:
-none, dome, mode, live, vile, tide
-------
- These words end in d:
-tied, lead
-------
- These words end in l:
-evil, fowl, veil
-------
- These words end in f:
-wolf, self
-------
- These words end in t:
-diet, edit
-------
- These words end in w:
-flow, grow
-------
- These words end in n:
-neon, moon小A曰:ruby solution6_extra_credit.rb
 ------
 These words end in o:
 demo, taco

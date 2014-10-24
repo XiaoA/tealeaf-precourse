@@ -4841,7 +4841,7 @@ What's the difference between the two hashes that were created?
 1. my_hash uses the symbol ':x' (Ruby 1.9 or later)
 2. my_hash2 uses the older, pre-1.9 'hash-rocket'.
 
-### The authors's answer
+### The authors' answer
 The first hash that was created used a symbol x as the key. The second hash used the string value of the x variable as the key.
 
 ### My comments

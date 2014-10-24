@@ -20,6 +20,6 @@ words.each do |word|
 end
 
 result.each do |k, v|
-  puts "------\n These words end in #{k}:"
+  puts "------\nThese words end in #{k}:"
   puts v.join(", ")
 end

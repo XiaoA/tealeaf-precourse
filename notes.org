@@ -4847,3 +4847,26 @@ The first hash that was created used a symbol x as the key. The second hash used
 ### My comments
 In addition to 'hash rocket,' I should remember that *=>* is a 'string value of the x variable.'
 #+END_SRC
+
+*** Problem 8
+If you see this error, what do you suspect is the most likely problem?
+
+#+BEGIN_SRC ruby
+NoMethodError: undefined method `keys' for Array
+#+END_SRC
+A. We're missing keys in an array variable.
+
+B. There is no method called keys for Array objects.
+
+C. keys is an Array object, but it hasn't been defined yet.
+
+*** Solution 8
+
+*File:*[[08_hashes/solution8.md]]
+#+BEGIN_SRC markdown :tangle 08_hashes/solution8.md
+Unfortunately, I've seen that error, more than once...The answer is definitely **B.**
+
+I checked the authors' answer, and I was right. Here's hoping I never see that error again! :)
+#+END_SRC
+
+

@@ -4999,3 +4999,12 @@ end
 2: Writing to files in Ruby is simple.
 => ["another example of writing to a file.\n", "Here we are with a new line of text\n", "Writing to files in Ruby is simple."]
 #+END_SRC
+
+** Deleting a File
+We can delete files by passing the name or reference to a file to *File.delete*.
+
+#+BEGIN_SRC ruby
+irb(main):008:0> File.new("dummy_file.txt", "w+")
+File.new("dummy_file.txt", "w+")
+=> #<File:dummy_file.txt>
+#+END_SRC

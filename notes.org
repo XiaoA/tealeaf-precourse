@@ -5036,3 +5036,13 @@ File.read(original)
 => "another example of writing to a file.\nHere we are with a new line of text\nWriting to files in Ruby is simple.\n"
 
 #+END_SRC
+
+** Overview of File Classes
+
+*** Files rule everything.
+- Our programs and apps are built with files.
+- Some files are the programs; others are the inputs/outputs of the programs.
+- This complexity works when the *right stuff* is in the *right kind of files* in the *right place*.
+  + The *right stuff* is the code that drives our programs.
+  + The *right kind of files* is the format or extension of the file.
+  + The *right place* is in a recognizable directory structure or Path.

@@ -5014,3 +5014,25 @@ File.delete("dummy_file.txt")
 #+END_SRC
 
 Deleting files in Ruby is just as permanent (and dangerous) as the *rm* command in a Unix-like environment. The file is unrecoverable, so be careful!
+
+** Exercise 1
+Let's take one file's contents as input and create a new transformed file as a result:
+#+BEGIN_SRC ruby
+irb(main):010:0> simple = File.read("simple_file.txt")
+simple = File.read("simple_file.txt")
+=> "another example of writing to a file.\nHere we are with a new line of text\nWriting to files in Ruby is simple."
+irb(main):011:0> original = File.new("original_file.txt", "w+")
+original = File.new("original_file.txt", "w+")
+=> #<File:original_file.txt>
+irb(main):012:0> File.open(original, "a") do |file|
+File.open(original, "a") do |file|
+irb(main):013:1* file.puts simple
+file.puts simple
+irb(main):014:1> end
+end
+=> nil
+irb(main):015:0> File.read(original)
+File.read(original)
+=> "another example of writing to a file.\nHere we are with a new line of text\nWriting to files in Ruby is simple.\n"
+
+#+END_SRC

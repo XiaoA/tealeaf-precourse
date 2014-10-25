@@ -4873,13 +4873,13 @@ I checked the authors' answer, and I was right. Here's hoping I never see that e
 * Files 
 - exist on durable storage
 - can be shared or validated to other formats
-
+  
 In this chapter, we'll look at common formats:
 - json
 - csv
 - xml/html
 - xls
-
+  
 The [[http://www.ruby-doc.org/core-2.1.3/IO.html][IO Class Documentation]] for Ruby 2.1.3 documents the modes and options available for Ruby files.
 
 ** Creating a file 
@@ -4900,20 +4900,20 @@ We can open existing files with the *File.open* command, which takes various arg
 - *w*: write-only (if the file exists, overwrites everything in the file)
 - *w+:* read and write (if the file exists, overwrites everything in the file)
 - *a+:* read-write (if file exists, starts at end of file. Otherwise creates a new file). Suitable for updating files.
-
+  
 *** Open File For Reading
 This is simple in Ruby. Here are a couple options:
 
 - *File.read("file_name")* - Spits out entire contents of the file.
 - *File.readlines("file_name")* - Reads the entire file based on individual lines and returns those lines in an array.
-
+  
 *** Open File For Writing
 - The standard workflow is open-use-close.
 - We can use *write* or *puts* to write files.
   + *puts* adds a line break to the end of strings
   + *write* does not
 - Closing files is very important. Ruby will automatically close files if the open method is called with a block.
-
+  
 Using the *write* method:
 
 #+BEGIN_SRC ruby
@@ -4977,7 +4977,7 @@ Here we are with a new ine of text
 - The variable *file* was used as a placeholder for the file, to allow text to be appended with the shovel operator.
 - The file was automatically closed after the operation (at the end of the block).
 - Instead of using *<<*, it's possible to use *puts* or *write*.
-
+  
 #+BEGIN_SRC ruby
 irb(main):001:0> File.open("simple_file.txt", "a+") do |file|
 File.open("simple_file.txt", "a+") do |file|
@@ -5046,13 +5046,13 @@ File.read(original)
   + The *right stuff* is the code that drives our programs.
   + The *right kind of files* is the format or extension of the file.
   + The *right place* is in a recognizable directory structure or Path.
-
+    
 Ruby's File class has an *IO* subclass, which handles bidirectional streams of data. Other well-known IO streams include: 
 
 - *STDIN* (standard input)
 - *STDOUT* (standard output)
 - *STDERR* (standard error)
-
+  
 #+BEGIN_SRC ruby
 irb(main):016:0> File.superclass
 File.superclass
@@ -5080,7 +5080,7 @@ In addition to the *File* class we've used so far, Ruby provides other classes f
 
 - [[http://ruby-doc.org/core-2.1.3/Dir.html#method-i-to_path][Dir]]: Useful for working with directories and their contents. Shares many of File's methods, but it is not an IO stream.
 - [[http://www.ruby-doc.org/stdlib-2.1.3/libdoc/pathname/rdoc/Pathname.html][Pathname]]: Exposes almost all of the methods supported by *File* and *Dir*. It's primary advantage is that you can declare an instance of it and access the methods from both the *File* and *Dir* methods on the same instance object.
-
+  
 *Authors' Note:* Depending on your particular Ruby installation, you may need to require Pathname before you can use it. We have included this in the example, just in case. If the return value from the require statement is false, that just means that Pathname was already available ([[http://www.gotealeaf.com/books/ruby/read/files#overviewfileclasses][Source]]).
 
 #+BEGIN_SRC ruby
@@ -5146,3 +5146,46 @@ simple_file.txt has extension .txt
 => [#<Pathname:.>, #<Pathname:..>, #<Pathname:original_file.txt>, #<Pathname:simple_file.txt>]
 #+END_SRC
 ()In the example above, when I required 'pathname', it came back 'false' because I'd already required.)
+
+** Working with file formats - CSV, Excel, JSON, XML
+
+*** CSV and XLS/XLSX
+- Commonly used to export/import tabular data.
+- I often use these to export SQL data, as well as run statistical data in R in my job.
+- Most people use Excel to open .csv files, but I often use Emacs or [[http://www.r-project.org][R]]. When I need to see the data in 'spreadsheet form, I also use the plain text/spreadsheet capabilities in [[http://orgmode.org/worg/org-tutorials/org-spreadsheet-intro.html][Emacs Org-Mode]].
+  
+We can access .csv files in Ruby with the built-in [[http://ruby-doc.org/stdlib-2.1.3/libdoc/csv/rdoc/index.html][CSV Class]] in the Ruby Standard Library.
+
+For Excel (.xls/.xlsx) files, we can use [[https://github.com/randym/axlsx][axlsx]] to provide Ruby with the ability to access and export to Excel file formats. (Note for Rails: use *acts_as_axlsx*)...
+
+*** JSON and XML/HTML
+- These formats help us describe data that is nested, or doesn't 'fit into a box' the way tabular data usually does.
+- [[http://json.org][JSON]] stands for JavaScript Object Notation.
+  
+Exercise 3 will deal with an article, which has three fields: 
+1. *title*
+2. *link*
+3. *summary*
+   
+A newspaper and an article might be represented in JSON like this:
+
+#+BEGIN_SRC javascript
+      {
+      "newspaper_name": "Cooking Today",
+      "issue_date": "November 15th, 2014",
+      "articles": [
+          {
+              "title": "Bacon Cooking",
+              "link": "http:/baconcooklove.com",
+              "summary": "Just a few thousand ideas about bacon"
+    },
+    {
+        "title": "Cooking with leftovers",
+        "link": "http://love.com",
+        "summary": "Just a few thousand ides about tasting love twice"
+  }
+  ]
+      }
+  
+#+END_SRC
+

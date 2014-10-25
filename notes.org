@@ -4950,3 +4950,52 @@ irb(main):010:0> File.read("simple_file.txt")
 File.read("simple_file.txt")
 => "another example of writing to a file.\n"
 #+END_SRC
+
+Insert more text into *simple_file.txt*:
+
+#+BEGIN_SRC ruby
+irb(main):011:0> File.open("simple_file.txt", "a+") do |file|
+File.open("simple_file.txt", "a+") do |file|
+irb(main):012:1* file << "Here we are with a new ine of text"
+file << "Here we are with a new ine of text"
+irb(main):013:1> end
+end
+=> #<File:simple_file.txt (closed)>
+irb(main):014:0> File.readlines("simple_file.txt").each do |line|
+File.readlines("simple_file.txt").each do |line|
+irb(main):015:1* puts line
+puts line
+irb(main):016:1> end
+end
+another example of writing to a file.
+Here we are with a new ine of text
+=> ["another example of writing to a file.\n", "Here we are with a new line of text"]
+#+END_SRC
+
+*Notes*
+- The *a+* mode was used to open the file for reading and updating.
+- The variable *file* was used as a placeholder for the file, to allow text to be appended with the shovel operator.
+- The file was automatically closed after the operation (at the end of the block).
+- Instead of using *<<*, it's possible to use *puts* or *write*.
+
+#+BEGIN_SRC ruby
+irb(main):001:0> File.open("simple_file.txt", "a+") do |file|
+File.open("simple_file.txt", "a+") do |file|
+irb(main):002:1* file.write "Writing to files in Ruby is simple."
+file.write "Writing to files in Ruby is simple."
+irb(main):003:1> end
+end
+=> 35
+irb(main):004:0> 
+
+irb(main):005:0* File.readlines("simple_file.txt").each_with_index do |line, line_num|
+File.readlines("simple_file.txt").each_with_index do |line, line_num|
+irb(main):006:1* puts "#{line_num}: #{line}"
+puts "#{line_num}: #{line}"
+irb(main):007:1> end
+end
+0: another example of writing to a file.
+1: Here we are with a new line of text
+2: Writing to files in Ruby is simple.
+=> ["another example of writing to a file.\n", "Here we are with a new line of text\n", "Writing to files in Ruby is simple."]
+#+END_SRC

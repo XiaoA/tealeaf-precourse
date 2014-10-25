@@ -5007,4 +5007,10 @@ We can delete files by passing the name or reference to a file to *File.delete*.
 irb(main):008:0> File.new("dummy_file.txt", "w+")
 File.new("dummy_file.txt", "w+")
 => #<File:dummy_file.txt>
+
+irb(main):009:0> File.delete("dummy_file.txt")
+File.delete("dummy_file.txt")
+=> 1
 #+END_SRC
+
+Deleting files in Ruby is just as permanent (and dangerous) as the *rm* command in a Unix-like environment. The file is unrecoverable, so be careful!

@@ -5046,3 +5046,103 @@ File.read(original)
   + The *right stuff* is the code that drives our programs.
   + The *right kind of files* is the format or extension of the file.
   + The *right place* is in a recognizable directory structure or Path.
+
+Ruby's File class has an *IO* subclass, which handles bidirectional streams of data. Other well-known IO streams include: 
+
+- *STDIN* (standard input)
+- *STDOUT* (standard output)
+- *STDERR* (standard error)
+
+#+BEGIN_SRC ruby
+irb(main):016:0> File.superclass
+File.superclass
+=> IO
+irb(main):017:0> $stdin
+$stdin
+=> #<IO:<STDIN>>
+irb(main):018:0> $stdout
+$stdout
+=> #<IO:<STDOUT>>
+irb(main):019:0> $stderr
+$stderr
+=> #<IO:<STDERR>>
+
+#+END_SRC
+
+*Andrew's comment:* using this *superclass* method is a great resource! For example, I can verify that the *Array class* is a subclass of *Object*:
+#+BEGIN_SRC ruby
+irb(main):020:0> Array.superclass
+Array.superclass
+=> Object
+#+END_SRC
+
+In addition to the *File* class we've used so far, Ruby provides other classes for dealing with files:
+
+- [[http://ruby-doc.org/core-2.1.3/Dir.html#method-i-to_path][Dir]]: Useful for working with directories and their contents. Shares many of File's methods, but it is not an IO stream.
+- [[http://www.ruby-doc.org/stdlib-2.1.3/libdoc/pathname/rdoc/Pathname.html][Pathname]]: Exposes almost all of the methods supported by *File* and *Dir*. It's primary advantage is that you can declare an instance of it and access the methods from both the *File* and *Dir* methods on the same instance object.
+
+*Authors' Note:* Depending on your particular Ruby installation, you may need to require Pathname before you can use it. We have included this in the example, just in case. If the return value from the require statement is false, that just means that Pathname was already available ([[http://www.gotealeaf.com/books/ruby/read/files#overviewfileclasses][Source]]).
+
+#+BEGIN_SRC ruby
+irb(main):025:0> require 'pathname'
+require 'pathname'
+=> true
+irb(main):026:0> f = File.new("simple_file.txt", "r")
+f = File.new("simple_file.txt", "r")
+=> #<File:simple_file.txt>
+irb(main):027:0> pn = Pathname.new(f)
+pn = Pathname.new(f)
+=> #<Pathname:simple_file.txt>
+irb(main):028:0> pn.extname
+pn.extname
+=> ".txt"
+irb(main):029:0> File.extname("simple_file.txt")
+File.extname("simple_file.txt")
+=> ".txt"
+
+#+END_SRC
+
+The example above created a file instance, and then used an instance of *Pathname* to find the extension. We could also do this by calling the *File::extname* method:
+
+#+BEGIN_SRC ruby
+irb(main):030:0> File::extname("simple_file.txt")
+File::extname("simple_file.txt")
+=> ".txt"
+#+END_SRC
+
+** Exercise 2
+Look at the current directory and report the files that have *.txt* extensions
+
+#+BEGIN_SRC ruby
+irb(main):032:0> d = Dir.new(".")
+d = Dir.new(".")
+=> #<Dir:.>
+irb(main):033:0> while file = d.read do
+while file = d.read do
+irb(main):034:1* puts "#{file} has extension .txt" if File.extname(file) == ".txt"
+puts "#{file} has extension .txt" if File.extname(file) == ".txt"
+irb(main):035:1> end
+end
+original_file.txt has extension .txt
+simple_file.txt has extension .txt
+=> nil
+#+END_SRC
+
+We can also do this by using the *Pathname* class (remember to *require 'pathname' first, if needed).
+
+#+BEGIN_SRC ruby
+irb(main):039:0> require 'pathname'
+require 'pathname'
+=> false
+
+irb(main):040:0> pn = Pathname.new(".")
+pn = Pathname.new(".")
+=> #<Pathname:.>
+
+irb(main):041:0> pn.entries.each { |f| puts "#{f} has extension .txt" if f.extname == ".txt" }
+pn.entries.each { |f| puts "#{f} has extension .txt" if f.extname == ".txt" }
+original_file.txt has extension .txt
+simple_file.txt has extension .txt
+=> [#<Pathname:.>, #<Pathname:..>, #<Pathname:original_file.txt>, #<Pathname:simple_file.txt>]
+#+END_SRC
+()In the example above, when I required 'pathname', it came back 'false' because I'd already required.)

@@ -4913,3 +4913,40 @@ This is simple in Ruby. Here are a couple options:
   + *puts* adds a line break to the end of strings
   + *write* does not
 - Closing files is very important. Ruby will automatically close files if the open method is called with a block.
+
+Using the *write* method:
+
+#+BEGIN_SRC ruby
+irb(main):003:0> File.open("simple_file.txt", "w") {|file| file.write("adding first line of text") }
+File.open("simple_file.txt", "w") {|file| file.write("adding first line of text") }
+=> 25
+#+END_SRC
+
+Using the *w* option, this opens the file and invokes a block to write content to the file. As we've seen, writing a file with a block automatically closes the file.
+
+#+BEGIN_SRC ruby
+irb(main):005:0> File.read("simple_file.txt")
+File.read("simple_file.txt")
+=> "adding first line of text"
+
+#+END_SRC
+
+We can also open the file, write to it, and close it with the *puts* method:
+
+#+BEGIN_SRC ruby
+irb(main):006:0> my_file = File.new("simple_file.txt", "w+")
+my_file = File.new("simple_file.txt", "w+")
+=> #<File:simple_file.txt>
+irb(main):007:0> sample = File.open("simple_file.txt", "w+")
+sample = File.open("simple_file.txt", "w+")
+=> #<File:simple_file.txt>
+irb(main):008:0> sample.puts("another example of writing to a file.")
+sample.puts("another example of writing to a file.")
+=> nil
+irb(main):009:0> sample.close
+sample.close
+=> nil
+irb(main):010:0> File.read("simple_file.txt")
+File.read("simple_file.txt")
+=> "another example of writing to a file.\n"
+#+END_SRC

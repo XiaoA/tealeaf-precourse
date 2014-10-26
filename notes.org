@@ -5492,3 +5492,66 @@ Using the built-in *Time* class, we can confirm that 7/4/2008 was a Friday.
 
 /Author's Note: why is it Math.sqrt and not math.sqrt? This is because sqrt is a "class method", and not an "instance method". So far, we've only been dealing with instance methods, and this is the first time you're seeing a class method. For now, just use the syntax we introduced. We'll talk about the differences between class and instance methods later in the book when we introduce Object Oriented Programming concepts/ ([[http://www.gotealeaf.com/books/ruby/read/more_stuff#rubystandardclasses][Source]]).
 
+** Variables as Pointers
+Variables act as pointers to a place or address space in memory. This is an extremely important concept, but that one can be difficult for beginners, according to the authors. Here are some examples to illustrate this concept:
+
+#+BEGIN_SRC ruby
+irb(main):016:0> a = "hi there"
+a = "hi there"
+=> "hi there"
+irb(main):017:0> b = a
+b = a
+=> "hi there"
+irb(main):018:0> b
+b
+=> "hi there"
+irb(main):019:0> a = "not here"
+a = "not here"
+=> "not here"
+#+END_SRC
+
+Given this pattern, the authors ask what *b* now equals. 
+
+The answer is simple. b was assigned to the value of a, when a = "hi there." Although the value of a has changed, the value of b is still "hi there." And I'll prove it now:
+
+#+BEGIN_SRC ruby
+irb(main):020:0> b
+b
+=> "hi there"
+#+END_SRC
+
+I've already seen this in JavaScript, for example.
+
+The authors then ask what the value of *b* is below:
+
+#+BEGIN_SRC ruby
+irb(main):021:0> a = "hi there"
+a = "hi there"
+=> "hi there"
+irb(main):022:0> b = a
+b = a
+=> "hi there"
+irb(main):023:0> b
+b
+=> "hi there"
+irb(main):024:0> a << ", Bob!"
+a << ", Bob!"
+=> "hi there, Bob!"
+irb(main):025:0> a
+a
+=> "hi there, Bob!"
+
+#+END_SRC
+
+Again, the value of b has not changed, becaue we have not explicitly modified it. The value of *b* remains the same value we assigned ("hi there").
+
+And here is the proof:
+
+#+BEGIN_SRC ruby
+irb(main):026:0> b
+b
+=> "hi there, Bob!"
+#+END_SRC
+
+Oops. I was mistaken in the second example. Using the shovel method to append a value to *a* also changed the value of b.
+

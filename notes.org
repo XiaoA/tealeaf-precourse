@@ -5700,3 +5700,32 @@ Here's the output:
 小A曰:ruby passing_block.rb 
 Block being called in the method!
 #+END_SRC
+
+Here's a more complicated example, which also passes an argument to the method:
+
+#+BEGIN_SRC ruby :tangle 10_more_stuff/passing_block_II.rb
+  # 10_more_stuff/passing_block.rb 
+  # pass a block and an argument to the method
+  
+  def take_block(number, &block)
+    block.call
+  end
+  
+  [1, 2, 3, 4, 5].each do |number|
+    take_block number do
+      puts "Block being called in the method! #{number}"
+    end
+  end
+#+END_SRC
+
+Here's the output:
+#+BEGIN_SRC sh
+小A曰:ruby passing_block_II.rb 
+Block being called in the method! 1
+Block being called in the method! 2
+Block being called in the method! 3
+Block being called in the method! 4
+Block being called in the method! 5
+
+#+END_SRC
+

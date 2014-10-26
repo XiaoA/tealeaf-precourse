@@ -5178,14 +5178,172 @@ A newspaper and an article might be represented in JSON like this:
               "title": "Bacon Cooking",
               "link": "http:/baconcooklove.com",
               "summary": "Just a few thousand ideas about bacon"
-    },
-    {
-        "title": "Cooking with leftovers",
-        "link": "http://love.com",
-        "summary": "Just a few thousand ides about tasting love twice"
-  }
-  ]
+          },
+          {
+              "title": "Cooking with leftovers",
+              "link": "http://love.com",
+              "summary": "Just a few thousand ides about tasting love twice"
+          }
+      ]
       }
   
 #+END_SRC
 
+Like hashes, JSON employs a key/value pair format, but it is a file that must be parsed and converted to a Ruby hash format. The standard Ruby library supports JSON. See Exercise 3, below, for an example of how to use JSON in a Ruby project.
+
+[[http://www.w3.org/XML/][XML]], or *Extensible Markup Language is a useful tool for defining domain-specific schematics. HTML is an specialized form of XML. (OPML is another one that I indirectly use everyday, in my RSS feed reader).
+
+The JSON file above might look like this in XML:
+
+#+BEGIN_SRC html
+
+<newspaper>
+  <name>Cooking Today</name>
+  <issue_date>November 15th, 2014</issue_date>
+  <articles>
+    <article>
+      <title>Bacon Cooking</title>
+      <link>http://baconcooklove.com</link>
+      <summary>Just a few thousand ideas about bacon</summary>
+    </article>
+    <article>
+      <title>Cooking with leftovers</title>
+      <link>http://love.com</link>
+      <summary>Just a few thousand ideas about tasting love twice</summary>
+    </article>
+  </articles>
+</newspaper>
+
+#+END_SRC
+[[http://www.nokogiri.org][Nokogiri]] is a good Ruby gem for parsing XML and web pages.
+
+** Exercise 3
+To wrap up this chapter we are going to work through an exercise that will show us how to interact with these common file types. We will pull news articles from two different sources. One in XML format. One in JSON. We will combine the two lists to a common format, sort them, and save them to CSV and XLS files.
+
+Let's get started. In your command line run these two commands.
+
+#+BEGIN_SRC sh
+$ wget -O feedzilla.json http://api.feedzilla.com/v1/categories/8/articles.json
+$ wget -O slashdot.xml http://rss.slashdot.org/Slashdot/slashdot
+
+#+END_SRC
+
+Following the text's instructions, I peeked at the these two files: 
+
+#+BEGIN_SRC sh
+$ cat feedzilla.json
+$ cat slashdot.xml
+#+END_SRC
+
+Lots of data. I'm not going to copy the output here.
+
+Next, install the *axlsx gem*:
+#+BEGIN_SRC sh
+小A曰:gem install axlsx
+
+#+END_SRC
+I already had nokogiri installed, but this failed for me until I updated from 2.1.2 to 2.1.3 and set 'rbenv global 2.1.3'.
+
+I read that there was a conflict with openssl, but that it had been resolved. I'd been meaning to update my environment, so I cleaned up and updated my installed gems and updated my Ruby, and that seemed to fix it. For future reference, here's the error I got:
+
+#+BEGIN_SRC sh
+小A曰:gem install axlsx
+ERROR:  Loading command: install (LoadError)
+	dlopen(/usr/local/var/rbenv/versions/2.1.2/lib/ruby/2.1.0/x86_64-darwin13.0/openssl.bundle, 9): Symbol not found: _SSLv2_client_method
+  Referenced from: /usr/local/var/rbenv/versions/2.1.2/lib/ruby/2.1.0/x86_64-darwin13.0/openssl.bundle
+  Expected in: /usr/local/opt/openssl/lib/libssl.1.0.0.dylib
+ in /usr/local/var/rbenv/versions/2.1.2/lib/ruby/2.1.0/x86_64-darwin13.0/openssl.bundle - /usr/local/var/rbenv/versions/2.1.2/lib/ruby/2.1.0/x86_64-darwin13.0/openssl.bundle
+ERROR:  While executing gem ... (NoMethodError)
+    undefined method `invoke_with_build_args' for nil:NilClass
+#+END_SRC
+
+After updating my Ruby version and gems, I was able to finish the exercise.
+
+*Note:* The output for each of these steps is really too long to paste here, but all of the files are in the '09_files' subdirectory. I've also included direct links to each file at the very end of this exercise.
+
+#+BEGIN_SRC ruby
+irb(main):001:0> require 'json'
+=> true
+irb(main):002:0> require 'nokogiri'
+=> true
+irb(main):003:0> require 'axlsx'
+=> true
+irb(main):004:0> require 'csv'
+=> true
+#+END_SRC
+
+Next, open the XML file, find the items, and parse them with nokogiri:
+
+#+BEGIN_SRC ruby
+irb(main):010:0> slashdot_articles = []
+=> []
+irb(main):011:0> File.open("slashdot.xml", "r") do |f|
+irb(main):012:1*   doc = Nokogiri::XML(f)
+irb(main):013:1>   slashdot_articles = doc.css('item').map { |i|
+irb(main):014:2*     {
+irb(main):015:3*       title: i.at_css('title').content,
+irb(main):016:3*       link: i.at_css('link').content,
+irb(main):017:3*       summary: i.at_css('description').content
+irb(main):018:3>     }
+irb(main):019:2>   }
+irb(main):020:1> end
+
+
+#+END_SRC
+
+*** The authors explain:
+
+"At this point, the *slashdot_articles* array should be populated with the articles from the slashdot XML RSS feed. We have an array of hashes with fields we want to export. We found all the articles with the doc.css('item') call and then chained it through the map block to pull out the fields we want to export. We are ready to do a similar manauver on the *feedzilla.json* file" ([[http://www.gotealeaf.com/books/ruby/read/files#fileformats][Source]]).
+
+And we do the same with the *feedzilla articles*:
+#+BEGIN_SRC ruby
+irb(main):026:0> feedzilla_articles = [ ]
+=> []
+irb(main):027:0> File.open("feedzilla.json", "r") do |f|
+irb(main):028:1* items = JSON.parse(f.read)
+irb(main):029:1> feedzilla_articles = items['articles'].map { |a|
+irb(main):030:2* {
+irb(main):031:3* title: a['title'],
+irb(main):032:3* link: a['url'],
+irb(main):033:3* summary: a['summary']
+irb(main):034:3> }
+irb(main):035:2> }
+irb(main):036:1> end
+
+irb(main):037:0> sorted_articles = (feedzilla_articles + slashdot_articles).sort_by {|a| a[:title]}
+#+END_SRC
+
+Now, we just need to write the two export files:
+
+#+BEGIN_SRC ruby
+irb(main):038:0> CSV.open("article.csv", "wb") do |csv|
+irb(main):039:1* sorted_articles.each { |a| csv << [ a[:title], a[:link], a[:summary] ] }
+irb(main):040:1> end
+
+#+END_SRC
+
+#+BEGIN_SRC ruby
+irb(main):041:0> pkg = Axlsx::Package.new
+=> #<Axlsx::Package:0x007fdf79859c78 @workbook=nil, @app=#<Axlsx::App:0x007fdf79859b10>, @core=#<Axlsx::Core:0x007fdf79859bd8 @creator="axlsx", @created=nil>>
+irb(main):042:0> pkg.workbook.add_worksheet(:name => "Articles") do |sheet|
+irb(main):043:1* sorted_articles.each { |a| sheet.add_row [a[:title], a[:link], a[:summary]]
+irb(main):044:2> }
+irb(main):045:1> end
+
+#+END_SRC
+
+#+BEGIN_SRC ruby
+irb(main):046:0> pkg.serialize("articles.xlsx")
+=> true
+
+#+END_SRC
+*** Source RSS/XHML Files
+[[file:09_files/feedzilla.json][feedzilla.json]]
+[[file:09_files/slashdot.xml][slashdot.xml]]
+
+*** Output CSV/XLSX Files
+[[file:09_files/article.csv][article.csv]]
+[[file:09_files/articles.xlsx][articles.xlsx]]
+
+** Summary
+In this chapter, we learned how easy it is to work with Ruby files. Assuming that we have the proper permissions, and that the files are correctly formatted, we should be able to open and edit them within Ruby, using tools from the Ruby standard library, as well as supplemental Ruby gems.

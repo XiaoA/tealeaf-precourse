@@ -5449,3 +5449,46 @@ We have a match!
 No match here.
 No match here.
 #+END_SRC
+
+Regular expressions are not something we have use all the time, but they can solve very complex problems in a very elegant and efficient way.
+
+** Ruby Standard Classes
+There are a lot of Gems and other extensions on the standard Ruby class, and it's easy to create your own, but remember to first look at the Ruby Standard Classes, because many problems that you'll encounter have already been solved within Ruby.
+
+For example, the *Math* module contains numerous useful built-in methods to help solve problems. One of this is *sqrt*, which you can use to find the square root of a given number:
+
+#+BEGIN_SRC ruby
+irb(main):008:0> Math.sqrt(400)
+Math.sqrt(400)
+=> 20.0
+#+END_SRC
+
+Another is the constant, *PI*:
+
+#+BEGIN_SRC ruby
+irb(main):009:0> Math::PI
+Math::PI
+=> 3.141592653589793
+#+END_SRC
+
+You could also determine the specific day that July 4th, 2008 fell on:
+
+#+BEGIN_SRC ruby
+irb(main):012:0> t = Time.new(2008, 7, 4)
+t = Time.new(2008, 7, 4)
+=> 2008-07-04 00:00:00 -0500
+irb(main):013:0> t.monday?
+t.monday?
+=> false
+irb(main):014:0> t.tuesday?
+t.tuesday?
+=> false
+irb(main):015:0> t.friday?
+t.friday?
+=> true
+#+END_SRC
+
+Using the built-in *Time* class, we can confirm that 7/4/2008 was a Friday.
+
+/Author's Note: why is it Math.sqrt and not math.sqrt? This is because sqrt is a "class method", and not an "instance method". So far, we've only been dealing with instance methods, and this is the first time you're seeing a class method. For now, just use the syntax we introduced. We'll talk about the differences between class and instance methods later in the book when we introduce Object Oriented Programming concepts/ ([[http://www.gotealeaf.com/books/ruby/read/more_stuff#rubystandardclasses][Source]]).
+

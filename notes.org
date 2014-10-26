@@ -5673,3 +5673,30 @@ The authors ask:
 My answer: 
 'a' is an array of [1, 2, 3]. When we use the *map* method to iterate through the array and append a string ("I like the #{letter}"), we're creating a new array with that a string for each element of the array. The *map* method doesn't permanently alter the array, but *map!* does.
 
+** Blocs and Procs
+
+This section will go a little deeper into the power of blocks. Blocks, like parameters, can be passed into a method, in the same way that normal variables are. This is extremely powerful!
+
+*File:* 10_more_stuff/passing_block.rb
+#+BEGIN_SRC ruby :tangle 10_more_stuff/passing_block.rb
+    # 10_more_stuff/passing_block.rb
+    
+  def take_block(&block)
+    block.call
+  end
+  
+  take_block do
+    puts "Block being called in the method!"
+  end
+    
+#+END_SRC
+
+The ampersand (&) in the method definition signals that the argument is a block. It could be named anything. The block needs to be the last parameter in the method definition. When we're ready, we call it like any method: *take_block*. Here's the difference: because this method can accept a block, we pass in *do/end* into the code block.
+
+We've been using blocks all along, but this is the first time that we've defined an original method that takes a block as an argument!
+
+Here's the output:
+#+BEGIN_SRC sh
+小A曰:ruby passing_block.rb 
+Block being called in the method!
+#+END_SRC

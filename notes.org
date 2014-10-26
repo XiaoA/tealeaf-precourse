@@ -5411,3 +5411,41 @@ We have a match!
 No match here.
 No match here.
 #+END_SRC
+
+In addition to the *=~* operator, we can use the *match* method to find regex matches. This method returns a *Matchdata* object, which describes the match, or a *nil*.
+
+#+BEGIN_SRC ruby
+irb(main):007:0> /b/.match("powerball")
+/b/.match("powerball")
+=> #<MatchData "b">
+#+END_SRC
+
+*Matchdata* objects can act as boolean values in Ruby programs. For example:
+
+#+BEGIN_SRC ruby :tangle 10_more_stuff/boolean_matchdata.rb
+  # :tangle 10_more_stuff/boolean_matchdata.rb
+        
+  def has_a_b?(string)
+    if /b/.match(string)
+      puts "We have a match!"
+    else
+      puts "No match here."
+    end 
+  end
+    
+has_a_b?("basketball")  
+has_a_b?("football")
+has_a_b?("hockey")
+has_a_b?("golf")
+          
+#+END_SRC 
+
+The output is the same!
+
+#+BEGIN_SRC sh
+小A曰:ruby boolean_matchdata.rb 
+We have a match!
+We have a match!
+No match here.
+No match here.
+#+END_SRC

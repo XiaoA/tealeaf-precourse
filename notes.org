@@ -5347,3 +5347,67 @@ irb(main):046:0> pkg.serialize("articles.xlsx")
 
 ** Summary
 In this chapter, we learned how easy it is to work with Ruby files. Assuming that we have the proper permissions, and that the files are correctly formatted, we should be able to open and edit them within Ruby, using tools from the Ruby standard library, as well as supplemental Ruby gems.
+
+* More Stuff
+This is a collection of important things to know to help round out a Ruby programmer's knowledge.
+
+** Regex (Regexp)
+I've been working with regex for years, but it's one of those things that you tend to forget if you don't use it. I use it for simple things on Unix-like command lines, at work when I am working in an Oracle SQL database, and also in Emacs. I'm spoiled with Emacs, but there are a number of regex functions that are easy to use and easy to understand, so I don't usually have to spend a lot of time building complex regular expressions on a daily basis. When I do, it's pretty easy to either use Emacs 'regex-builder' or search online for what I need to do.
+
+Regular expressions are patterns that we can use to form rules for searching strings. Most modern applications include a "Find" tool, but regular expressions allow us to find many different kinds of patterns that would be difficult or impossible for a simple Find/Replace tool. For example:
+
+1. Check if the pattern "ss" appears in the string "Mississippi".
+2. Print out the 3rd word of each sentence from a list of sentences.
+3. Find and replace all instances of "Mrs" with "Ms" in a sentence.
+4. Does a string start with "St"?
+5. Does a string end with "art"?
+6. Does a string have non-alphanumeric characters in it?
+7. Are there any whitespace characters in the string?
+8. Find and replace all non-alphanumeric characters in a string with "-".
+
+The first example is the most common usage, so that is the one that this section will focus on. 
+
+Regular expressions in Ruby begin with a forward slash (/). Place what you want to match between two forward slashes. 
+
+We can use the *=~* operator to see if we have a match. For example, to search for the letter 'b' in 'powerball', we could write a regexp like this:
+
+#+BEGIN_SRC ruby
+irb(main):005:0> 'powerball' =~ /b/
+'powerball' =~ /b/
+=> 5
+irb(main):006:0> "powerball" =~ /b/
+"powerball" =~ /b/
+=> 5
+
+#+END_SRC
+
+Note that we can use either single or double quotes, and that the search told us that 'b' was the fifth index of the string (counting from 0, as always).
+
+*File:* 10_more_stuff/boolean_regex.rb
+#+BEGIN_SRC ruby :tangle 10_more_stuff/boolean_regex.rb
+  # 10_more_stuff/boolean_regex.rb
+  
+  def has_a_b?(string)
+    if string =~ /b/
+      puts "We have a match!"
+    else 
+      puts "No match here."
+    end
+  end
+  
+  has_a_b?("basketball")
+  has_a_b?("football")
+  has_a_b?("hockey")
+  has_a_b?("golf")
+  
+#+END_SRC
+
+And here's the output: sh
+
+#+BEGIN_SRC 
+小A曰:ruby boolean_regex.rb 
+We have a match!
+We have a match!
+No match here.
+No match here.
+#+END_SRC

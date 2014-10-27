@@ -6181,6 +6181,7 @@ Authors' solution:
 
 Nothing is printed to the screen because the block is never activated with the *.call* method. The method returns a Proc object.
 
+*File:* [[10_more_stuff/exercise2.md]]
 #+BEGIN_SRC md :tangle 10_more_stuff/exercise2.md
 In notes.org, before I tested it in irb or checked the authors' solution, I wrote:
 
@@ -6188,3 +6189,45 @@ In notes.org, before I tested it in irb or checked the authors' solution, I wrot
 
 In fact, it returns a proc object, but it prints nothing, because the *call* method was not included in the block.
 #+END_SRC
+
+*** Problem 3
+What is exception handling and what problem does it solve?
+
+*** Solution 3
+
+*File:* [[10_more_stuff/exercise3.md]]
+#+BEGIN_SRC md :tangle 10_more_stuff/exercise3.md
+The authors explained in this chapter that we can consider exceptions to be errors. When **nil** or other errors are introduced into our programs, they can cause them to stop running.
+
+By including instructions on how to handle exceptions, we allow our programs to run, and also provide us with useful debugging information.
+#+END_SRC
+
+Authors' Solution:
+
+#+BEGIN_SRC md
+Exception handling is a structure used to handle the possibility of an error occurring in a program. It is a way of handling the error by changing the flow of control without exiting the program entirely.
+#+END_SRC
+
+*** Problem 4
+Modify the code in exercise 2 to make the block execute properly.
+
+*** Solution 4
+*File:* [[10_more_stuff/exercise4.rb]]
+#+BEGIN_SRC ruby :tangle 10_more_stuff/exercise4.rb
+# Adding a call method to the block will make the block execute properly.
+
+def execute(&block)
+  block.call
+end
+
+execute { puts "Hello from inside the execute method!" }
+#+END_SRC
+
+*Output:*
+
+#+BEGIN_SRC sh
+小A曰:ruby exercise4.rb
+Hello from inside the execute method!
+#+END_SRC
+
+

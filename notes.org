@@ -5915,3 +5915,151 @@ divided by 0
 The *ZeroDivisionError* has been saved into variable *e* when we tried to divide 4 / 0. We can access the *message* method that the *ZeroDivisionError* class has access to.
 
 Anticipating errors and providing ways of handling exceptions is an important skill to develop. Otherwise, errors will break your programs!
+
+** Exceptions & Stack Traces
+
+An exception is essentially like an error. When something goes wrong, we say, "an exception is thrown." It's essential to learn how to read error messages, and look for clues of what went wrong.
+
+For example:
+
+#+BEGIN_SRC ruby
+irb(main):052:0> "1" + 1
+"1" + 1
+TypeError: no implicit conversion of Fixnum into String
+	from (irb):52:in `+'
+	from (irb):52
+	from /usr/bin/irb:12:in `<main>'
+#+END_SRC
+
+An exception was thrown (raised) because we tried to add a string and an integer, and Ruby was unable to do this. This is a *TypeError*.
+
+Here are some other common error types:
+
+- StandardError
+- TypeError
+- ArgumentError
+- NoMethodError
+- RuntimeError
+- SystemCallError
+- ZeroDivisionError
+- RegexpError
+- IOError
+- EOFError
+- ThreadError
+- ScriptError
+- SyntaxError
+- LoadError
+- NotImplementedError
+- SecurityError
+
+Unfortunately, I've already enountered some of these...
+
+*File:* 10_more_stuff/greeting.rb
+#+BEGIN_SRC ruby :tangle 10_more_stuff/greeting.rb
+  # 10_more_stuff/greeting.rb
+  def greet(person)
+    puts "Hello, " + person
+  end
+  
+  greet("John")
+  greet(1)
+    
+#+END_SRC
+
+Here's the output:
+#+BEGIN_SRC sh
+小A曰:ruby greeting.rb 
+Hello, John
+greeting.rb:3:in `+': no implicit conversion of Fixnum into String (TypeError)
+	from greeting.rb:3:in `greet'
+	from greeting.rb:7:in `<main>'
+#+END_SRC
+
+The authors expalain:
+
+#+BEGIN_SRC md
+The first use of the greet method supplies a String as the parameter, and so the output is what you'd expect it to be. But when we pass 1 as the argument into the greet method, we get a TypeError exception. We already mentioned the first line: it's the error type and the error message. But what do the other lines mean?
+
+Part of this involves understanding how execution works within Ruby, involving the 'stack'. When ruby calls a function, the function is added to Ruby's 'stack'. In the simple example above when we called greet("John"), program execution would look like this:
+#+END_SRC
+
+#+BEGIN_SRC sh
+main -> greet -> puts -> exit and return to main
+#+END_SRC
+
+The authors continue:
+
+#+BEGIN_SRC md
+Now we can make a little more sense of the output from the error, as it provides a detailed trace (known as a stack trace) that shows the flow of execution and where the error occurred. One important thing to note is that the stack trace will go from the most recent piece of code to the top level, as stacks function in a manner known as "First in, First out".
+
+In the second method invocation, greet(1), an error occurs and the program execution flow didn't exit back to main, and stayed in the greet method. The program execution looks like this:
+#+END_SRC
+
+#+BEGIN_SRC sh
+main -> greet -> puts
+#+END_SRC
+
+Now, here's the error again:
+
+#+BEGIN_SRC sh
+greeting.rb:2:in +': no implicit conversion of Fixnum into String (TypeError) from greeting.rb:2:in greet'
+from greeting.rb:6:in `<main>'
+#+END_SRC
+
+#+BEGIN_SRC md
+The stack trace first tells us where the error occurred and why: line 2 of greeting.rb, and because the types don't match. The error occured due to the call made in the 'main' context on line 6, which contains the line that called the method with incorrect arguments, line 2.
+
+This is a fairly shorter error stack trace than most. Let's take a look a slightly more complex example. Note: try not to worry about anything you don't understand in the code yet, just pay attention to the stack trace and how it allows you to see what called which method, and provides a trail of calls.
+#+END_SRC
+
+*File:* 10_more_stuff/greet.rb
+#+BEGIN_SRC ruby :tangle 10_more_stuff/greet.rb
+  # 10_more_stuff/greet.rb
+  
+  def space_out_letters(person)
+    return person.split("").join(" ")
+  end
+  
+  def greet(person)
+    return "H e l l o, " + space_out_letters(person)
+  end
+  
+  def decorate_greeting(person)
+    puts "" + greet(person) + ""
+  end
+  
+  decorate_greeting("John")
+  decorate_greeting(1)
+#+END_SRC
+
+Here's the result:
+
+#+BEGIN_SRC sh
+小A曰:ruby greet.rb
+H e l l o, J o h n
+greet.rb:4:in `space_out_letters': undefined method `split' for 1:Fixnum (NoMethodError)
+	from greet.rb:8:in `greet'
+	from greet.rb:12:in `decorate_greeting'
+	from greet.rb:16:in `<main>'
+#+END_SRC
+
+The first example works, but the second throws an exception. The normal flow of execution should be:
+
+#+BEGIN_SRC md
+main -> decorate_greeting -> greet -> space_out_letters (passes result back) -> greet -> decorate_greeting -> main
+#+END_SRC
+
+According to the authors:
+#+BEGIN_SRC md
+Looking at the stack trace, you can see this happening: on line 14 (the beginning of the chain where the error originated) the decorate_greeting method is called. It then identifies line 10, where the greet method is called by decorate_greeting, and then line 6 where greet calls space_out_letters. Because the function 'split' expects a string, we get an error, along with a trace of the calls that lead up to that error. In a small script this is less useful, but in a larger codebase, being able to trace the execution flow is a very useful way to drill down to the source of the error.
+#+END_SRC
+
+** Exercises
+
+*** Problem 1
+Write a program that checks if the sequence of characters "lab" exists in the following strings. If it does exist, print out the word.
+- "laboratory"
+- "experiment"
+- "Pans Labyrinth"
+- "elaborate"
+- "polar bear"

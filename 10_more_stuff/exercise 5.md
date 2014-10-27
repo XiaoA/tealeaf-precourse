@@ -1,0 +1,1 @@
+I've encountered that kind of error before. Whenever you see an error that says you have the 'wrong number of arguments' pay attention to the ratio. In this case, '0 for 1'....So there should be one argument, but there's something missing. Comparing this to #2, it's obvious! It's missing the '&'.

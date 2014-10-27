@@ -6230,4 +6230,34 @@ execute { puts "Hello from inside the execute method!" }
 Hello from inside the execute method!
 #+END_SRC
 
+*** Problem 5
+Why does the following code...
 
+#+BEGIN_SRC ruby
+def execute(block)
+  block.call
+end
+
+
+execute { puts "Hello from inside the execute method!" }
+#+END_SRC
+
+Give us the following error when we run it?
+
+#+BEGIN_SRC sh
+block.rb1:in `execute': wrong number of arguments (0 for 1) (ArgumentError)
+from test.rb:5:in `<main>'
+#+END_SRC
+
+*** Solution 5
+
+*File:* [[10_more_stuff/exercise%205.md][10_more_stuff/exercise 5.md]]
+#+BEGIN_SRC md :tangle 10_more_stuff/exercise 5.md
+I've encountered that kind of error before. Whenever you see an error that says you have the 'wrong number of arguments' pay attention to the ratio. In this case, '0 for 1'....So there should be one argument, but there's something missing. Comparing this to #2, it's obvious! It's missing the '&'.
+#+END_SRC
+
+Authors' solution:
+
+#+BEGIN_SRC md
+The method parameter block is missing the ampersand sign & that allows a block to be passed as a parameter.
+#+END_SRC

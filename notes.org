@@ -6090,3 +6090,25 @@ And here's the output:
 'laboratory' has 'lab' so it makes the cut
 'elaborate' has 'lab' so it makes the cut
 #+END_SRC
+
+Here's what the authors did:
+
+#+BEGIN_SRC ruby
+def check_in(word)
+  if /lab/ =~ word
+    puts word
+  else
+    puts "No match"
+  end
+end
+
+
+check_in("laboratory")
+check_in("experiment")
+check_in("Pans Labyrinth")
+check_in("elaborate")
+check_in("polar bear")
+
+#+END_SRC
+
+The main difference is that they used an 'else' statement, which returns "No match" when the /lab/ string was not found. I originally included a similar string, but decided to remove it, so that it only mentioned the words that met the search terms.

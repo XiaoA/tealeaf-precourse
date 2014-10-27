@@ -6147,3 +6147,44 @@ If we wanted to include that, we could make our search /case insensitive/ by add
   if string =~ /lab/i
   ...
 #+END_SRC
+
+*** Problem 2
+What will the following program print to the screen? What will it return?
+
+#+BEGIN_SRC ruby
+def execute(&block)
+  block
+end
+
+execute { puts "Hello from inside the execute method!" }
+
+#+END_SRC
+
+*** Solution 2
+My guess, without running anything, is that it won't print anything. I guess it might return 'nil' or an error. The last line looks wrong.
+
+Running it in irb:
+
+#+BEGIN_SRC ruby
+irb(main):001:0> def execute(&block)
+irb(main):002:1> block
+irb(main):003:1> end
+=> :execute
+irb(main):004:0> execute { puts "Hello from inside the execute method!" }
+=> #<Proc:0x007f98dc8617b8@(irb):4>
+irb(main):005:0> execute
+=> nil
+
+#+END_SRC
+
+Authors' solution:
+
+Nothing is printed to the screen because the block is never activated with the *.call* method. The method returns a Proc object.
+
+#+BEGIN_SRC md :tangle 10_more_stuff/exercise2.md
+In notes.org, before I tested it in irb or checked the authors' solution, I wrote:
+
+"My guess, without running anything, is that it won't print anything. I guess it might return 'nil' or an error. The last line looks wrong."
+
+In fact, it returns a proc object, but it prints nothing, because the *call* method was not included in the block.
+#+END_SRC

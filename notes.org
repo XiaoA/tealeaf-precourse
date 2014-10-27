@@ -6261,3 +6261,68 @@ Authors' solution:
 #+BEGIN_SRC md
 The method parameter block is missing the ampersand sign & that allows a block to be passed as a parameter.
 #+END_SRC
+
+* Exercises
+
+** Problem 1
+Use the *each* method of Array to iterate over [1, 2, 3, 4, 5, 6, 7, 8, 9, 10], and print out each value.
+
+** Solution 1
+
+*File:* [[11_exercises/exercise1.rb]]
+#+BEGIN_SRC ruby :tangle 11_exercises/exercise1.rb
+  # 11_exercises/exercise1.rb
+  # Use the *each* method of Array to iterate over [1, 2, 3, 4, 5, 6, 7, 8, 9, 10], and print out each value.
+  
+  arr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+  arr.each {|num| puts num }
+  
+#+END_SRC
+
+The authors added a multiline version, which is a good idea. I'll refactor mine:
+
+*File* [[11_exercises/exercise1_multiline.rb]]
+#+BEGIN_SRC ruby :tangle 11_exercises/exercise1_multiline.rb
+  # 11_exercises/exercise1_multiline.rb
+    # Use the *each* method of Array to iterate over [1, 2, 3, 4, 5, 6, 7, 8, 9, 10], and print out each value. (Adding mulitline version)
+    
+    arr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]  
+  # single line version
+    puts "-Single Line Version-"
+    arr.each {|num| puts num }
+  
+  # multi-line version
+    puts "\n-Mutiple Line Version-"
+    arr.each do |num|
+      puts num
+    end
+#+END_SRC
+
+Here's the output:
+
+#+BEGIN_SRC sh
+小A曰:ruby exercise1_multiline.rb
+-Single Line Version-
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+
+-Mutiple Line Version-
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+#+END_SRC

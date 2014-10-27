@@ -5977,7 +5977,7 @@ greeting.rb:3:in `+': no implicit conversion of Fixnum into String (TypeError)
 
 The authors expalain:
 
-#+BEGIN_SRC md
+#+BEGIN_SRC markdown
 The first use of the greet method supplies a String as the parameter, and so the output is what you'd expect it to be. But when we pass 1 as the argument into the greet method, we get a TypeError exception. We already mentioned the first line: it's the error type and the error message. But what do the other lines mean?
 
 Part of this involves understanding how execution works within Ruby, involving the 'stack'. When ruby calls a function, the function is added to Ruby's 'stack'. In the simple example above when we called greet("John"), program execution would look like this:
@@ -5989,7 +5989,7 @@ main -> greet -> puts -> exit and return to main
 
 The authors continue:
 
-#+BEGIN_SRC md
+#+BEGIN_SRC markdown
 Now we can make a little more sense of the output from the error, as it provides a detailed trace (known as a stack trace) that shows the flow of execution and where the error occurred. One important thing to note is that the stack trace will go from the most recent piece of code to the top level, as stacks function in a manner known as "First in, First out".
 
 In the second method invocation, greet(1), an error occurs and the program execution flow didn't exit back to main, and stayed in the greet method. The program execution looks like this:
@@ -6006,7 +6006,7 @@ greeting.rb:2:in +': no implicit conversion of Fixnum into String (TypeError) fr
 from greeting.rb:6:in `<main>'
 #+END_SRC
 
-#+BEGIN_SRC md
+#+BEGIN_SRC markdown
 The stack trace first tells us where the error occurred and why: line 2 of greeting.rb, and because the types don't match. The error occured due to the call made in the 'main' context on line 6, which contains the line that called the method with incorrect arguments, line 2.
 
 This is a fairly shorter error stack trace than most. Let's take a look a slightly more complex example. Note: try not to worry about anything you don't understand in the code yet, just pay attention to the stack trace and how it allows you to see what called which method, and provides a trail of calls.
@@ -6045,12 +6045,12 @@ greet.rb:4:in `space_out_letters': undefined method `split' for 1:Fixnum (NoMeth
 
 The first example works, but the second throws an exception. The normal flow of execution should be:
 
-#+BEGIN_SRC md
+#+BEGIN_SRC
 main -> decorate_greeting -> greet -> space_out_letters (passes result back) -> greet -> decorate_greeting -> main
 #+END_SRC
 
 According to the authors:
-#+BEGIN_SRC md
+#+BEGIN_SRC 
 Looking at the stack trace, you can see this happening: on line 14 (the beginning of the chain where the error originated) the decorate_greeting method is called. It then identifies line 10, where the greet method is called by decorate_greeting, and then line 6 where greet calls space_out_letters. Because the function 'split' expects a string, we get an error, along with a trace of the calls that lead up to that error. In a small script this is less useful, but in a larger codebase, being able to trace the execution flow is a very useful way to drill down to the source of the error.
 #+END_SRC
 
@@ -6182,12 +6182,12 @@ Authors' solution:
 Nothing is printed to the screen because the block is never activated with the *.call* method. The method returns a Proc object.
 
 *File:* [[10_more_stuff/exercise2.md]]
-#+BEGIN_SRC md :tangle 10_more_stuff/exercise2.md
+#+BEGIN_SRC markdown :tangle 10_more_stuff/exercise2.md
 In notes.org, before I tested it in irb or checked the authors' solution, I wrote:
 
 "My guess, without running anything, is that it won't print anything. I guess it might return 'nil' or an error. The last line looks wrong."
 
-In fact, it returns a proc object, but it prints nothing, because the *call* method was not included in the block.
+In fact, it returns a proc object, but it prints nothing, because the **call** method was not included in the block.
 #+END_SRC
 
 *** Problem 3
@@ -6196,7 +6196,7 @@ What is exception handling and what problem does it solve?
 *** Solution 3
 
 *File:* [[10_more_stuff/exercise3.md]]
-#+BEGIN_SRC md :tangle 10_more_stuff/exercise3.md
+#+BEGIN_SRC markdown :tangle 10_more_stuff/exercise3.md
 The authors explained in this chapter that we can consider exceptions to be errors. When **nil** or other errors are introduced into our programs, they can cause them to stop running.
 
 By including instructions on how to handle exceptions, we allow our programs to run, and also provide us with useful debugging information.
@@ -6204,7 +6204,7 @@ By including instructions on how to handle exceptions, we allow our programs to 
 
 Authors' Solution:
 
-#+BEGIN_SRC md
+#+BEGIN_SRC markdown
 Exception handling is a structure used to handle the possibility of an error occurring in a program. It is a way of handling the error by changing the flow of control without exiting the program entirely.
 #+END_SRC
 
@@ -6252,13 +6252,13 @@ from test.rb:5:in `<main>'
 *** Solution 5
 
 *File:* [[10_more_stuff/exercise%205.md][10_more_stuff/exercise 5.md]]
-#+BEGIN_SRC md :tangle 10_more_stuff/exercise 5.md
+#+BEGIN_SRC markdown :tangle 10_more_stuff/exercise 5.md
 I've encountered that kind of error before. Whenever you see an error that says you have the 'wrong number of arguments' pay attention to the ratio. In this case, '0 for 1'....So there should be one argument, but there's something missing. Comparing this to #2, it's obvious! It's missing the '&'.
 #+END_SRC
 
 Authors' solution:
 
-#+BEGIN_SRC md
+#+BEGIN_SRC markdown
 The method parameter block is missing the ampersand sign & that allows a block to be passed as a parameter.
 #+END_SRC
 
@@ -6325,4 +6325,124 @@ Here's the output:
 8
 9
 10
+#+END_SRC
+
+** Problem 2
+Same as above, but only print out values greater than 5.
+
+** Solution 2
+I'm going to need a conditional statement here...
+
+*File:* [[11_exercises/exercise2.rb]]
+#+BEGIN_SRC ruby :tangle 11_exercises/exercise2.rb
+    # 11_exercises/exercise2.rb
+    # Same as exercise 1, but only prints out values greater than 5.
+    
+    arr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+    
+    puts "The following numbers are higher than 5, but lower than 11:"
+    arr.each do |num|
+      if num > 5
+        puts num
+      end
+    end
+#+END_SRC
+
+And the output:
+#+BEGIN_SRC sh
+小A曰:ruby exercise2.rb
+The following numbers are higher than 5, but lower than 11:
+6
+7
+8
+9
+10
+#+END_SRC
+
+Oops, the authors also did a one-line version:
+#+BEGIN_SRC ruby
+# one line version
+arr.each do { |number| puts number if number > 5 }
+
+# multi-line version
+arr.each do |number|
+  if number > 5
+    puts number
+  end
+end
+
+#+END_SRC
+
+I'll update mine to include a one-line version:
+
+*File:* [[11_exercises/exercise2_final.rb]]
+#+BEGIN_SRC ruby :tangle 11_exercises/exercise2_final.rb
+  # 11_exercises/exercise2_final.rb
+  # Updated to include single line version
+  
+  arr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+  
+  # single line version
+  
+  puts "- Single Line Version - "
+  puts "The following numbers are higher than 5, but lower than 11:"
+  arr.each { |num| puts num if num > 5 }
+    
+  puts "\n"
+  puts "- Multiple Line Version - "
+  puts "The following numbers are higher than 5, but lower than 11:"
+  arr.each do |num|
+    if num > 5
+      puts num
+    end
+  end
+#+END_SRC
+
+*Note: I found a typo in the book, and reported it to the authors. They fixed it within a few minutes, but because of this, I learned a very good lesson. Here's the relevant part from email I sent:
+
+
+#+BEGIN_SRC markdown
+I'm working on the 2nd exercise in the final set of [Exercises](http://www.gotealeaf.com/books/ruby/read/intro_exercises) for pre-course1. Comparing the solution for exercises #1 and #2, there's an extra 'do' in the solution for #2: arr.each **do**. 
+
+I can't get the solution 2 one line answer to work with 'do' (unless I remove the '{ }' brackets. I'm not sure if I've just overlooked something, but I've found two ways to get the answer. The first was my original answer, and the second was the only way I could use 'do' and get it to work:
+
+### Version 1: Without 'do'
+小A曰:irb
+irb(main):001:0> arr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+=> [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+irb(main):002:0> arr.each { |num| puts num if num > 5 }
+6
+7
+8
+9
+10
+=> [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+
+### Version 2: With 'do
+irb(main):003:0> arr
+=> [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+irb(main):004:0> arr.each do |num| puts num if num > 5
+irb(main):005:1> end
+6
+7
+8
+9
+10
+=> [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+#+END_SRC
+
+The takeaway for me is that you can either do this:
+
+*File:* [[11_exercises/syntax_note.rb]]
+#+BEGIN_SRC ruby :tangle 11_exercises/syntax_note.rb
+# The takeaway for me is that you can either use 'do' without {} brackets:
+arr.each do |num| puts num if num > 5
+
+# Or use brackets without 'do':
+
+arr.each { |num| puts num if num > 5 }
+
+#But you *can't* use both do and {}:
+# this code will produce an error!
+# arr.each do { |num| puts num if num > 5 }
 #+END_SRC

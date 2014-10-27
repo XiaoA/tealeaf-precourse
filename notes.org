@@ -6112,3 +6112,38 @@ check_in("polar bear")
 #+END_SRC
 
 The main difference is that they used an 'else' statement, which returns "No match" when the /lab/ string was not found. I originally included a similar string, but decided to remove it, so that it only mentioned the words that met the search terms.
+
+I can fix that, so that it more closely matches the authors' answer:
+
+
+*File:* [[10_more_stuff/exercise1.rb]]
+#+BEGIN_SRC ruby :tangle 10_more_stuff/exercise1.rb
+    # 10_more_stuff/exercise1.rb
+    
+    def has_lab?(string)
+      if string =~ /lab/
+        puts "'#{string}' has 'lab' so it makes the cut."
+      else
+        puts "Sorry, no match."
+      end
+    end
+  
+  has_lab?("laboratory")
+  has_lab?("experiment")
+  has_lab?("Pans Labyrinth")
+  has_lab?("elaborate")
+  has_lab?("polar bear")
+  
+#+END_SRC
+
+One really good point from the video walkthrough: The third line, with the string "Pans Labryinth," is not matched, because of the uppercase 'L.'
+
+If we wanted to include that, we could make our search /case insensitive/ by adding an 'i' after the search term (/lab/), like this:
+
+
+#+BEGIN_SRC ruby 
+  # Case insensitive search
+  ...
+  if string =~ /lab/i
+  ...
+#+END_SRC

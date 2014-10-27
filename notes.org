@@ -5802,3 +5802,116 @@ Here's what we get:
 
 Using procs also allows us the flexibility to reuse blocks in more than one place, without having to type out each instance.
 
+** Exception Handling
+*Exception Handling*
+- A process that handles errors in a manageable and predictable way.
+- The reserved words *begin*, *rescue*, and *end* are often used in Ruby for handling exceptions.
+- Additionally, Ruby provides an *Exception* class.
+- Programs can be unpredictable. Your program should include instructions for what to do when something goes wrong, for example:
+  + Users can enter bad information.
+  + The file manipulation process can be corrupted.
+
+Here is an example of how this works:
+
+*File:* 10_more_stuff/excpetion_example.rb
+#+BEGIN_SRC ruby :tangle 10_more_stuff/excpetion_example.rb
+  # 10_more_stuff/excpetion_example.rb
+  
+  begin
+  # perform some dangerous operation
+  
+  rescue
+    # do this if the operation fails
+    # log the error
+  
+  end
+#+END_SRC
+
+It's important to be prepared for handling exceptions. A common example is when a *nil* values gets into the program.
+
+Let's try this example:
+
+*File:* 10_more_stuff/exception_example_II.rb
+#+BEGIN_SRC ruby :tangle 10_more_stuff/exception_example_II.rb
+      # 10_more_stuff/exception_example_II.rb
+      
+      names = ['bob', 'joe', 'steve', nil, 'frank']
+      
+      names.each do |name| 
+        begin
+          puts "#{name}'s names has #{name.length} letters in it."
+        rescue
+          puts "Something went wrong!"
+        end
+      end
+  
+#+END_SRC
+
+Here's the output (note the fourth line):
+#+BEGIN_SRC ruby
+小A曰:ruby exception_example_II.rb
+bob's names has 3 letters in it.
+joe's names has 3 letters in it.
+steve's names has 5 letters in it.
+Something went wrong!
+frank's names has 5 letters in it.
+#+END_SRC
+
+When the program hit the *nil.value* iteration, it threw an exception. If we'd not included the *begin/rescue/end* block, the program would have stopped when it hit the *nil* value. Instead, it handled the exception, and continued running unitl the end. 
+
+We can also include the *rescue* reserved word inline:
+
+*File:* 10_more_stuff/inline_exception_example.rb
+#+BEGIN_SRC ruby :tangle 10_more_stuff/inline_exception_example.rb
+# 10_more_stuff/inline_exception_example.rb
+zero = 0
+puts "Before each call"
+zero.each { |element| puts element } rescue puts "Can't do that!"
+puts "After each call"
+#+END_SRC
+
+Here's the output:
+
+#+BEGIN_SRC sh
+小A曰:ruby inline_exception_example.rb
+Before each call
+Can't do that!
+After each call
+#+END_SRC
+
+Without the *rescue* block, the program would just fail, instead of being allowed to finish. As the authors explain:
+
+"It does so because it isn't possible to call the each method on an Integer which is the value of the zero variable. If we remove the rescue block, the second puts method will not execute because the program will exit when it runs into the error. You can see why the word "rescue" is relevant here. We are effectively rescuing our program from coming to a grinding halt. If we give this same code the proper variable, our rescue block never gets executed" ([[http://www.gotealeaf.com/books/ruby/read/more_stuff#exceptionhandling][Source]]).
+
+The *divide* method allows us to rescue pre-existing errors:
+
+*File:* 10_more_stuff/divide.rb
+#+BEGIN_SRC ruby :tangle 10_more_stuff/divide.rb
+  # 10_more_stuff/divide.rb
+  
+  def divide(number, divisor)
+    begin
+      answer = number / divisor 
+      rescue ZeroDivisionError => e
+      puts e.message
+    end
+  end
+
+puts divide(16, 4)
+puts divide(4, 0)
+puts divide(14, 7)
+#+END_SRC
+
+Which gives us:
+
+#+BEGIN_SRC sh
+小A曰:ruby divide.rb
+4
+divided by 0
+
+2
+#+END_SRC
+
+The *ZeroDivisionError* has been saved into variable *e* when we tried to divide 4 / 0. We can access the *message* method that the *ZeroDivisionError* class has access to.
+
+Anticipating errors and providing ways of handling exceptions is an important skill to develop. Otherwise, errors will break your programs!

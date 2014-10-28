@@ -6503,3 +6503,32 @@ Output:
 #+END_SRC
 
 I got the same answer as the authors!
+
+** Problem 5
+Get rid of "11". And append a "3".
+
+** Solution
+To get rid of the 11, I'll use the *pop* method.
+
+[[11_exercises/exercise%205.rb][11_exercises/exercise5.rb]]
+#+BEGIN_SRC ruby :tangle 11_exercises/exercise5.rb
+# 11_exercises/exercise 5.rb
+# Get rid of "11". And append a "3".
+
+arr = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
+
+# Remove 11
+arr.pop
+
+# Append 3
+arr.push(3)
+# or: 
+# arr << 3
+p arr
+#+END_SRC
+
+*Output:*
+#+BEGIN_SRC ruby
+小A曰:ruby exercise5.rb
+[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 3]
+#+END_SRC

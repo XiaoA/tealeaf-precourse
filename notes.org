@@ -6576,3 +6576,33 @@ Here's the output:
 "now dup_arr no longer has duplicates: [1, 3, 4, 5, 6]"
 
 #+END_SRC
+
+** Problem 7
+What's the major difference between an Array and a Hash?
+
+** Solution 7
+*File:* [[11_exercises/exercise7.md]]
+#+BEGIN_SRC markdown :tangle 11_exercises/exercise7.md
+*11_exercises/exercise7.rb*
+## What's the major difference between an Array and a Hash?
+
+### Arrays
+- ordered lists
+- can contain any data types
+- can be nested
+- usually referenced by index
+
+### Hashes
+- key/value pairs
+- can contain any value types, as long as they share a key/value relationship
+- similar to a simple database
+- can be referenced by key or value
+
+Arrays are lists that hold data. Hashes are key/value pairs, which store relational data.
+
+#+END_SRC
+
+The authors wrote:
+#+BEGIN_SRC markdown
+The major difference between an array and a hash is that a hash contains a key value pair for referencing by key.
+#+END_SRC

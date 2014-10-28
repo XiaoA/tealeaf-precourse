@@ -6475,3 +6475,31 @@ Now, using the same array from #2, use the *select* method to extract all odd nu
         end
        #+END_SRC
 
+** Problem 4
+Append "11" to the end of the original array. Prepend "0" to the beginning.
+
+** Solution 4
+
+*File:* [[11_exercises/exercise4.rb]]
+#+BEGIN_SRC ruby :tangle 11_exercises/exercise4.rb
+# 11_exercises/exercise4.rb
+# Append "11" to the end of the original array. Prepend "0" to the beginning.
+
+arr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+
+# There's probably way to do these two actions in one line
+append_arr = arr << 11
+# or: append_arr.push(11)
+prepend_arr = arr.unshift(0)
+
+p arr
+#+END_SRC
+
+Output:
+
+#+BEGIN_SRC sh
+小A曰:ruby exercise4.rb
+[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
+#+END_SRC
+
+I got the same answer as the authors!

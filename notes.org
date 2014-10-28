@@ -6446,3 +6446,32 @@ arr.each { |num| puts num if num > 5 }
 # this code will produce an error!
 # arr.each do { |num| puts num if num > 5 }
 #+END_SRC
+
+** Problem 3
+Now, using the same array from #2, use the *select* method to extract all odd numbers into a new array.
+
+** Solution 3
+*File:* [[11_exercises/exercise3.rb]]
+#+BEGIN_SRC ruby :tangle 11_exercises/exercise3.rb
+      # 11_exercises/exercise3.rb
+      # Using the same array from #2, use the *select* method to extract all odd numbers into a new array.
+      
+      arr = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+      
+      odd_arr = arr.select {|num| num.odd? }
+      p odd_arr
+#+END_SRC
+      
+
+      The authors demonstrated how to use the modulo to accomplish this. It works because if a number is even, the modulo will be '0'; odd numbers will return a value of '1'.
+
+      #+BEGIN_SRC ruby
+        # authors' single line version
+        new_arr = arr.select { |number| number % 2 != 0 }
+        
+        # The authors' multi-line version
+        new_arr = arr.select do |number|
+          number % 2 != 0
+        end
+       #+END_SRC
+

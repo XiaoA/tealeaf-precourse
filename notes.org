@@ -6690,9 +6690,9 @@ arr_hash = [{name: 'David'}, {age: 32}, {occupation: 'accountant'}]
 Look at several Rails/Ruby online API sources and say which one you like best and why.
 
 ** Solution 11
-*File:* 11_exercises/exercise11.markdown
-#+BEGIN_SRC markdown :tangle 11_exercises/exercise11.markdown
-*11_exercises/exercise11.markdown*
+*File:* [[11_exercises/exercise11.md]]
+#+BEGIN_SRC markdown :tangle 11_exercises/exercise11.md
+*11_exercises/exercise11.md*
 
 ### Look at several Rails/Ruby online API sources and say which one you like best and why.
 

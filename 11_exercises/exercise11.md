@@ -2,7 +2,7 @@
 
 ### Look at several Rails/Ruby online API sources and say which one you like best and why.
 
-I'm a beginner, so I'm sure my answer will change later, but as I looked throug the Ruby APIs, with so many new and interesting tools, I smiled when I saw 'YAML.'
+I'm a beginner, so I'm sure my answer will change later, but as I looked through the Ruby APIs, with so many new and interesting tools, I smiled when I saw 'YAML.'
 
 I spent a lot of time this year, working with Jekyll blogging, and I build my own site with Jekyll. YAML allows Jekyll to configure their sites, or even individual pages; the title, permalinks, tags, categtories, and third-party account information (e.g., Google+, Flickr, Twitter, etc.). It's an amazingly simple and yet powerful resource for Jekyll.
 

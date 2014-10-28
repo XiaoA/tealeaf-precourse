@@ -6606,3 +6606,21 @@ The authors wrote:
 #+BEGIN_SRC markdown
 The major difference between an array and a hash is that a hash contains a key value pair for referencing by key.
 #+END_SRC
+
+** Problem 8
+Create a Hash using both Ruby syntax styles.
+
+** Solution 8
+*File:* [[11_exercises/exercise8.rb]]
+#+BEGIN_SRC ruby :tangle 11_exercises/exercise8.rb
+# 11_exercises/exercise8.rb
+# "Create a Hash using both Ruby syntax styles."
+
+# Pre-Ruby 1.9 Syntax
+# This was used before 1.9, and is still used whenever the key is anything other than a symbol.
+
+old_hash = {:apple => fruit, :orange => fruit, :lettuce => vegetable, :celery => vegetable, :pork => meat, :chicken => meat}
+
+# Ruby 1.9 or later can use this syntax if the key is a symbol
+new_hash = {apple: fruit, orange: fruit, lettuce: vegetable, celery: vegetable, pork: meat, chicken: meat}
+#+END_SRC

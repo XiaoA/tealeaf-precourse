@@ -6667,3 +6667,21 @@ Suppose you have a hash h = {a:1, b:2, c:3, d:4}
     v < 3.5
   end
 #+END_SRC
+
+** Problem 10
+Can hash values be arrays? Can you have an array of hashes? (give examples)
+
+** Solution 10
+*File:* [[11_exercises/exercise10.rb]]
+#+BEGIN_SRC ruby :tangle 11_exercises/exercise10.rb
+# 11_exercises/exercise10.rb
+# "Can hash values be arrays? Can you have an array of hashes? (give examples)"
+
+# Yes. hash values can be arrays. For example:
+
+hash_arr = {men: ['Hiro', 'Makoto', 'Shinya'], women: ['Ayumi', 'Eri', 'Nana']}
+
+# Yes, you can have an array of hashes. For example:
+
+arr_hash = [{name: 'David'}, {age: 32}, {occupation: 'accountant'}]
+#+END_SRC

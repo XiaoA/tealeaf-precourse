@@ -6752,3 +6752,51 @@ Output:
 
 #+END_SRC
 
+** Problem 13
+
+{"Joe Smith"=>{:email=>"joe@email.com", :address=>"123 Main st.", :phone=>"555-123-4567"}, "Sally Johnson"=>{:email=>"sally@email.com", :address=>"404 Not Found Dr.", :phone=>"123-234-3454"}}
+
+puts contact["Joe Smith"][:email]
+puts contact["Sally Johnson"][:address]
+
+** Solution 13
+
+*File:* [[11_exercises/exercise13.rb]]
+#+BEGIN_SRC ruby :tangle 11_exercises/exercise13.rb
+# 11_exercises/exercise13.rb
+
+contact = {"Joe Smith"=>{:email=>"joe@email.com", :address=>"123 Main st.", :phone=>"555-123-4567"}, "Sally Johnson"=>{:email=>"sally@email.com", :address=>"404 Not Found Dr.", :phone=>"123-234-3454"}}
+
+puts contact["Joe Smith"][:email]
+puts contact["Sally Johnson"][:phone]
+#+END_SRC
+
+Output:
+#+BEGIN_SRC ruby
+小A曰:ruby exercise13.rb
+joe@email.com
+123-234-3454
+#+END_SRC
+
+This worked. Of course, the authors' solution was a little nicer, because it embedded the output in sentences. But to do that, they had had to change 'contact' to '#{contact}'. Here's that fix:
+
+*File:* [[11_exercises/exercise13_contact_revised.rb]]
+#+BEGIN_SRC ruby :tangle 11_exercises/exercise13_contact_revised.rb
+# 11_exercises/exercise13_contact_revised.rb
+# My original version worked, but to make it like the authors' solution, with a full sentence, I need to change 'contact' to '#{contact}'.
+
+
+contact = {"Joe Smith"=>{:email=>"joe@email.com", :address=>"123 Main st.", :phone=>"555-123-4567"}, "Sally Johnson"=>{:email=>"sally@email.com", :address=>"404 Not Found Dr.", :phone=>"123-234-3454"}}
+
+puts "Joe's email is: #{contact["Joe Smith"][:email]}"
+puts "Sally's address is: #{contact["Sally Johnson"][:phone]}"
+#+END_SRC
+
+Output: 
+#+BEGIN_SRC ruby
+小A曰:ruby exercise13_contact_revised.rb
+Joe's email is: joe@email.com
+Sally's address is: 123-234-3454
+#+END_SRC
+
+Yep. That looks nicer.

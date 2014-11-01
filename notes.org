@@ -911,7 +911,11 @@ and...
 What does x print to the screen in each case? Do they both give errors? Are the errors different? Why?
 
 **** My Solution
-*Here are my guesses before I test them...*
+*File:* [[03_variables/exercise5.md]]
+#+BEGIN_SRC markdown 03_variables/exercise5.md
+### 03_variables/exercise5.md
+
+###Here are my guesses before I test them...
 I think the first one will print '3', because 'X' is defined as '0', and then it is incremented three times. Because the variable is initialized globally, it will be available in the global scope.
 
 X will cause an error in the second example, because 'x' is initialized within the '3.times do' local scope. (BTW, Y = 1)...
@@ -922,16 +926,17 @@ And now for the tests...
 
 - I was also right for the second one. The exact error message was:
 
-  #+BEGIN_SRC sh
-test.rb:6:in `<main>': undefined local variable or method `x' for main:Object (NameError)
-  
-  #+END_SRC
 
-*Here's the book's solution:*
+> test.rb:6:in `<main>': undefined local variable or method `x' for main:Object (NameError)
+  
+
+###Here's the book's solution:
 The first prints 3 to the screen. The second throws an error undefined local variable or method because x is not available as it is created within the scope of the do/end block.
 
-*Comments*
+###Comments
 I was right, but I should have been a bit more precise with my answer for the second one. The nature of the error was 'undefined local variable or method.'
+  #+END_SRC
+
 
 *** Problem 6
 What does the following error message tell you?
@@ -946,11 +951,16 @@ from /usr/local/rvm/rubies/ruby-2.0.0-rc2/bin/irb:16:in `<main>'
 #+END_SRC
 
 *** Solution 6
+*File:* 03_variables/exercise6.md
+#+BEGIN_SRC markdown :tangle 03_variables/exercise6.md
+*03_variables/exercise6.md*
+
+
 The variable 'shoes' was defined locally, and is therefore unavailable in the global scope.
 
-*Here's the book's solution:*
+### Here's the book's solution:
 "The program is trying to reference a variable or method named shoes that has not been defined in the program, or is outside of the scope in which it is being called."
-
+#+END_SRC
 * Methods
 
 ** What Are Methods and Why Do We Need Them?

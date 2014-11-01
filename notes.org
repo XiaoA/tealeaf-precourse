@@ -10,22 +10,24 @@
 ** Exercise 1
 Create a directory named my_folder and then navigate inside that directory. Create two files named one.rb and two.rb in the my_folder directory. Write a ruby program that outputs the line this is file one when you run the one.rb file. Then write another program that outputs this is file two when you run the two.rb file. (Hint: one.rb should have this in it puts "this is file one")
 *** Solution
-
-   #+BEGIN_SRC ruby
-     # one.rb
+*File:* [[01_preparation/exercise1_file1.rb]]
+#+BEGIN_SRC ruby :tangle 01_preparation/exercise1_file1.rb
+     # 01_preparation/exercise1_file1.rb
      puts "this is file one"
-        #+END_SRC
+#+END_SRC
 
-   #+BEGIN_SRC ruby
-     # two.rb
+*File:* [[01_preparation/exercise1_file2.rb]]
+#+BEGIN_SRC ruby :tangle 01_preparation/exercise1_file2.rb
+     # 01_preparation/exercise1_file2.rb
    puts "this is file two"
-   #+END_SRC
+#+END_SRC
 
 
 ** Exercise 2
 When you are finished with the above and both programs are working correctly, navigate to the directory above the my_folder directory and delete all of the content you generated with one command.
 *** Solution
-#+BEGIN_SRC sh
+*File:* [[01_preparation/exercise2.sh]]
+#+BEGIN_SRC sh :tangle 01_preparation/exercise2.sh
 小A曰:ls
 one.rb	two.rb
 小A曰:cd ..

@@ -44,37 +44,37 @@ my_folder
    - String interpolation (concatenation) *only works with double quotes*
      - Syntax: "Here's how to use string interpolation with a #{Ruby Expression}"
        *Example:*       
-
+       
    #+BEGIN_SRC ruby 
-a = 'ten'
-"My favorite number is #{a}!"
+     a = 'ten'
+     "My favorite number is #{a}!"
    #+END_SRC
 ** Symbols
 - You can use symbols to reference things, like strings, that you don't intend to print or edit.
 - Often referred to as "immutable" (though this is apparently not 100% correct)
-
+  
 #+BEGIN_SRC ruby
 # Examples of symbols
 :name
 :a_symbol
 :"surprisingly, this is also a symbol" 
-   #+END_SRC
+#+END_SRC
 
 ** Numbers
 Integers do not contain decimal points. Floats do.
-  
+
 *** Integers
-    9, 1, 4, 1000
+9, 1, 4, 1000
 
 *** Floats
-    9.1, 44.44409, 9.01234
+9.1, 44.44409, 9.01234
 
 ** nil
 The *nil* variable allows us to express an /empty value/ (it equals nothing). Ruby also outputs nil when an expected value is not returned.
 
 In this example, puts prints out a statement, but returns nothing (nil):
 
-   #+BEGIN_SRC ruby
+#+BEGIN_SRC ruby
 # An example from irb
 
 irb(main):006:0> puts "I love Ruby!"
@@ -82,7 +82,7 @@ puts "I love Ruby!"
 I love Ruby!
 => nil
 irb(main):007:0> 
-   #+END_SRC
+#+END_SRC
 
 We can also check to see if a value is equal to nil:
 
@@ -126,63 +126,63 @@ Hello, World!
 #+END_SRC
 
 ** Operations (Mathematical)
-   These work as I would expect (similar to JavaScript).
+These work as I would expect (similar to JavaScript).
 *** Adding, Subtracting, and Multiplying Integers
 
 *Addition (+)*
-    #+BEGIN_SRC ruby
+#+BEGIN_SRC ruby
 2 + 2
 => 4
-    #+END_SRC
+#+END_SRC
 
-    #+RESULTS:
+#+RESULTS:
     : 4
 
 *Subtraction (-)*
-    #+BEGIN_SRC ruby
+#+BEGIN_SRC ruby
 49 - 47
 => 2
     
-    #+END_SRC
+#+END_SRC
 
-    #+RESULTS:
+#+RESULTS:
     : 2
 
 *Multiplication (*)*
 #+BEGIN_SRC ruby
 144 * 144
 => 20736    
-    #+END_SRC
+#+END_SRC
 
-    #+RESULTS:
+#+RESULTS:
     : 20736
 
 ** Division vs. Modulus
 
 *** Division (/)
-    #+BEGIN_SRC ruby
+#+BEGIN_SRC ruby
 144 / 2
 => 2
-    #+END_SRC
+#+END_SRC
 
-    #+RESULTS:
+#+RESULTS:
     : 72
 
 *** Modulo
-    #+BEGIN_SRC ruby
+#+BEGIN_SRC ruby
 16 / 4
 => 0
 
 16 / 3
 => 5
     
-    #+END_SRC
+#+END_SRC
 
-    #+RESULTS:
+#+RESULTS:
     : 5
 
 *** Multiplying Floats and Decimals
-    #+BEGIN_SRC ruby
+#+BEGIN_SRC ruby
 15.0 / 4
 => 3.75
 
@@ -190,14 +190,14 @@ Hello, World!
 => 345.6
 
     
-    #+END_SRC
+#+END_SRC
 
-    #+RESULTS:
+#+RESULTS:
     : 3.75
 
 *** Equality Comparison
 
-    #+BEGIN_SRC ruby
+#+BEGIN_SRC ruby
 4 == 4
 => true
 
@@ -213,18 +213,18 @@ Hello, World!
 'four' == '4'
 => false
 
-    #+END_SRC
+#+END_SRC
 
-    #+RESULTS:
+#+RESULTS:
     : false
 
 *** String Concatenation
-    #+BEGIN_SRC ruby
+#+BEGIN_SRC ruby
 "I love" + " Ruby!"
     
-    #+END_SRC
+#+END_SRC
 
-    #+RESULTS:
+#+RESULTS:
     : I love Ruby!
 
 #+BEGIN_SRC ruby
@@ -234,7 +234,7 @@ Hello, World!
 #+RESULTS:
 : 11
 
-    *We cannot concatenate a string and a number*
+*We cannot concatenate a string and a number*
 
 #+BEGIN_SRC ruby
 1 + "Love"
@@ -242,24 +242,24 @@ Hello, World!
 
 #+RESULTS:
 -:3:in `+': String can't be coerced into Fixnum (TypeError)
-	from -:3:in `main'
-	from -:5:in `<main>'
+from -:3:in `main'
+from -:5:in `<main>'
 
 ** Basic Data Structures
-   
+
 *** Arrays
 
-    #+BEGIN_SRC ruby
+#+BEGIN_SRC ruby
 [1,2,3,4]
     
-    #+END_SRC
+#+END_SRC
 
-    #+RESULTS:
-    | 1 | 2 | 3 | 4 |
+#+RESULTS:
+| 1 | 2 | 3 | 4 |
 
-    Predictably, the index starts with 0:
+Predictably, the index starts with 0:
 
-    #+BEGIN_SRC ruby
+#+BEGIN_SRC ruby
 irb(main):012:0> [1, 2, 3, 4] [0]
 [1, 2, 3, 4] [0]
 => 1
@@ -275,56 +275,56 @@ irb(main):015:0> [1, 2, 3, 4] [3]
 irb(main):016:0> [1, 2, 3, 4] [4]
 [1, 2, 3, 4][4]
 => nil 
-    #+END_SRC
+#+END_SRC
 In the example above, there is no 4th index, so the result is nil.
-    
+
 *** Hashes {}
     - Function as dictionary/key-value pairs
     - consists of a *key* and a *value*.
       + The key is usually represented by a *:symbol*.
       + The value follows the *=>*.
-
         
-#+BEGIN_SRC ruby
+        
+    #+BEGIN_SRC ruby
 irb(main):019:0> {:dog => 'barks'}
 {:dog => 'barks'}
 => {:dog=>"barks"}
 irb(main):020:0> {:dog => 'barks', :cat => 'meows', :pig => 'oinks'}
 {:dog => 'barks', :cat => 'meows', :pig => 'oinks'}
 => {:dog=>"barks", :cat=>"meows", :pig=>"oinks"}
-#+END_SRC
-
-We can retrieve any value by its key:    
-#+BEGIN_SRC ruby
+    #+END_SRC
+    
+    We can retrieve any value by its key:    
+    #+BEGIN_SRC ruby
 # Can you spot the error?
 irb(main):021:0> 
 {dog => 'barks', :cat => 'meows', :pig => 'oinks'}[:cat]
 NameError: undefined local variable or method `dog' for main:Object
 	from (irb):21
 	from /usr/bin/irb:12:in `<main>'
-#+END_SRC
-
-In the example above, I forgot to add the ':' before 'dog'. Remember that strings require single or double quotes, and symbols require colons. Without either of these, your statements will throw an error.
-
-I've fixed the error. Now we can search for the sound a cat makes:
-
-#+BEGIN_SRC ruby
+    #+END_SRC
+    
+    In the example above, I forgot to add the ':' before 'dog'. Remember that strings require single or double quotes, and symbols require colons. Without either of these, your statements will throw an error.
+    
+    I've fixed the error. Now we can search for the sound a cat makes:
+    
+    #+BEGIN_SRC ruby
 irb(main):022:0> {:dog => 'barks', :cat => 'meows', :pig => 'oinks'}[:cat]
 {:dog => 'barks', :cat => 'meows', :pig => 'oinks'}[:cat]
 => "meows"{:cat => 'meows'}
-#+END_SRC      
-
-Many coding errors are just tiny punctuation or spacing errors. Syntax highlighting can help point those out, but experience reading error messages and a sharp eye are essential traits. For example, I remember once, when I was trying to debug a CSS file, it took me forever to figure out why it wasn't working. It turns out I'd used a colon instead of a semi-colon. Lesson learned...
-
+    #+END_SRC      
+    
+    Many coding errors are just tiny punctuation or spacing errors. Syntax highlighting can help point those out, but experience reading error messages and a sharp eye are essential traits. For example, I remember once, when I was trying to debug a CSS file, it took me forever to figure out why it wasn't working. It turns out I'd used a colon instead of a semi-colon. Lesson learned...
+    
 ** Expressions and Return
    - When you use the IRB, you'll see the 'hash rocket': *=>*
    - Everything in Ruby is an expression, and it always returns something, even if only /nil/
-
+     
 *** Puts vs. Return
     - puts: Ruby puts something on the screen, but it doesn't return what is printed to the screen. For example, *do* does something, but it also returns a value. Puts does not return the value.
-
+      
       In these examples, *put* /prints/ a value to the screen, but it /returns/ nil:
-
+      
       #+BEGIN_SRC ruby
 irb(main):023:0> puts 'stuff'
 puts 'stuff'
@@ -337,7 +337,7 @@ stuff
 irb(main):025:0> puts a
 puts a
 => nil
-#+END_SRC
+      #+END_SRC
       
 *** Exercises
 
@@ -349,6 +349,8 @@ For example, if your name is John Doe, think about how you can put "John" and "D
 **** Solution 1
 Here are three ways. The first is the one I came up with. It can be run in irb:     
 #+BEGIN_SRC ruby
+# Here are three ways. The first is the one I came up with. It can be run in irb:     
+
 irb(main):026:0> "Andrew " + "Buckingham"
 "Andrew " + "Buckingham"
 => "Andrew Buckingham"
@@ -387,7 +389,7 @@ Andrew Buckingham
 
 **** Problem 2
 2. Use the modulo operator, division, or a combination of both to take a 4 digit number and find 1) the thousands number 2) the hundreds 3) the tens and 4) and the ones.
-     
+   
 **** Solution 2
 
 #+BEGIN_SRC ruby :tangle 02_basics/solution2.rb
@@ -431,7 +433,7 @@ Write a program that uses a hash to store a list of movie titles with the year t
        puts movies[:Avatar]
        puts movies[:The_Blind_Side]
        puts movies[:Into_the_Fire]
-     #+END_SRC
+#+END_SRC
 
 File: [[file:02_basics/solution3.rb][02_basics/solution3.rb]]
 #+BEGIN_SRC sh
@@ -523,6 +525,7 @@ This summer, I learned the 'get.chomps' method. I think I could use that to crea
 
 *File:* [[file:02_basics/solution6_bonus.rb][02_basics/solution6_bonus.rb]]
 #+BEGIN_SRC ruby :tangle 02_basics/solution6_bonus.rb
+# This is an 'extra credit' program I wrote for fun/practice
 # Asks user to provide three floats and then outputs the result to the screen.
 
 puts "Please provide three numbers, with decimal points and at least one digit."
@@ -557,6 +560,8 @@ I just thought of one more way to improve the program. Instead of saying, "The s
 
 *File:* [[file:02_basics/solution6_bonus_improved.rb][02_basics/solution6_bonus_improved.rb]]
 #+BEGIN_SRC ruby :tangle 02_basics/solution6_bonus_improved.rb
+# This is an 'extra credit' program I wrote for fun/practice
+
 puts "Please provide three numbers, with decimal points and at least one digit."
 first_number = gets.chomp.to_f
 second_number = gets.chomp.to_f

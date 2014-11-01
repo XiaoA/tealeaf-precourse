@@ -1,3 +1,5 @@
+# This is an 'extra credit' program I wrote for fun/practice
+
 puts "Please provide three numbers, with decimal points and at least one digit."
 first_number = gets.chomp.to_f
 second_number = gets.chomp.to_f

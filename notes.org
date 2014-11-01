@@ -6800,3 +6800,186 @@ Sally's address is: 123-234-3454
 #+END_SRC
 
 Yep. That looks nicer.
+
+** Problem 14
+Create the data structure that you created in the previous example for Joe Smith using loops instead of assignment. Some helpful methods might be the Array *shift* and *first* method.
+
+** Solution 14
+
+I experimented with the *shift* and *first* methods, and I was able to get Joe's email with both. The main difference, of course, is that *shift* is destructive, while *first* is not.
+
+*File:* [[11_exercises/exercise14_preliminary.rb]]
+#+BEGIN_SRC ruby :tangle 11_exercises/exercise14_preliminary.rb
+# 11_exercises/exercise14_preliminary.rb
+# I experiment with the *shift* and *first* methods, and I was able to get Joe's email with both. The main difference, of course, is that *shift* is destructive, while *first* is not.
+
+irb(main):033:0> contact = {"Joe Smith"=>{:email=>"joe@email.com", :address=>"123 Main st.", :phone=>"555-123-4567"}, "Sally Johnson"=>{:email=>"sally@email.com", :address=>"404 Not Found Dr.", :phone=>"123-234-3454"}}
+contact = {"Joe Smith"=>{:email=>"joe@email.com", :address=>"123 Main st.", :phone=>"555-123-4567"}, "Sally Johnson"=>{:email=>"sally@email.com", :address=>"404 Not Found Dr.", :phone=>"123-234-3454"}}
+=> {"Joe Smith"=>{:email=>"joe@email.com", :address=>"123 Main st.", :phone=>"555-123-4567"}, "Sally Johnson"=>{:email=>"sally@email.com", :address=>"404 Not Found Dr.", :phone=>"123-234-3454"}}
+
+irb(main):034:0> contact.first.last.first.last
+contact.first.last.first.last
+=> "joe@email.com"
+
+irb(main):035:0> contact
+contact
+=> {"Joe Smith"=>{:email=>"joe@email.com", :address=>"123 Main st.", :phone=>"555-123-4567"}, "Sally Johnson"=>{:email=>"sally@email.com", :address=>"404 Not Found Dr.", :phone=>"123-234-3454"}}
+
+irb(main):036:0> contact.shift.last.first.last
+contact.shift.last.first.last
+=> "joe@email.com"
+
+irb(main):037:0> contact
+contact
+=> {"Sally Johnson"=>{:email=>"sally@email.com", :address=>"404 Not Found Dr.", :phone=>"123-234-3454"}}
+#+END_SRC
+
+Using those two methods, I could pull out the values from the hash. But from the instructions, it seems like they want me to fist turn the hashes into arrays, and then use either the *first* or *shift* methods.
+
+#+BEGIN_SRC ruby :tangle 11_exercises/exercise14.rb
+  # I misunderstood the question. I'll do an "extra credit exercise to demonstrate my understanding."
+  
+  contact_data = ["joe@email.com", "123 Main st.", "555-123-4567"]
+
+  contacts = {"Joe Smith" => {}}
+
+  fields = [:email, :address, :phone]
+  
+  contacts.each do |name, hash|
+    fields.each do |field|
+      hash[field] = contact_data.shift
+    end
+  end
+#+END_SRC
+
+*File:* [[11_exercises/exercise14_extra_credit.rb]]
+#+BEGIN_SRC ruby :tangle 11_exercises/exercise14_extra_credit.rb
+  # 11_exercises/exercise14_extra_credit.rb
+  # This is an extra (original) variation on exercise 14, for more practice
+  # Matches a list of Tokyo train stations with the correct train that stops there
+  
+  # Provide the station (values) in an array
+  tokyo_stations = ["Koenji", "Nishi-Oi", "Omote Sando"]
+  
+  # Prepare the hash
+  station_lines = {"Tokyo" => {}}
+  
+  # Provide a list of keys (stations)
+  lines = [:Chuo, :Yokosuka, :Marunouchi]
+  
+  station_lines.each do |name, hash|
+    lines.each do |line|
+      hash[line] = tokyo_stations.shift
+    end
+  end
+  p station_lines
+#+END_SRC
+
+Output:
+#+BEGIN_SRC ruby
+小A曰:ruby exercise14_extra_credit.rb 
+{"Tokyo"=>{:Chuo=>"Koenji", :Yokosuka=>"Nishi-Oi", :Marunouchi=>"Omote Sando"}}
+#+END_SRC
+
+** Problem 15
+Use Ruby's Array method *delete_if* and String method *start_with?* to delete all of the words that begin with an "s" in the following array.
+
+#+BEGIN_SRC ruby
+arr = ['snow', 'winter', 'ice', 'slippery', 'salted roads', 'white trees']
+#+END_SRC
+
+Then recreate the *arr* and get rid of all of the words that start with "s" or starts with "w".
+
+*** Solution 15
+
+#+BEGIN_SRC ruby
+
+
+irb(main):001:0> arr = ['snow', 'winter', 'ice', 'slippery', 'salted roads', 'white trees']
+=> ["snow", "winter", "ice", "slippery", "salted roads", "white trees"]
+
+irb(main):002:0> arr.delete_if {|string| string.start_with?("s")}
+=> ["winter", "ice", "white trees"]
+
+irb(main):003:0> arr = ['snow', 'winter', 'ice', 'slippery', 'salted roads', 'white trees']
+=> ["snow", "winter", "ice", "slippery", "salted roads", "white trees"]
+
+irb(main):004:0> arr.delete_if {|string| string.start_with?("s") || string.start_with?("w")}
+=> ["ice"]
+
+
+#+END_SRC
+*File:* [[11_exercises/exercise15.rb]]
+#+BEGIN_SRC ruby :tangle 11_exercises/exercise15.rb
+# 11_exercises/exercise15.rb
+
+# Create the array
+arr = ['snow', 'winter', 'ice', 'slippery', 'salted roads', 'white trees']
+
+# Delete words that start with an 's'
+arr.delete_if {|string| string.start_with?("s")}
+
+# Recreate the array
+arr = ['snow', 'winter', 'ice', 'slippery', 'salted roads', 'white trees']
+
+# Delete words that start with an 's' or a 'w'
+arr.delete_if {|string| string.start_with?("s") || string.start_with?("w")}
+
+
+#+END_SRC
+
+The authors combined the 'or' statement in the same argument, which is tidier.
+
+#+BEGIN_SRC ruby
+arr.delete_if { |word| word.start_with?("s") }
+
+arr.delete_if { |word| word.start_with?("s", "w") }
+
+#+END_SRC
+
+** Problem 16
+Take the following array:
+
+#+BEGIN_SRC ruby
+  a = ['white snow', 'winter wonderland', 'melting ice',
+       'slippery sidewalk', 'salted roads', 'white trees']
+  
+#+END_SRC
+and turn it into a new array that consists of strings containing one word. (ex. ["white snow", etc...] → ["white", "snow", etc...]. Look into using Array's *map* and *flatten* methods, as well as String's *split* method.
+
+** Solution 16
+In irb, I realized that I would need to first map/split the array items, and then flatten them, as I couldn't stack flatten on the others, and get it to work:
+
+#+BEGIN_SRC ruby
+irb(main):014:0> a
+=> ["white snow", "winter wonderland", "melting ice", "slippery sidewalk", "salted roads", "white trees"]
+
+irb(main):015:0> a2 = a.map {|word| word.split(" ")}
+=> [["white", "snow"], ["winter", "wonderland"], ["melting", "ice"], ["slippery", "sidewalk"], ["salted", "roads"], ["white", "trees"]]
+
+irb(main):016:0> a2.flatten
+=> ["white", "snow", "winter", "wonderland", "melting", "ice", "slippery", "sidewalk", "salted", "roads", "white", "trees"]
+
+#+END_SRC
+
+*File:* [[11_exercises/exercise16.rb]]
+#+BEGIN_SRC ruby :tangle 11_exercises/exercise16.rb
+  # 11_exercises/exercise16.rb
+  
+  a = ['white snow', 'winter wonderland', 'melting ice',
+       'slippery sidewalk', 'salted roads', 'white trees']
+  
+  a = a.map {|word| word.split(" ")}
+  a = a.flatten
+  
+  p a
+  
+#+END_SRC
+
+And here's the output:
+#+BEGIN_SRC ruby
+小A曰:ruby exercise16.rb 
+["white", "snow", "winter", "wonderland", "melting", "ice", "slippery", "sidewalk", "salted", "roads", "white", "trees"]
+#+END_SRC
+
+

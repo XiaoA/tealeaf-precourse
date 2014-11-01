@@ -6982,4 +6982,29 @@ And here's the output:
 ["white", "snow", "winter", "wonderland", "melting", "ice", "slippery", "sidewalk", "salted", "roads", "white", "trees"]
 #+END_SRC
 
+** Problem 17
+What will the following program output?
+
+#+BEGIN_SRC ruby
+  hash1 = {shoes: "nike", "hat" => "adidas", :hoodie => true}
+  hash2 = {"hat" => "adidas", :shoes => "nike", hoodie: true}
+  
+  if hash1 == hash2
+    puts "These hashes are the same!"
+  else
+    puts "These hashes are not the same!"
+  end
+#+END_SRC
+
+** Solution 
+*File:* [[11_exercises/exercise17.md]]
+#+BEGIN_SRC markdown :tangle 11_exercises/exercise17.md
+  Arrays are ordered lists. As of Ruby 1.9, hashes can maintain order. But they don't have to. I predicted that Ruby would consider both of these hashes equal, even though their key-values were not in the same order.
+  
+  And I was correct. When I ran this program in irb, here's what I got:
+  
+  **These hashes are the same!**
+  => nil
+  
+#+END_SRC
 

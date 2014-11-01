@@ -1,4 +1,4 @@
-# 04_methods/greeting.rb
+# 04_methods/greeting.rb (Exercise 1)
 
 puts "What is your name?"
 name = gets.chomp

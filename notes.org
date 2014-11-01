@@ -1228,13 +1228,13 @@ Here's an example of *return*:
 
 *File:* [[file:04_methods/return.rb][04_methods/return.rb]]
 #+BEGIN_SRC ruby :tangle 04_methods/return.rb
-# return.rb
-def add_three(number)
-number + 3
-end
-
-returned_value = add_three(4)
-puts returned_value
+  # return.rb
+  def add_three(number)
+    number + 3
+  end
+  
+  returned_value = add_three(4)
+  puts returned_value
 #+END_SRC
 
 
@@ -1290,7 +1290,7 @@ Write a program that contains a method called greeting that takes a name as its 
 
 *File:* [[file:04_methods/greeting.rb][04_methods/greeting.rb]]
 #+BEGIN_SRC ruby :tangle 04_methods/greeting.rb
-# 04_methods/greeting.rb
+# 04_methods/greeting.rb (Exercise 1)
 
 puts "What is your name?"
 name = gets.chomp
@@ -1328,7 +1328,7 @@ puts greeting("Jon")
 #+END_SRC
 
 
-** Problem 2.
+*** Problem 2.
 What do the following expressions evaluate to?
 
 #+BEGIN_SRC ruby
@@ -1341,15 +1341,19 @@ What do the following expressions evaluate to?
 
 #+END_SRC
 
-** Solution 2
+*** Solution 2
+My predictions:
+
+#+BEGIN_SRC markdown
 
 1. x will equal 2, but it won't print anything. 2
 2. x will equal two, and it will evaluate to "2" and return nil
 3. "Joe"
 4. four will equal the string "four", but it won't print anything.
 5. nothing
+#+END_SRC
    
-*** Book Solution
+**** Book Solution
 #+BEGIN_SRC ruby
 1. x = 2 # => 2
 2. puts x = 2 # nil
@@ -1363,16 +1367,8 @@ What do the following expressions evaluate to?
 print something = "nothing"
 
 #+END_SRC
-
-*** Solution 2
-
-1. x will equal 2, but it won't print anything. 2
-2. x will equal two, and it will evaluate to "2" and return nil
-3. "Joe"
-4. four will equal the string "four", but it won't print anything.
-5. nothing
    
-*** Book Solution
+**** Book Solution
 #+BEGIN_SRC ruby
 1. x = 2 # => 2
 2. puts x = 2 # nil
@@ -1406,14 +1402,27 @@ irb(main):007:0>
 
 #+END_SRC
 
+*** Solution 2
+*File:* [[04_methods/exercise2.md]]
+#+BEGIN_SRC markdown :tangle 04_methods/exercise2.md
+*04_methods/exercise2.md*
+
+1. x will equal 2, but it won't print anything. 2
+2. x will equal two, and it will evaluate to "2" and return nil
+3. "Joe"
+4. four will equal the string "four", but it won't print anything.
+5. nothing
+#+END_SRC
+
 *** Problem 3
 Write a program that includes a method called multiply that takes two arguments and returns the product of the two numbers.
 
 *** Solution 3
 
 *File:* [[file:04_methods/multiply.rb][04_methods/multiply.rb]]
-#+BEGIN_SRC ruby :tangle 04_methods/multiply.rb
 
+#+BEGIN_SRC ruby :tangle 04_methods/multiply.rb
+# 04_methods/multiply.rb (exercise 3)
 def multiply(a, b)
   a * b
 end
@@ -1422,7 +1431,7 @@ puts multiply(5,3)
 
 #+END_SRC
 
-*** Book Solution
+**** Book Solution
 
 #+BEGIN_SRC ruby
   
@@ -1433,7 +1442,7 @@ puts multiply(5,3)
   
 #+END_SRC
 
-*** Comments
+**** Comments
 My solution worked, and it was essentially the same thing, but I used 'a' and 'b' for arguments. 'number1' and 'number2' are more descriptive and would probably be better choices for arguments.
 
 ** Problem 4
